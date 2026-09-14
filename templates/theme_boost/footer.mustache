@@ -1,0 +1,93 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_boost/footer
+
+    Atrium override of theme_boost/footer, copied from Moodle 5.2.
+
+    Boost hides the footer behind a "?" popover. Atrium renders a real footer: the
+    configured columns, social links and legal line from core_renderer::atrium_footer(),
+    then every link and fragment Boost's popover contained, inline. The debugging strip
+    is unchanged.
+
+    Example context (json):
+    {
+        "output": {
+            "page_doc_link": "Documentation for this page",
+            "supportemail": "<a href=\"#\">Contact site support</a>",
+            "has_popover_links": true,
+            "services_support_link": "Services and support",
+            "login_info": "You are logged in as cute kitten",
+            "moodle_release": "90210",
+            "has_communication_links": true,
+            "communication_url": "https://element:8081/#/room/#yourroom:synapse",
+            "communication_link": "<a href=\"#\">Communication room</a>",
+            "atrium_footer": "<div class=\"atrium-footer-content\">© 2026</div>"
+        }
+    }
+}}
+<footer id="page-footer" class="atrium-footer">
+    {{{ output.atrium_footer }}}
+    <div class="atrium-footer-meta container-fluid" data-region="footer-content">
+        <div class="atrium-footer-links">
+            {{#output.has_communication_links}}
+                <span class="footer-support-link">{{{ output.communication_link }}}</span>
+            {{/output.has_communication_links}}
+            {{# output.page_doc_link }}
+                <span class="footer-support-link">{{{ output.page_doc_link }}}</span>
+            {{/ output.page_doc_link }}
+            {{# output.services_support_link }}
+                <span class="footer-support-link">{{{ output.services_support_link }}}</span>
+            {{/ output.services_support_link }}
+            {{# output.supportemail }}
+                <span class="footer-support-link">{{{ output.supportemail }}}</span>
+            {{/ output.supportemail }}
+        </div>
+        <div class="logininfo">
+            {{{ output.login_info }}}
+        </div>
+        <div class="tool_usertours-resettourcontainer">
+        </div>
+        {{# output.telemetry_traceid }}
+            <div>
+                <span id="telemetry_traceid" class="d-none">
+                    {{{ output.telemetry_traceid }}}
+                </span>
+                <a href="#" data-action="copytoclipboard" data-clipboard-target="#telemetry_traceid"
+                        data-clipboard-success-message="{{#str}}telemetrytraceidfooterlinkcopied, core{{/str}}">
+                    {{#str}}telemetrytraceidfooterlink, core{{/str}}
+                </a>
+            </div>
+        {{/ output.telemetry_traceid }}
+        {{{ output.standard_footer_html }}}
+        {{{ output.standard_end_of_body_html }}}
+        {{#output.moodle_release}}
+            <div class="atrium-footer-release">
+                {{#str}}version, core{{/str}} {{{ output.moodle_release }}}
+            </div>
+        {{/output.moodle_release}}
+    </div>
+
+    <div class="footer-content-debugging footer-dark bg-dark text-light">
+        <div class="container-fluid footer-dark-inner">
+            {{{ output.debug_footer_html }}}
+        </div>
+    </div>
+</footer>
+{{#js}}
+require(['core/copy_to_clipboard']);
+{{/js}}

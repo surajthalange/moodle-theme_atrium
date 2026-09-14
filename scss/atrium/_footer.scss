@@ -1,0 +1,151 @@
+// The page footer.
+
+.atrium-footer {
+    margin-top: 2rem;
+    background-color: var(--atrium-surface);
+    border-top: 1px solid var(--atrium-border);
+    color: var(--atrium-text-muted);
+    font-size: 0.875rem;
+    a {
+        color: var(--atrium-text-muted);
+        &:hover,
+        &:focus-visible {
+            color: var(--atrium-accent);
+        }
+    }
+}
+
+.atrium-footer-content,
+.atrium-footer-meta {
+    max-width: 1320px;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
+
+.atrium-footer-columns {
+    display: grid;
+    gap: 2rem;
+    padding: 2rem 0 1.5rem;
+    border-bottom: 1px solid var(--atrium-border);
+    &.atrium-footer-columns-2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    &.atrium-footer-columns-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+.atrium-footer-title {
+    color: var(--atrium-text);
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+}
+
+.atrium-footer-html {
+    ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        li {
+            margin-bottom: 0.375rem;
+        }
+    }
+    p:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.atrium-footer-bottom {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem 1.5rem;
+    padding: 1rem 0;
+}
+
+.atrium-footer-social {
+    display: flex;
+    gap: 0.375rem;
+}
+
+.atrium-footer-social-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: var(--atrium-radius-sm);
+    background-color: var(--atrium-surface-2);
+    color: var(--atrium-text-muted);
+    font-size: 1rem;
+    &:hover,
+    &:focus-visible {
+        background-color: var(--atrium-accent-soft);
+        color: var(--atrium-accent);
+        text-decoration: none;
+    }
+}
+
+.atrium-footer-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 1.25rem;
+    padding-top: 0.75rem;
+    padding-bottom: 1.25rem;
+    border-top: 1px solid var(--atrium-border);
+    font-size: 0.8125rem;
+    color: var(--atrium-text-faint);
+    > div,
+    > .atrium-footer-links {
+        display: inline-flex;
+        flex-wrap: wrap;
+        gap: 0.5rem 1.25rem;
+    }
+    .tool_usertours-resettourcontainer:empty {
+        display: none;
+    }
+    .logininfo {
+        color: var(--atrium-text-faint);
+    }
+}
+
+.atrium-footer-release {
+    margin-left: auto;
+}
+
+@include media-breakpoint-down(md) {
+    .atrium-footer-columns {
+        &.atrium-footer-columns-2,
+        &.atrium-footer-columns-3 {
+            grid-template-columns: 1fr;
+        }
+    }
+}
+
+// The login page carries only the legal line.
+.pagelayout-login .atrium-footer {
+    margin-top: 0;
+    background-color: transparent;
+    border-top: 0;
+    .atrium-footer-columns,
+    .atrium-footer-social,
+    .atrium-footer-release {
+        display: none;
+    }
+    .atrium-footer-bottom,
+    .atrium-footer-meta {
+        justify-content: center;
+        text-align: center;
+        border: 0;
+        padding: 0.5rem 0;
+    }
+}
+
+// Sticky footer (form actions) on the surface.
+.stickyfooter {
+    background-color: var(--atrium-surface);
+    border-top: 1px solid var(--atrium-border);
+    box-shadow: var(--atrium-shadow-lg);
+}

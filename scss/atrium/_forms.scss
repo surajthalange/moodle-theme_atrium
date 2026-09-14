@@ -1,0 +1,95 @@
+// Forms and inputs.
+
+.form-control,
+.form-select,
+.custom-select {
+    background-color: var(--atrium-surface);
+    border-color: var(--atrium-border-strong);
+    color: var(--atrium-text);
+    &::placeholder {
+        color: var(--atrium-text-faint);
+    }
+    &:focus {
+        background-color: var(--atrium-surface);
+        border-color: var(--atrium-accent);
+        color: var(--atrium-text);
+    }
+    &:disabled,
+    &[readonly] {
+        background-color: var(--atrium-surface-2);
+        color: var(--atrium-text-muted);
+    }
+}
+
+.form-check-input {
+    background-color: var(--atrium-surface);
+    border-color: var(--atrium-border-strong);
+    &:checked {
+        background-color: var(--atrium-accent);
+        border-color: var(--atrium-accent);
+    }
+}
+
+.input-group-text {
+    background-color: var(--atrium-surface-2);
+    border-color: var(--atrium-border-strong);
+    color: var(--atrium-text-muted);
+}
+
+// Moodle forms: section headers as quiet dividers.
+.mform {
+    .fcontainer {
+        padding-top: 0.25rem;
+    }
+    fieldset > legend,
+    .fitem .fitemtitle,
+    .col-form-label {
+        color: var(--atrium-text);
+    }
+    fieldset.collapsible legend a.fheader,
+    .fheader {
+        font-weight: 600;
+    }
+    .form-text,
+    .form-control-feedback {
+        color: var(--atrium-text-muted);
+    }
+    .felement .form-control-static {
+        color: var(--atrium-text);
+    }
+}
+
+// Editor (TinyMCE) frames follow the surface.
+.editor_atto_toolbar,
+.tox-tinymce {
+    border-color: var(--atrium-border-strong) !important; // stylelint-disable-line declaration-no-important
+    border-radius: var(--atrium-radius-sm) !important; // stylelint-disable-line declaration-no-important
+}
+
+// File pickers and file managers.
+.filemanager .fp-content,
+.filemanager-container,
+.filepicker-filelist {
+    background-color: var(--atrium-surface);
+    border-color: var(--atrium-border);
+    border-radius: var(--atrium-radius-sm);
+}
+
+// Search boxes.
+.simplesearchform .form-control {
+    border-radius: 999px;
+}
+
+// Admin settings pages: the table of settings as a list of rows.
+#adminsettings {
+    .form-item {
+        border-bottom: 1px solid var(--atrium-border);
+        padding: 1rem 0;
+    }
+    .form-label {
+        font-weight: 600;
+    }
+    .form-description {
+        color: var(--atrium-text-muted);
+    }
+}

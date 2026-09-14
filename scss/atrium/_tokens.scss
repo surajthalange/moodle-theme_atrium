@@ -1,0 +1,108 @@
+// Design tokens.
+//
+// Every colour Atrium paints comes from one of these custom properties. The light set
+// is the default; the dark set is redefined under [data-bs-theme="dark"], which the
+// server puts on the html element before the first byte of body is sent.
+//
+// Bootstrap's own colour-mode variables are aligned with the same values so core
+// components (dropdowns, modals, forms, tables) follow the scheme without any rule in
+// _dark.scss having to chase them.
+
+:root,
+[data-bs-theme="light"] {
+    --atrium-bg: #{$body-bg};
+    --atrium-surface: #ffffff;
+    --atrium-surface-2: #f8f9fc;
+    --atrium-surface-3: #eef0f5;
+    --atrium-border: #{$border-color};
+    --atrium-border-strong: #d3d7e0;
+    --atrium-text: #{$body-color};
+    --atrium-text-muted: #64748b;
+    --atrium-text-faint: #94a3b8;
+    --atrium-accent: #{$primary};
+    --atrium-accent-rgb: #{to-rgb($primary)};
+    --atrium-accent-contrast: #ffffff;
+    --atrium-accent-soft: rgba(var(--atrium-accent-rgb), 0.1);
+    --atrium-accent-softer: rgba(var(--atrium-accent-rgb), 0.06);
+    --atrium-shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04), 0 1px 1px rgba(15, 23, 42, 0.02);
+    --atrium-shadow-md: 0 4px 12px rgba(15, 23, 42, 0.08);
+    --atrium-shadow-lg: 0 12px 32px rgba(15, 23, 42, 0.12);
+    --atrium-navbar-bg: #ffffff;
+    --atrium-navbar-border: #{$border-color};
+    --atrium-sidebar-width: #{$atrium-sidebar-width};
+    --atrium-radius: #{$atrium-radius};
+    --atrium-radius-sm: #{$atrium-radius * 0.5};
+    --atrium-radius-lg: #{$atrium-radius * 1.25};
+    --atrium-hero-bg: #{$primary};
+    --atrium-hero-fg: #ffffff;
+    --atrium-progress-track: #e6e8ef;
+
+    // Sidebar, light tone.
+    --atrium-sidebar-bg: #ffffff;
+    --atrium-sidebar-border: #{$border-color};
+    --atrium-sidebar-fg: #334155;
+    --atrium-sidebar-fg-muted: #64748b;
+    --atrium-sidebar-hover-bg: #f1f3f8;
+    --atrium-sidebar-active-bg: var(--atrium-accent-soft);
+    --atrium-sidebar-active-fg: var(--atrium-accent);
+    --atrium-sidebar-brand-fg: #0f172a;
+
+    color-scheme: light;
+}
+
+// Sidebar, dark tone: applied by preset or setting in light scheme, and always in dark.
+@mixin atrium-sidebar-dark {
+    --atrium-sidebar-bg: #111827;
+    --atrium-sidebar-border: #1f2937;
+    --atrium-sidebar-fg: #cbd5e1;
+    --atrium-sidebar-fg-muted: #94a3b8;
+    --atrium-sidebar-hover-bg: rgba(255, 255, 255, 0.06);
+    --atrium-sidebar-active-bg: rgba(255, 255, 255, 0.1);
+    --atrium-sidebar-active-fg: #ffffff;
+    --atrium-sidebar-brand-fg: #ffffff;
+}
+
+@if $atrium-sidebar-tone == dark {
+    :root,
+    [data-bs-theme="light"] {
+        @include atrium-sidebar-dark;
+    }
+}
+
+[data-bs-theme="dark"] {
+    --atrium-bg: #{$body-bg-dark};
+    --atrium-surface: #{$body-secondary-bg-dark};
+    --atrium-surface-2: #{$body-tertiary-bg-dark};
+    --atrium-surface-3: #262b3b;
+    --atrium-border: #{$border-color-dark};
+    --atrium-border-strong: #3a4053;
+    --atrium-text: #{$body-color-dark};
+    --atrium-text-muted: #{$body-secondary-color-dark};
+    --atrium-text-faint: #6b7280;
+    --atrium-accent-soft: rgba(var(--atrium-accent-rgb), 0.22);
+    --atrium-accent-softer: rgba(var(--atrium-accent-rgb), 0.14);
+    --atrium-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+    --atrium-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+    --atrium-shadow-lg: 0 12px 32px rgba(0, 0, 0, 0.5);
+    --atrium-navbar-bg: #{$body-secondary-bg-dark};
+    --atrium-navbar-border: #{$border-color-dark};
+    --atrium-progress-track: #2a2f3f;
+
+    @include atrium-sidebar-dark;
+
+    // Align Bootstrap's colour-mode variables with the tokens.
+    --#{$prefix}body-bg: var(--atrium-bg);
+    --#{$prefix}body-color: var(--atrium-text);
+    --#{$prefix}secondary-bg: var(--atrium-surface);
+    --#{$prefix}tertiary-bg: var(--atrium-surface-2);
+    --#{$prefix}border-color: var(--atrium-border);
+    --#{$prefix}secondary-color: var(--atrium-text-muted);
+    --#{$prefix}emphasis-color: #ffffff;
+    --#{$prefix}link-color: #{tint-color($primary, 35%)};
+    --#{$prefix}link-hover-color: #{tint-color($primary, 50%)};
+    --#{$prefix}link-color-rgb: #{to-rgb(tint-color($primary, 35%))};
+    --#{$prefix}link-hover-color-rgb: #{to-rgb(tint-color($primary, 50%))};
+    --#{$prefix}heading-color: #ffffff;
+
+    color-scheme: dark;
+}

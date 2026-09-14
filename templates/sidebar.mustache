@@ -1,0 +1,106 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_atrium/sidebar
+
+    The left navigation sidebar: brand, primary navigation, collapse control.
+
+    Rendered once, for md and up; below md the navigation bar's hamburger opens Boost's
+    own mobile primary drawer instead. Collapsed state is a class on the body so the page
+    margin and the sidebar move together.
+
+    Context variables required for this template:
+    * homeurl - Site home URL
+    * sitename - Site short name
+    * haslogo - Whether a compact logo is configured
+    * logourl - URL of the compact logo
+    * collapsed - Whether the sidebar starts collapsed
+    * items - Navigation items: text, url, isactive, iconkey, iconcomponent, haschildren, children, id
+
+    Example context (json):
+    {
+        "homeurl": "/",
+        "sitename": "Atrium",
+        "haslogo": false,
+        "logourl": "",
+        "collapsed": false,
+        "hasitems": true,
+        "items": [
+            {"text": "Home", "url": "/", "isactive": false, "iconkey": "i/home", "iconcomponent": "core", "haschildren": false, "id": "atrium-nav-home"},
+            {"text": "Dashboard", "url": "/my/", "isactive": true, "iconkey": "i/dashboard", "iconcomponent": "core", "haschildren": false, "id": "atrium-nav-myhome"},
+            {"text": "Help", "url": "#", "isactive": false, "iconkey": "link", "iconcomponent": "theme_atrium", "haschildren": true, "id": "atrium-nav-help",
+             "children": [{"text": "Guides", "url": "/guides", "isactive": false}]}
+        ]
+    }
+}}
+<aside id="atrium-sidebar" class="atrium-sidebar d-none d-md-flex flex-column d-print-none" data-region="atrium-sidebar">
+    <div class="atrium-sidebar-brand">
+        <a href="{{{ homeurl }}}" class="atrium-brand-link aabtn" data-region="site-home-link">
+            {{#haslogo}}
+                <img src="{{{ logourl }}}" alt="{{ sitename }}" class="atrium-brand-logo">
+            {{/haslogo}}
+            {{^haslogo}}
+                <span class="atrium-brand-mark" aria-hidden="true">{{#pix}} i/course, core {{/pix}}</span>
+            {{/haslogo}}
+            <span class="atrium-brand-name">{{ sitename }}</span>
+        </a>
+    </div>
+    {{#hasitems}}
+    <nav class="atrium-sidebar-nav" aria-label="{{#str}} mainnavigation, theme_atrium {{/str}}">
+        <ul class="atrium-nav list-unstyled m-0">
+            {{#items}}
+                <li class="atrium-nav-item{{#isactive}} active{{/isactive}}" data-key="{{ key }}">
+                    {{^haschildren}}
+                        <a href="{{{ url }}}" class="atrium-nav-link"{{#isactive}} aria-current="page"{{/isactive}}>
+                            <span class="atrium-nav-icon" aria-hidden="true">{{#pix}} {{ iconkey }}, {{ iconcomponent }} {{/pix}}</span>
+                            <span class="atrium-nav-text">{{ text }}</span>
+                        </a>
+                    {{/haschildren}}
+                    {{#haschildren}}
+                        <button type="button" class="atrium-nav-link atrium-nav-group" data-bs-toggle="collapse"
+                                data-bs-target="#{{ id }}" aria-controls="{{ id }}"
+                                aria-expanded="{{#isactive}}true{{/isactive}}{{^isactive}}false{{/isactive}}">
+                            <span class="atrium-nav-icon" aria-hidden="true">{{#pix}} {{ iconkey }}, {{ iconcomponent }} {{/pix}}</span>
+                            <span class="atrium-nav-text">{{ text }}</span>
+                            <span class="atrium-nav-chevron" aria-hidden="true">{{#pix}} t/collapsed, core {{/pix}}</span>
+                        </button>
+                        <ul id="{{ id }}" class="atrium-nav-children collapse{{#isactive}} show{{/isactive}} list-unstyled">
+                            {{#children}}
+                                <li>
+                                    <a href="{{{ url }}}" class="atrium-nav-sublink{{#isactive}} active{{/isactive}}"{{#isactive}} aria-current="page"{{/isactive}}>
+                                        <span class="atrium-nav-text">{{ text }}</span>
+                                    </a>
+                                </li>
+                            {{/children}}
+                        </ul>
+                    {{/haschildren}}
+                </li>
+            {{/items}}
+        </ul>
+    </nav>
+    {{/hasitems}}
+    <div class="atrium-sidebar-foot">
+        <button type="button" class="atrium-nav-link atrium-sidebar-toggle" data-action="atrium-sidebar-toggle"
+                aria-controls="atrium-sidebar" aria-expanded="{{^collapsed}}true{{/collapsed}}{{#collapsed}}false{{/collapsed}}"
+                data-label-collapse="{{#str}} collapsesidebar, theme_atrium {{/str}}"
+                data-label-expand="{{#str}} expandsidebar, theme_atrium {{/str}}">
+            <span class="atrium-nav-icon atrium-icon-collapse" aria-hidden="true">{{#pix}} collapse, theme_atrium {{/pix}}</span>
+            <span class="atrium-nav-icon atrium-icon-expand" aria-hidden="true">{{#pix}} expand, theme_atrium {{/pix}}</span>
+            <span class="atrium-nav-text">{{^collapsed}}{{#str}} collapsesidebar, theme_atrium {{/str}}{{/collapsed}}{{#collapsed}}{{#str}} expandsidebar, theme_atrium {{/str}}{{/collapsed}}</span>
+        </button>
+    </div>
+</aside>

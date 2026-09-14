@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice" role="img" aria-label="">
+  <title>Atrium login background</title>
+  <!--
+    Deliberately bright and saturated. The theme lays a colour wash over this image at
+    an administrator-set opacity, and a wash can only read as a wash if there is real
+    luminance range underneath it. An already-dark image would make the overlay a no-op.
+
+    No vignette here either: the theme draws one in CSS so that it applies equally to an
+    uploaded photograph, and doing it in both places darkened the edges twice.
+  -->
+  <defs>
+    <linearGradient id="atriumBase" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0e7490"/>
+      <stop offset="0.38" stop-color="#3730a3"/>
+      <stop offset="0.72" stop-color="#6d28d9"/>
+      <stop offset="1" stop-color="#9d174d"/>
+    </linearGradient>
+
+    <radialGradient id="atriumCyan" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#67e8f9" stop-opacity="0.95"/>
+      <stop offset="0.45" stop-color="#22d3ee" stop-opacity="0.38"/>
+      <stop offset="1" stop-color="#22d3ee" stop-opacity="0"/>
+    </radialGradient>
+
+    <radialGradient id="atriumViolet" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#c4b5fd" stop-opacity="0.85"/>
+      <stop offset="0.45" stop-color="#a78bfa" stop-opacity="0.34"/>
+      <stop offset="1" stop-color="#a78bfa" stop-opacity="0"/>
+    </radialGradient>
+
+    <radialGradient id="atriumAmber" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#fcd34d" stop-opacity="0.72"/>
+      <stop offset="0.45" stop-color="#fbbf24" stop-opacity="0.26"/>
+      <stop offset="1" stop-color="#fbbf24" stop-opacity="0"/>
+    </radialGradient>
+
+    <radialGradient id="atriumRose" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#fda4af" stop-opacity="0.6"/>
+      <stop offset="0.5" stop-color="#fb7185" stop-opacity="0.2"/>
+      <stop offset="1" stop-color="#fb7185" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1600" height="1000" fill="url(#atriumBase)"/>
+
+  <!-- Light sources sit off-centre, so the brightest areas fall either side of the
+       login card rather than directly behind it. -->
+  <ellipse cx="210" cy="150" rx="720" ry="580" fill="url(#atriumCyan)"/>
+  <ellipse cx="1450" cy="900" rx="780" ry="640" fill="url(#atriumViolet)"/>
+  <ellipse cx="1330" cy="90" rx="560" ry="450" fill="url(#atriumAmber)"/>
+  <ellipse cx="620" cy="1010" rx="620" ry="420" fill="url(#atriumRose)"/>
+
+  <!-- Faint concentric arcs, to give the gradient some structure to read against. -->
+  <g fill="none" stroke="#ffffff" stroke-opacity="0.14" stroke-width="1.5">
+    <circle cx="180" cy="980" r="250"/>
+    <circle cx="180" cy="980" r="400"/>
+    <circle cx="180" cy="980" r="550"/>
+    <circle cx="180" cy="980" r="710"/>
+  </g>
+  <g fill="none" stroke="#ffffff" stroke-opacity="0.10" stroke-width="1.5">
+    <circle cx="1480" cy="60" r="210"/>
+    <circle cx="1480" cy="60" r="350"/>
+    <circle cx="1480" cy="60" r="500"/>
+  </g>
+
+  <!-- A sparse scatter, suggesting a network without drawing one literally. -->
+  <g fill="#ffffff" fill-opacity="0.5">
+    <circle cx="430" cy="300" r="2.5"/>
+    <circle cx="620" cy="180" r="2"/>
+    <circle cx="880" cy="420" r="2.5"/>
+    <circle cx="1120" cy="260" r="2"/>
+    <circle cx="330" cy="620" r="2"/>
+    <circle cx="760" cy="740" r="2.5"/>
+    <circle cx="1240" cy="640" r="2"/>
+    <circle cx="1010" cy="880" r="2.5"/>
+    <circle cx="520" cy="880" r="2"/>
+    <circle cx="1380" cy="440" r="2.5"/>
+  </g>
+</svg>

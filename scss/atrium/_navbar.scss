@@ -1,0 +1,119 @@
+// The top navigation bar: 56px, starts at the sidebar's right edge on md and up.
+
+.atrium-navbar.navbar {
+    height: $navbar-height;
+    background-color: var(--atrium-navbar-bg);
+    border-bottom: 1px solid var(--atrium-navbar-border);
+    box-shadow: none;
+    padding-top: 0;
+    padding-bottom: 0;
+    transition: left 0.2s ease;
+
+    .navbar-brand {
+        font-weight: 600;
+        color: var(--atrium-text);
+        .logo {
+            max-height: 36px;
+        }
+    }
+
+    .navbar-toggler {
+        color: var(--atrium-text);
+        .navbar-toggler-icon {
+            width: 1.25em;
+            height: 1.25em;
+        }
+    }
+
+    #usernavigation {
+        gap: 0.125rem;
+        .divider {
+            border-color: var(--atrium-border) !important; // stylelint-disable-line declaration-no-important
+        }
+    }
+
+    // Icon buttons (notifications, messages, scheme switch, edit switch).
+    .btn-icon,
+    .popover-region-toggle,
+    .usermenu .dropdown-toggle {
+        border-radius: var(--atrium-radius-sm);
+        color: var(--atrium-text-muted);
+        &:hover,
+        &:focus-visible {
+            background-color: var(--atrium-surface-3);
+            color: var(--atrium-text);
+        }
+    }
+
+    .usermenu .dropdown-toggle .userinitials {
+        width: 32px;
+        height: 32px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        background-color: var(--atrium-accent-soft);
+        color: var(--atrium-accent);
+    }
+
+    .usermenu .dropdown-toggle .userpicture {
+        width: 32px;
+        height: 32px;
+    }
+
+    .edit-switch .form-check-label {
+        color: var(--atrium-text-muted);
+        font-weight: 500;
+    }
+
+    .search-input-wrapper {
+        .simplesearchform .form-control {
+            background-color: var(--atrium-surface-2);
+            border-color: transparent;
+            &:focus {
+                background-color: var(--atrium-surface);
+                border-color: var(--atrium-accent);
+            }
+        }
+    }
+}
+
+// The scheme switch shows a moon in light mode and a sun in dark mode.
+.atrium-scheme-toggle {
+    .atrium-scheme-icon-sun {
+        display: none;
+    }
+    .icon {
+        font-size: 1.1rem;
+        width: auto;
+        height: auto;
+    }
+}
+
+[data-bs-theme="dark"] .atrium-scheme-toggle {
+    .atrium-scheme-icon-moon {
+        display: none;
+    }
+    .atrium-scheme-icon-sun {
+        display: inline;
+    }
+}
+
+@include media-breakpoint-up(md) {
+    body.has-atrium-sidebar .atrium-navbar.navbar {
+        left: var(--atrium-sidebar-width);
+        right: 0;
+        width: auto;
+    }
+}
+
+// The message and notification popover panels.
+.popover-region-container {
+    border-radius: var(--atrium-radius);
+    border: 1px solid var(--atrium-border);
+    box-shadow: var(--atrium-shadow-lg);
+    background-color: var(--atrium-surface);
+    overflow: hidden;
+    .popover-region-header-container {
+        background-color: var(--atrium-surface-2);
+        border-bottom: 1px solid var(--atrium-border);
+    }
+}

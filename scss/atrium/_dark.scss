@@ -1,0 +1,273 @@
+// Dark scheme: the rules Boost compiles to fixed light colours.
+//
+// Everything Atrium paints already reads the tokens, and Bootstrap's own components
+// follow its colour-mode variables. What remains is Moodle's own SCSS, which uses
+// compiled greys in places; those are restated here against the tokens. Kept to
+// selectors that core ships, grouped by area, so a Boost change is easy to trace.
+
+[data-bs-theme="dark"] {
+    // Text utilities that core uses for secondary text.
+    .text-muted,
+    .dimmed_text,
+    .text-secondary {
+        color: var(--atrium-text-muted) !important; // stylelint-disable-line declaration-no-important
+    }
+    .text-dark,
+    .text-body {
+        color: var(--atrium-text) !important; // stylelint-disable-line declaration-no-important
+    }
+
+    // Background utilities.
+    .bg-white,
+    .bg-light,
+    .bg-body {
+        background-color: var(--atrium-surface) !important; // stylelint-disable-line declaration-no-important
+    }
+    .bg-gray,
+    .bg-secondary {
+        background-color: var(--atrium-surface-3) !important; // stylelint-disable-line declaration-no-important
+    }
+    .border,
+    .border-top,
+    .border-bottom,
+    .border-start,
+    .border-end {
+        border-color: var(--atrium-border) !important; // stylelint-disable-line declaration-no-important
+    }
+
+    // Lists.
+    .list-group-item {
+        background-color: var(--atrium-surface);
+        border-color: var(--atrium-border);
+        color: var(--atrium-text);
+        &.active {
+            background-color: var(--atrium-accent);
+            border-color: var(--atrium-accent);
+            color: var(--atrium-accent-contrast);
+        }
+    }
+
+    // Page header and its context header.
+    #page-header .card,
+    .page-context-header {
+        background-color: transparent;
+    }
+
+    // Course index items and drawers use compiled greys.
+    .courseindex .courseindex-item {
+        color: var(--atrium-text);
+        &:hover {
+            background-color: var(--atrium-surface-2);
+        }
+        .courseindex-link,
+        .courseindex-chevron {
+            color: var(--atrium-text);
+        }
+    }
+    .drawerheader .draweractions .btn {
+        --#{$prefix}btn-color: var(--atrium-text-muted);
+    }
+
+    // Course page.
+    .course-content .course-section .sectionname > a {
+        color: var(--atrium-text);
+    }
+    .course-content .course-section.hidden .section-item,
+    .course-content .course-section.orphaned .section-item {
+        background-color: var(--atrium-surface-2);
+    }
+    .activity-item .activityname a {
+        color: var(--atrium-text);
+    }
+    .path-mod .activity-details:not(:empty),
+    .path-mod .activity-description.has-automatic-completion {
+        background-color: var(--atrium-surface-2);
+        border-color: var(--atrium-border);
+    }
+
+    // Tables Moodle builds directly.
+    .generaltable,
+    .table {
+        color: var(--atrium-text);
+        > thead > tr > th,
+        > tbody > tr > td,
+        > tbody > tr > th {
+            border-color: var(--atrium-border);
+            background-color: transparent;
+        }
+        > thead > tr > th {
+            background-color: var(--atrium-surface-2);
+        }
+    }
+    .gradeparent .gradeitemheader,
+    .path-grade-report-grader .gradeparent table th,
+    .path-grade-report-grader .gradeparent table td {
+        background-color: var(--atrium-surface);
+        border-color: var(--atrium-border);
+        color: var(--atrium-text);
+    }
+
+    // Forms.
+    .mform fieldset.collapsible legend a.fheader,
+    .mform .fitemtitle,
+    .col-form-label,
+    label {
+        color: var(--atrium-text);
+    }
+    .form-control-static,
+    .form-control-plaintext {
+        color: var(--atrium-text);
+    }
+    select option {
+        background-color: var(--atrium-surface);
+        color: var(--atrium-text);
+    }
+    .filemanager .fp-content,
+    .filemanager-container,
+    .filepicker-filelist {
+        background-color: var(--atrium-surface);
+        border-color: var(--atrium-border);
+    }
+
+    // Cards Moodle builds with utilities instead of .card.
+    .dashboard-card .card-footer,
+    .card-footer {
+        background-color: var(--atrium-surface-2);
+    }
+    .userinitials {
+        background-color: var(--atrium-accent-soft);
+        color: var(--atrium-accent-contrast);
+    }
+
+    // Badges and pills that default to light backgrounds.
+    .badge.bg-light,
+    .badge.text-bg-light,
+    .badge-light {
+        background-color: var(--atrium-surface-3) !important; // stylelint-disable-line declaration-no-important
+        color: var(--atrium-text) !important; // stylelint-disable-line declaration-no-important
+    }
+
+    // Forum posts and messages.
+    .forumpost,
+    .forum-post-container .post-message {
+        border-color: var(--atrium-border);
+        color: var(--atrium-text);
+    }
+    .path-mod-forum .nested-v2-display-mode .badge-light,
+    .path-mod-forum .nested-v2-display-mode .rating-aggregate-container {
+        background-color: var(--atrium-surface-3);
+        color: var(--atrium-text);
+    }
+    .message-app {
+        .list-group-item,
+        .header-container,
+        .footer-container,
+        .body-container {
+            background-color: var(--atrium-surface);
+            border-color: var(--atrium-border);
+            color: var(--atrium-text);
+        }
+        .message .tail,
+        .message {
+            background-color: var(--atrium-surface-2);
+            color: var(--atrium-text);
+        }
+        .message.send {
+            background-color: var(--atrium-accent);
+            color: var(--atrium-accent-contrast);
+        }
+    }
+
+    // Calendar.
+    .calendarwrapper,
+    .calendartable td,
+    .calendartable th,
+    .calendarmonth .day {
+        background-color: var(--atrium-surface);
+        border-color: var(--atrium-border);
+        color: var(--atrium-text);
+    }
+    .calendartable .today {
+        background-color: var(--atrium-accent-softer);
+    }
+
+    // Admin.
+    #adminsettings .form-item,
+    .admin-search-results {
+        border-color: var(--atrium-border);
+    }
+    .path-admin .box.generalbox,
+    .path-admin .adminsettingsflags {
+        background-color: transparent;
+    }
+
+    // Quiz.
+    .que {
+        background-color: var(--atrium-surface);
+        border-color: var(--atrium-border);
+        .info {
+            background-color: var(--atrium-surface-2);
+        }
+    }
+    .path-mod-quiz #mod_quiz_navblock .qnbutton {
+        background-color: var(--atrium-surface-2);
+        color: var(--atrium-text);
+        border-color: var(--atrium-border);
+    }
+
+    // Tags, chips, pagination.
+    .tag,
+    .page-link {
+        background-color: var(--atrium-surface);
+        border-color: var(--atrium-border);
+        color: var(--atrium-text);
+    }
+    .page-item.active .page-link {
+        background-color: var(--atrium-accent);
+        border-color: var(--atrium-accent);
+        color: var(--atrium-accent-contrast);
+    }
+
+    // Toasts.
+    .toast {
+        background-color: var(--atrium-surface);
+        color: var(--atrium-text);
+    }
+
+    // Images with white backgrounds baked in, so activity icons stay legible.
+    .activityiconcontainer.modicon_wrapper img,
+    .modicon img {
+        filter: none;
+    }
+
+    // Scrollbars follow the scheme.
+    scrollbar-color: var(--atrium-border-strong) var(--atrium-surface);
+}
+
+// Boost rules that compile to plain white.
+[data-bs-theme="dark"] {
+    table.question-bank-table,
+    .search-input-wrapper .search-input,
+    .reportbuilder-editor-header,
+    #page-report-outline-index #outlinereport tbody tr,
+    #quiz-timer,
+    .course-summaryitem,
+    .btn-footer-popover,
+    .feedback_itemlist.sortable-list-is-dragged,
+    .sortable-list-is-dragged {
+        background-color: var(--atrium-surface);
+        color: var(--atrium-text);
+    }
+    .add-content-button,
+    .add-content-button:hover {
+        background-color: var(--atrium-surface-2);
+    }
+    #page-mod-quiz-edit {
+        div.question div.content div.questioncontrols,
+        div.quizpage .pagecontent .pagestatus,
+        div.editq div.question div.content,
+        .slot .content {
+            background-color: var(--atrium-surface);
+        }
+    }
+}

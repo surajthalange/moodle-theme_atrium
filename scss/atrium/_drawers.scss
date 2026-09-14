@@ -1,0 +1,132 @@
+// Page offsets, and Boost's drawers docked beside the sidebar.
+//
+// Boost's course index drawer and block drawer are left exactly as Boost renders and
+// scripts them; only their resting positions and the page margins change so that they
+// sit against the sidebar rather than under it.
+
+@include media-breakpoint-up(md) {
+    body.has-atrium-sidebar {
+        // The page starts at the sidebar's right edge.
+        #page.drawers {
+            margin-left: var(--atrium-sidebar-width);
+            transition: margin-left 0.2s ease, margin-right 0.2s ease;
+        }
+
+        // The course index drawer docks against the sidebar when open.
+        .drawer.drawer-left.show {
+            left: var(--atrium-sidebar-width);
+        }
+
+        // The course index toggle sits at the sidebar's edge, not under it.
+        .drawer-left-toggle {
+            left: var(--atrium-sidebar-width);
+            transition: left 0.2s ease;
+        }
+
+        // Boost's mobile primary drawer never shows at this size.
+        #theme_boost-drawers-primary {
+            display: none;
+        }
+    }
+
+    body.has-atrium-sidebar.dir-rtl {
+        #page.drawers {
+            margin-left: 0;
+            margin-right: var(--atrium-sidebar-width);
+        }
+        .drawer.drawer-left.show {
+            left: auto;
+            right: var(--atrium-sidebar-width);
+        }
+        .drawer-left-toggle {
+            left: auto;
+            right: var(--atrium-sidebar-width);
+        }
+    }
+}
+
+// From lg up Boost shifts the page by the width of each open drawer; add the sidebar.
+@include media-breakpoint-up(lg) {
+    body.has-atrium-sidebar #page.drawers {
+        &.show-drawer-left,
+        &.show-drawer-left.show-drawer-right {
+            margin-left: calc(var(--atrium-sidebar-width) + #{$drawer-left-width});
+        }
+    }
+    body.has-atrium-sidebar.dir-rtl #page.drawers {
+        &.show-drawer-left,
+        &.show-drawer-left.show-drawer-right {
+            margin-left: 0;
+            margin-right: calc(var(--atrium-sidebar-width) + #{$drawer-left-width});
+        }
+    }
+}
+
+// Drawers on the surface colour with a subtle edge.
+.drawer {
+    background-color: var(--atrium-surface);
+    border-right: 1px solid var(--atrium-border);
+    box-shadow: none;
+    &.drawer-right {
+        border-right: 0;
+        border-left: 1px solid var(--atrium-border);
+    }
+    .drawerheader {
+        border-bottom: 1px solid var(--atrium-border);
+        .drawerheading {
+            font-weight: 600;
+        }
+    }
+    .drawercontent {
+        padding: 0.75rem;
+    }
+}
+
+// Course index items.
+.courseindex {
+    .courseindex-section-title {
+        border-radius: var(--atrium-radius-sm);
+        .courseindex-link {
+            font-weight: 600;
+        }
+    }
+    .courseindex-item {
+        border-radius: var(--atrium-radius-sm);
+        color: var(--atrium-text);
+        &:hover {
+            background-color: var(--atrium-surface-2);
+        }
+        &.pageitem {
+            background-color: var(--atrium-accent);
+            color: var(--atrium-accent-contrast);
+            a,
+            .icon {
+                color: var(--atrium-accent-contrast);
+            }
+        }
+    }
+}
+
+// The drawer toggles at the top of the page.
+.drawer-toggles .drawer-toggler .btn {
+    border-radius: var(--atrium-radius-sm);
+    color: var(--atrium-text-muted);
+    &:hover {
+        background-color: var(--atrium-surface-3);
+        color: var(--atrium-text);
+    }
+}
+
+// The message drawer.
+[data-region="right-hand-drawer"].drawer {
+    background-color: var(--atrium-surface);
+    border-left: 1px solid var(--atrium-border);
+    box-shadow: var(--atrium-shadow-lg);
+}
+
+// Drawer toggle buttons on the surface.
+.drawer-toggles .drawer-toggler .btn {
+    background-color: var(--atrium-surface);
+    border: 1px solid var(--atrium-border);
+    box-shadow: var(--atrium-shadow-sm);
+}

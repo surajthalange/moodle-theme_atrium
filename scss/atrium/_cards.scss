@@ -1,0 +1,112 @@
+// Cards: one surface style for cards, blocks, course cards and content boxes.
+
+%atrium-card {
+    background-color: var(--atrium-surface);
+    border: 1px solid var(--atrium-border);
+    border-radius: var(--atrium-radius);
+    box-shadow: var(--atrium-shadow-sm);
+}
+
+.card {
+    @extend %atrium-card;
+    --#{$prefix}card-cap-bg: var(--atrium-surface-2);
+    --#{$prefix}card-cap-color: var(--atrium-text);
+    --#{$prefix}card-color: var(--atrium-text);
+    --#{$prefix}card-border-color: var(--atrium-border);
+    .card-header {
+        border-bottom-color: var(--atrium-border);
+        font-weight: 600;
+    }
+    .card-footer {
+        border-top-color: var(--atrium-border);
+        background-color: var(--atrium-surface-2);
+    }
+}
+
+// Interactive cards lift on hover.
+.dashboard-card,
+.course-card,
+.coursebox.card,
+.atrium-stat-tile,
+.contentbank-card {
+    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+    &:hover,
+    &:focus-within {
+        box-shadow: var(--atrium-shadow-md);
+        border-color: var(--atrium-border-strong);
+        transform: translateY(-2px);
+    }
+}
+
+// Blocks in the block drawer.
+.block {
+    @extend %atrium-card;
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+    .card-body {
+        padding: 0;
+    }
+    .card-title,
+    h5.card-title {
+        font-size: 0.9375rem;
+        font-weight: 600;
+        margin-bottom: 0.75rem;
+    }
+    .card-text {
+        color: var(--atrium-text);
+    }
+}
+
+// Course listing cards (category pages, my courses).
+.course-card {
+    .card-img-top,
+    .dashboard-card-img {
+        border-top-left-radius: calc(var(--atrium-radius) - 1px);
+        border-top-right-radius: calc(var(--atrium-radius) - 1px);
+    }
+}
+
+// Progress bars: slim and rounded.
+.progress {
+    height: 6px;
+    background-color: var(--atrium-progress-track);
+    border-radius: 999px;
+    .progress-bar {
+        background-color: var(--atrium-accent);
+        border-radius: 999px;
+    }
+}
+
+// Alerts on the surface with a coloured edge instead of a filled block.
+.alert {
+    border-width: 1px;
+    border-left-width: 4px;
+    background-color: var(--atrium-surface);
+    color: var(--atrium-text);
+    &.alert-info {
+        border-color: var(--atrium-border) var(--atrium-border) var(--atrium-border) #{$info};
+    }
+    &.alert-success {
+        border-color: var(--atrium-border) var(--atrium-border) var(--atrium-border) #{$success};
+    }
+    &.alert-warning {
+        border-color: var(--atrium-border) var(--atrium-border) var(--atrium-border) #{$warning};
+    }
+    &.alert-danger {
+        border-color: var(--atrium-border) var(--atrium-border) var(--atrium-border) #{$danger};
+    }
+}
+
+// Boxes Moodle builds without .card.
+.box,
+.generalbox,
+.mform fieldset.collapsible {
+    background-color: transparent;
+}
+
+// Activity header on module pages.
+.activity-header {
+    @extend %atrium-card;
+    padding: 1.25rem;
+    margin-bottom: 1.25rem;
+}

@@ -1,0 +1,191 @@
+// The login page: one card centred over a full-bleed image with a colour wash.
+//
+// The image, wash colour and wash opacity are settings, published as custom
+// properties on body.pagelayout-login by theme_atrium_get_extra_scss(). The card uses
+// the surface tokens so it follows the dark scheme.
+
+.pagelayout-login {
+    // Boost paints #page white for its split layout; the background belongs to the
+    // page-content element here.
+    #page {
+        background-color: transparent;
+    }
+
+    #region-main,
+    #region-main-box {
+        border: 0;
+        background-color: transparent;
+        padding: 0;
+    }
+}
+
+.atrium-login-page {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 2rem 1rem;
+
+    // The wash colour doubles as the base fill, so a slow image leaves a deliberate
+    // flat colour rather than a white flash.
+    background-color: var(--atrium-login-overlay, #1b1d4d);
+    background-image: var(--atrium-login-image);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    // The wash.
+    &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-color: var(--atrium-login-overlay, #1b1d4d);
+        opacity: var(--atrium-login-overlay-opacity, 0.55);
+    }
+
+    // A vignette so the card reads against the brightest images.
+    &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(ellipse at 50% 42%, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.42) 100%);
+    }
+}
+
+.atrium-login-card {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 420px;
+    padding: 2.5rem;
+    background-color: var(--atrium-surface);
+    color: var(--atrium-text);
+    border-radius: var(--atrium-radius-lg);
+    box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.08), 0 1.5rem 3rem rgba(0, 0, 0, 0.28);
+
+    .loginform {
+        text-align: center;
+    }
+
+    #loginlogo {
+        margin-bottom: 1.5rem;
+        #logoimage {
+            max-height: 68px;
+            width: auto;
+        }
+    }
+
+    h1,
+    .h1 {
+        margin-bottom: 0.25rem;
+        font-size: 1.5rem;
+    }
+
+    .login-form,
+    .login-form-username,
+    .login-form-password {
+        text-align: start;
+    }
+
+    .login-separator {
+        margin-top: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .login-cookiesnotice {
+        margin-top: 0.5rem;
+    }
+
+    .login-identityprovider-btn {
+        background-color: var(--atrium-surface);
+        border-color: var(--atrium-border-strong);
+        color: var(--atrium-text);
+        &:hover,
+        &:focus {
+            background-color: var(--atrium-surface-2);
+        }
+    }
+
+    // Other pages that share this layout (signup, forgot password) render mforms; make
+    // them stack inside the card instead of using Boost's two-column grid.
+    .mform {
+        [class*="col-md-"] {
+            flex: 0 0 100%;
+            width: 100%;
+            max-width: 100%;
+        }
+        .col-form-label {
+            padding-bottom: 0.25rem;
+            font-weight: 400;
+        }
+        .form-control {
+            width: 100%;
+            max-width: 100%;
+        }
+        h2,
+        .h2,
+        h3,
+        .h3 {
+            font-size: 1.25rem;
+        }
+        .fitem + .fitem h3,
+        .fitem + .fitem .h3 {
+            margin-top: 1.5rem;
+        }
+        [id^="fitem_id_submit"] .btn,
+        [id^="fgroup_id_buttonar"] .btn {
+            width: 100%;
+        }
+    }
+
+    .mform + p,
+    #region-main-box > .box,
+    .loginform > .mform {
+        text-align: start;
+    }
+
+    .form-control:focus,
+    .btn:focus-visible,
+    a:focus-visible {
+        outline-offset: 2px;
+    }
+}
+
+.atrium-login-instructions {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 420px;
+    margin-top: 1.5rem;
+    padding: 1rem 1.25rem;
+    color: rgba(255, 255, 255, 0.92);
+    font-size: 0.875rem;
+    background-color: rgba(0, 0, 0, 0.28);
+    border-radius: var(--atrium-radius);
+
+    :last-child {
+        margin-bottom: 0;
+    }
+
+    a {
+        color: inherit;
+        text-decoration: underline;
+    }
+}
+
+@include media-breakpoint-down(md) {
+    .atrium-login-page {
+        padding: 1.5rem 1rem;
+    }
+    .atrium-login-card {
+        max-width: none;
+        width: calc(100% - 1rem);
+        padding: 1.75rem 1.5rem;
+    }
+    .atrium-login-instructions {
+        max-width: none;
+        width: calc(100% - 1rem);
+    }
+}

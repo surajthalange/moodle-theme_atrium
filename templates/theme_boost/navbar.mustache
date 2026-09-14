@@ -1,0 +1,113 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_boost/navbar
+
+    Atrium override of theme_boost/navbar, copied from Moodle 5.2.
+
+    Changes from Boost: the primary navigation is not rendered here because the sidebar
+    carries it; the brand shows only below md, where there is no sidebar; and an optional
+    colour scheme switch sits beside the user menu. Everything Boost puts in
+    #usernavigation stays in its order.
+
+    Example context (json):
+    {
+        "output": {
+            "should_display_navbar_logo": true,
+            "get_compact_logo_url": "http://placekitten.com/50/50",
+            "custom_menu": "<li>..</li>",
+            "page_heading_menu": "<li>..</li>",
+            "search_box": "<div><input type='text'></div>",
+            "navbar_plugin_output": "<div class='dropdown'>Messaging</div>",
+            "user_menu": "<div class='dropdown'>John Doe</div>"
+        },
+        "config": {
+            "wwwroot": "#",
+            "homeurl": "/my/"
+        },
+        "sitename": "Moodle Site",
+        "schemetoggle": {
+            "url": "/theme/atrium/scheme.php?scheme=dark",
+            "isdark": false,
+            "label": "Switch to dark mode"
+        },
+        "mobileprimarynav": [
+            {
+                "text": "Dashboard",
+                "url": "/my",
+                "isactive": true
+            }
+        ]
+    }
+}}
+<nav class="navbar fixed-top bg-body navbar-expand atrium-navbar" aria-label="{{#str}}sitemenubar, admin{{/str}}">
+    <div class="container-fluid">
+        <button class="navbar-toggler aabtn d-block d-md-none px-1 my-1 border-0" data-toggler="drawers" data-action="toggle" data-target="theme_boost-drawers-primary">
+            <span class="navbar-toggler-icon"></span>
+            <span class="visually-hidden">{{#str}}sidepanel, core{{/str}}</span>
+        </button>
+
+        <a href="{{{ config.homeurl }}}" class="navbar-brand d-flex d-md-none align-items-center m-0 me-4 p-0 aabtn">
+            {{# output.should_display_navbar_logo }}
+                <img src="{{output.get_compact_logo_url}}" class="logo me-1" alt="{{sitename}}">
+            {{/ output.should_display_navbar_logo }}
+            {{^ output.should_display_navbar_logo }}
+                {{{ sitename }}}
+            {{/ output.should_display_navbar_logo }}
+        </a>
+
+        {{# output.page_heading_menu}}
+            <ul class="navbar-nav d-none d-md-flex my-1 px-1">
+                <!-- page_heading_menu -->
+                {{{ output.page_heading_menu }}}
+            </ul>
+        {{/output.page_heading_menu}}
+
+        <div id="usernavigation" class="navbar-nav ms-auto h-100">
+            {{# output.search_box }}
+                {{{ output.search_box }}}
+                <div class="divider border-start h-75 align-self-center mx-1"></div>
+            {{/output.search_box}}
+            {{#schemetoggle}}
+                <a href="{{{ url }}}" class="btn btn-icon icon-no-margin atrium-scheme-toggle align-self-center"
+                   data-action="atrium-scheme-toggle" aria-label="{{ label }}" title="{{ label }}"
+                   data-label-light="{{#str}} switchtolight, theme_atrium {{/str}}"
+                   data-label-dark="{{#str}} switchtodark, theme_atrium {{/str}}">
+                    <span class="atrium-scheme-icon-moon" aria-hidden="true">{{#pix}} moon, theme_atrium {{/pix}}</span>
+                    <span class="atrium-scheme-icon-sun" aria-hidden="true">{{#pix}} sun, theme_atrium {{/pix}}</span>
+                </a>
+                <div class="divider border-start h-75 align-self-center mx-1"></div>
+            {{/schemetoggle}}
+            {{#langmenu}}
+                {{> theme_boost/language_menu }}
+                <div class="divider border-start h-75 align-self-center mx-1"></div>
+            {{/langmenu}}
+            {{{ output.edit_switch }}}
+            {{# output.navbar_plugin_output }}
+            {{{ . }}}
+                <div class="divider border-start h-75 align-self-center mx-1"></div>
+            {{/output.navbar_plugin_output}}
+            {{#usermenu}}
+                <div class="d-flex align-items-stretch usermenu-container" data-region="usermenu">
+                    {{> core/user_menu }}
+                </div>
+            {{/usermenu}}
+        </div>
+    </div>
+</nav>
+
+{{> theme_boost/primary-drawer-mobile }}

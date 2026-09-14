@@ -1,0 +1,69 @@
+// Atrium: variables injected before Boost compiles.
+//
+// Boost's preset declares its variables with !default, so anything set here wins.
+// Only Bootstrap and Boost variables belong in this file; Atrium's own values are
+// custom properties in atrium/_tokens.scss, which both colour schemes redefine.
+//
+// theme_atrium_get_pre_scss() appends $primary, $atrium-sidebar-tone, $atrium-radius
+// and $atrium-font-scale after this file from the settings.
+
+$atrium-radius: 12px !default;
+$atrium-font-scale: 1 !default;
+$atrium-sidebar-tone: light !default;
+$atrium-sidebar-width: 248px;
+$atrium-sidebar-collapsed-width: 64px;
+
+// Type: Inter, bundled (see atrium/_base.scss for the @font-face rules), then the
+// system stack. 16px base, scaled by the setting.
+$font-family-sans-serif: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+$font-size-base: 1rem * $atrium-font-scale;
+$headings-font-weight: 600;
+$line-height-base: 1.5;
+
+// Surfaces: a soft page background with white cards on it, the "SaaS" layering.
+$body-bg: #f5f6fa;
+$body-color: #0f172a;
+$border-color: #e6e8ef;
+$card-bg: var(--atrium-surface);
+$card-border-color: var(--atrium-border);
+
+// Dark scheme values Bootstrap emits under [data-bs-theme="dark"] on its own.
+$body-bg-dark: #0f1117;
+$body-color-dark: #e5e7eb;
+$body-secondary-bg-dark: #171a23;
+$body-tertiary-bg-dark: #1e2230;
+$border-color-dark: #2a2f3f;
+$body-emphasis-color-dark: #ffffff;
+$body-secondary-color-dark: #9ca3af;
+
+// Corners.
+$border-radius: $atrium-radius;
+$border-radius-sm: $atrium-radius * 0.5;
+$border-radius-lg: $atrium-radius * 1.25;
+$border-radius-xl: $atrium-radius * 1.5;
+$card-border-radius: $atrium-radius;
+$input-border-radius: $atrium-radius * 0.667;
+$btn-border-radius: $atrium-radius * 0.667;
+$btn-border-radius-sm: $atrium-radius * 0.5;
+$btn-border-radius-lg: $atrium-radius * 0.8;
+$dropdown-border-radius: $atrium-radius;
+$modal-content-border-radius: $atrium-radius * 1.25;
+$toast-border-radius: $atrium-radius;
+$badge-border-radius: 999px;
+$alert-border-radius: $atrium-radius;
+$progress-border-radius: 999px;
+
+// Chrome.
+$navbar-height: 56px;
+$course-content-maxwidth: 1040px;
+$enable-shadows: false;
+$dropdown-link-hover-color: $body-color;
+$dropdown-link-hover-bg: rgba(15, 23, 42, 0.06);
+$dropdown-box-shadow: 0 8px 24px rgba(15, 23, 42, 0.12);
+$modal-content-box-shadow-xs: 0 12px 40px rgba(15, 23, 42, 0.16);
+$modal-content-box-shadow-sm-up: 0 12px 40px rgba(15, 23, 42, 0.16);
+
+// Focus: the accent ring, always visible, never removed.
+$focus-ring-width: 2px;
+$focus-ring-opacity: 1;
+$focus-ring-blur: 0;

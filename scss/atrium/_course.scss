@@ -1,0 +1,136 @@
+// The course page: sections as cards, activities as rows.
+//
+// No template is overridden here. These rules restyle the class names core's course
+// format templates already emit, so editing mode, drag and drop, bulk editing and the
+// activity chooser keep working exactly as in Boost.
+
+.course-content {
+    .course-section {
+        margin-top: 1rem;
+        .section-item {
+            @extend %atrium-card;
+            padding: 1rem 1.25rem;
+        }
+        &.hidden .section-item,
+        &.orphaned .section-item {
+            background-color: var(--atrium-surface-2);
+        }
+        &.current > .section-item::before {
+            left: -1px;
+            border-left-color: var(--atrium-accent);
+            border-radius: var(--atrium-radius) 0 0 var(--atrium-radius);
+        }
+        .sectionname {
+            font-size: 1.125rem;
+            font-weight: 600;
+            > a {
+                color: var(--atrium-text);
+            }
+        }
+        .section-summary,
+        .summarytext {
+            color: var(--atrium-text-muted);
+        }
+    }
+
+    // Activity rows.
+    .activity-item {
+        border-radius: var(--atrium-radius-sm);
+        transition: background-color 0.15s ease;
+        &:hover {
+            background-color: var(--atrium-surface-2);
+        }
+        .activityname a,
+        .activity-instance .activityname {
+            font-weight: 500;
+            color: var(--atrium-text);
+        }
+        .activity-altcontent,
+        .activity-description {
+            color: var(--atrium-text-muted);
+        }
+        .activityiconcontainer {
+            border-radius: var(--atrium-radius-sm);
+        }
+    }
+
+    .activity-information,
+    .activity-dates {
+        font-size: 0.8125rem;
+        color: var(--atrium-text-muted);
+    }
+
+    // Completion controls.
+    .completion-dropdown .btn {
+        border-radius: 999px;
+        font-size: 0.8125rem;
+    }
+    .btn-success.completion-dropdown,
+    .completion-dropdown .btn-success {
+        --#{$prefix}btn-bg: #{shift-color($success, -80%)};
+        --#{$prefix}btn-border-color: #{shift-color($success, -60%)};
+        --#{$prefix}btn-color: #{shade-color($success, 30%)};
+    }
+
+    // Collapse controls and the "collapse all" link.
+    .course-section-header .icons-collapse-expand {
+        border-radius: var(--atrium-radius-sm);
+        color: var(--atrium-text-muted);
+        &:hover {
+            background-color: var(--atrium-surface-3);
+        }
+    }
+    .section-collapsemenu {
+        margin-bottom: 0.25rem;
+    }
+
+    // Editing: keep the drag handles and action menus legible on the card.
+    .editing & {
+        .activity-item .actions .action-menu .btn,
+        .course-section-header .action-menu .btn {
+            border-radius: var(--atrium-radius-sm);
+        }
+        .dragicon {
+            color: var(--atrium-text-faint);
+        }
+        .divider .divider-content .btn {
+            border-radius: 999px;
+        }
+    }
+}
+
+// Activity chooser modal cards.
+.modchooser {
+    .option {
+        border-radius: var(--atrium-radius);
+        border: 1px solid var(--atrium-border);
+        background-color: var(--atrium-surface);
+        &:hover,
+        &:focus-within {
+            border-color: var(--atrium-accent);
+            box-shadow: var(--atrium-shadow-md);
+        }
+    }
+}
+
+// Course index sections stay readable inside the docked drawer.
+.courseindex-section {
+    .courseindex-section-title .courseindex-link {
+        color: var(--atrium-text);
+    }
+}
+
+// Category and course listing pages.
+.coursebox {
+    @extend %atrium-card;
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+    .coursename a {
+        font-weight: 600;
+    }
+}
+
+.course-info-container,
+.course-summaryitem {
+    @extend %atrium-card;
+}
