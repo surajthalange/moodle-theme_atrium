@@ -77,7 +77,14 @@
             {{$drawerheadercontent}}
                 {{> theme_boost/courseindexdrawercontrols}}
             {{/drawerheadercontent}}
-            {{$drawerheading}}{{> theme_boost/courseindexdrawerheading}}{{/drawerheading}}
+            {{! Atrium: the heading is inline because theme_boost/courseindexdrawerheading only exists from 5.2. }}
+            {{$drawerheading}}
+                <div id="courseindexdrawerheading">
+                    <a class="aabtn m-1 courseindex-link text-truncate fw-bold" href="{{courseurl}}">
+                        {{coursefullname}}
+                    </a>
+                </div>
+            {{/drawerheading}}
             {{$drawerclasses}}drawer drawer-left {{#courseindexopen}}show{{/courseindexopen}}{{/drawerclasses}}
             {{$drawercontent}}
                 {{{courseindex}}}
@@ -87,8 +94,7 @@
             {{$tooltipplacement}}right{{/tooltipplacement}}
             {{$closebuttontext}}{{#str}}closecourseindex, core{{/str}}{{/closebuttontext}}
             {{$closebuttonicon}}
-                <span class="dir-rtl-hide">{{#pix}} e/sidebar_left, core {{/pix}}</span>
-                <span class="dir-ltr-hide">{{#pix}} e/sidebar_right, core {{/pix}}</span>
+                {{#pix}} collapse, theme_atrium {{/pix}}
             {{/closebuttonicon}}
         {{/ theme_boost/drawer}}
     {{/courseindex}}
@@ -109,8 +115,7 @@
             {{$drawercloseonresize}}1{{/drawercloseonresize}}
             {{$closebuttontext}}{{#str}}closeblockdrawer, core{{/str}}{{/closebuttontext}}
             {{$closebuttonicon}}
-                <span class="dir-rtl-hide">{{#pix}} e/sidebar_right, core {{/pix}}</span>
-                <span class="dir-ltr-hide">{{#pix}} e/sidebar_left, core {{/pix}}</span>
+                {{#pix}} expand, theme_atrium {{/pix}}
             {{/closebuttonicon}}
         {{/ theme_boost/drawer}}
     {{/hasblocks}}
@@ -129,8 +134,7 @@
                             title="{{#str}}opendrawerindex, core{{/str}}"
                         >
                             <span class="visually-hidden">{{#str}}opendrawerindex, core{{/str}}</span>
-                            <span class="dir-rtl-hide">{{#pix}} e/sidebar_left, core {{/pix}}</span>
-                            <span class="dir-ltr-hide">{{#pix}} e/sidebar_right, core {{/pix}}</span>
+                            {{#pix}} courseindex, theme_atrium {{/pix}}
                         </button>
                     </div>
                 {{/courseindex}}
@@ -146,8 +150,7 @@
                             title="{{#str}}opendrawerblocks, core{{/str}}"
                         >
                             <span class="visually-hidden">{{#str}}opendrawerblocks, core{{/str}}</span>
-                            <span class="dir-rtl-hide">{{#pix}} e/sidebar_right, core {{/pix}}</span>
-                            <span class="dir-ltr-hide">{{#pix}} e/sidebar_left, core {{/pix}}</span>
+                            {{#pix}} blocks, theme_atrium {{/pix}}
                         </button>
                     </div>
                 {{/hasblocks}}

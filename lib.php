@@ -199,5 +199,7 @@ function theme_atrium_get_fontawesome_icon_map(): array {
         'theme_atrium:due' => 'fa-regular fa-calendar-check',
         'theme_atrium:unread' => 'fa-regular fa-envelope',
         'theme_atrium:link' => 'fa-link',
+        'theme_atrium:courseindex' => 'fa-list',
+        'theme_atrium:blocks' => 'fa-table-columns',
     ];
 }

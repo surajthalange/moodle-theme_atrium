@@ -52,7 +52,7 @@ parent template expects. Atrium overrides **four**:
 | `theme_boost/drawers` | Renders the sidebar and the dashboard hero. Copied from Moodle 5.2; Boost's drawers are left as Boost renders them. |
 | `theme_boost/navbar` | Drops the primary navigation (the sidebar carries it), shows the brand only on small screens, adds the scheme switch. |
 | `theme_boost/footer` | A real footer instead of Boost's popover. Every link and fragment the popover contained is still rendered. |
-| `core/login_layout` | The centred card. |
+| `theme_boost/login` | The centred card, on both 5.1 (form rendered into the page) and 5.2 (split `core/login_layout`). |
 
 Everything else, the course page included, is SCSS written against the class names core
 already emits. One renderer method is added (`core_renderer::atrium_footer()`), no

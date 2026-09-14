@@ -18,8 +18,9 @@
  * The drawers layout with Atrium's sidebar, hero and footer added.
  *
  * Copied from theme/boost/layout/drawers.php as of Moodle 5.2 and extended at the end;
- * the Boost part is kept verbatim so a diff against the parent shows only Atrium's
- * additions. Every page layout Boost routes through drawers.php arrives here.
+ * the Boost part is kept as close to verbatim as serving 5.1 as well allows, so a diff
+ * against the parent shows only Atrium's additions. Every page layout Boost routes
+ * through drawers.php arrives here.
  *
  * @package    theme_atrium
  * @copyright  2026 Suraj Thalange
@@ -75,7 +76,11 @@ if ($PAGE->has_secondary_navigation()) {
     $moremenu = new \core\navigation\output\more_menu($PAGE->secondarynav, 'nav-tabs', true, $tablistnav);
     $secondarynavigation = $moremenu->export_for_template($OUTPUT);
     $overflowdata = $PAGE->secondarynav->get_overflow_menu_data();
-    if (!is_null($overflowdata)) {
+    if ($overflowdata instanceof \core\output\templatable) {
+        // Moodle 5.1 hands back a renderable.
+        $overflow = $overflowdata->export_for_template($OUTPUT);
+    } else if (!is_null($overflowdata)) {
+        // Moodle 5.2 hands back the data for a select menu.
         $selectmenu = new \core\output\select_menu(
             'tertiarynavigation',
             $overflowdata->urls,
