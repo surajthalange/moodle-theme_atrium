@@ -271,3 +271,21 @@
         }
     }
 }
+
+// Course overview cards and course page dividers use compiled greys.
+[data-bs-theme="dark"] {
+    .block_myoverview span.categoryname,
+    .block_myoverview .btn-link,
+    .block_myoverview .progress-text {
+        color: var(--atrium-text-muted);
+    }
+    .course-content .activity-item,
+    .course-content .activity,
+    .course-content .section .activity + .activity {
+        border-color: var(--atrium-border);
+    }
+    hr {
+        border-color: var(--atrium-border-strong);
+        opacity: 1;
+    }
+}
