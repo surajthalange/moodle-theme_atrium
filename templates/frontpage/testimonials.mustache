@@ -1,0 +1,60 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_atrium/frontpage/testimonials
+
+    Testimonials: quote cards with a photo or initial.
+
+    Context variables required for this template:
+    * heading - Section heading
+    * items - quote, name, role, hasphoto, photourl, initial
+
+    Example context (json):
+    {
+        "heading": "What learners say",
+        "items": [
+            {
+                "quote": "Brilliant course.",
+                "name": "Ada Lovelace",
+                "role": "Student",
+                "hasphoto": false,
+                "photourl": "",
+                "initial": "A"
+            }
+        ]
+    }
+}}
+<section class="atrium-fp-section atrium-fp-testimonials" data-region="atrium-fp-testimonials">
+    <div class="atrium-fp-container">
+        {{#heading}}<h2 class="atrium-fp-heading">{{ heading }}</h2>{{/heading}}
+        <ul class="atrium-fp-testimonial-grid list-unstyled">
+            {{#items}}
+                <li class="atrium-fp-testimonial">
+                    <blockquote class="atrium-fp-testimonial-quote">{{ quote }}</blockquote>
+                    <div class="atrium-fp-testimonial-who">
+                        {{#hasphoto}}<img src="{{{ photourl }}}" alt="" class="atrium-fp-testimonial-photo" loading="lazy">{{/hasphoto}}
+                        {{^hasphoto}}<span class="atrium-fp-testimonial-initial" aria-hidden="true">{{ initial }}</span>{{/hasphoto}}
+                        <span class="atrium-fp-testimonial-meta">
+                            <span class="atrium-fp-testimonial-name">{{ name }}</span>
+                            {{#role}}<span class="atrium-fp-testimonial-role">{{ role }}</span>{{/role}}
+                        </span>
+                    </div>
+                </li>
+            {{/items}}
+        </ul>
+    </div>
+</section>

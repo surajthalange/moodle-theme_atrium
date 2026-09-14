@@ -74,3 +74,33 @@ Feature: Atrium theme
     And "#atrium-sidebar" "css_element" should be visible
     When I open the activity chooser
     Then I should see "Forum" in the ".modal" "css_element"
+
+  Scenario: The front page shows its designed sections to a visitor and hides them when switched off
+    Given the following "courses" exist:
+      | fullname       | shortname |
+      | Marine Biology | MB1       |
+    And the following config values are set as admin:
+      | forcelogin   | 0 |
+      | enablemyhome | 1 |
+    And I am on site homepage
+    Then I should see "Welcome to" in the ".atrium-fp-hero" "css_element"
+    And I should see "Browse courses" in the ".atrium-fp-hero" "css_element"
+    And I should see "Why learn here" in the ".atrium-fp-features" "css_element"
+    And I should see "Marine Biology" in the ".atrium-fp-showcase" "css_element"
+    And I should see "Courses" in the ".atrium-fp-stats" "css_element"
+    And I should see "Ready to start learning?" in the ".atrium-fp-cta" "css_element"
+    And "#atrium-sidebar" "css_element" should not exist
+    And ".atrium-fp-testimonials" "css_element" should not exist
+    When the following config values are set as admin:
+      | fp_features_enable | 0 | theme_atrium |
+      | fp_testimonials_enable | 1 | theme_atrium |
+      | fp_testimonial1_quote | Best site I have studied on. | theme_atrium |
+      | fp_testimonial1_name | Ada Lovelace | theme_atrium |
+    And I am on site homepage
+    Then ".atrium-fp-features" "css_element" should not exist
+    And I should see "Best site I have studied on." in the ".atrium-fp-testimonials" "css_element"
+    And I should see "Ada Lovelace" in the ".atrium-fp-testimonials" "css_element"
+    When the following config values are set as admin:
+      | fp_enable | 0 | theme_atrium |
+    And I am on site homepage
+    Then ".atrium-frontpage" "css_element" should not exist

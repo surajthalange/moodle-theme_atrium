@@ -35,4 +35,22 @@ $definitions = [
         'staticacceleration' => true,
         'staticaccelerationsize' => 1,
     ],
+    // Active enrolment counts per course, for course cards. Ten minutes.
+    'coursecounts' => [
+        'mode' => cache_store::MODE_APPLICATION,
+        'simplekeys' => true,
+        'simpledata' => true,
+        'ttl' => 600,
+        'staticacceleration' => true,
+        'staticaccelerationsize' => 50,
+    ],
+    // Site-wide counters for the front page. Ten minutes.
+    'sitecounts' => [
+        'mode' => cache_store::MODE_APPLICATION,
+        'simplekeys' => true,
+        'simpledata' => true,
+        'ttl' => 600,
+        'staticacceleration' => true,
+        'staticaccelerationsize' => 1,
+    ],
 ];

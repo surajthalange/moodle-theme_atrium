@@ -1,0 +1,49 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_atrium/frontpage/cta
+
+    Call to action band.
+
+    Context variables required for this template:
+    * heading, text - Formatted content
+    * button - {text, url} or false
+    * background - accent, dark or image
+    * imageurl - When background is image
+
+    Example context (json):
+    {
+        "heading": "Ready to start?",
+        "text": "Join today.",
+        "button": {
+            "text": "Log in",
+            "url": "/login/index.php"
+        },
+        "background": "accent",
+        "imageurl": ""
+    }
+}}
+<section class="atrium-fp-section atrium-fp-cta atrium-fp-cta-{{ background }}" data-region="atrium-fp-cta"
+         {{#imageurl}}style="--atrium-fp-cta-image: url('{{{ imageurl }}}');"{{/imageurl}}>
+    <div class="atrium-fp-container atrium-fp-cta-inner">
+        <div class="atrium-fp-cta-text">
+            <h2 class="atrium-fp-cta-heading">{{ heading }}</h2>
+            {{#text}}<p class="atrium-fp-cta-body">{{ text }}</p>{{/text}}
+        </div>
+        {{#button}}<a href="{{{ url }}}" class="btn btn-lg atrium-fp-btn atrium-fp-cta-btn">{{ text }}</a>{{/button}}
+    </div>
+</section>

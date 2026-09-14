@@ -29,7 +29,7 @@
 
 use theme_atrium\local\scheme;
 use theme_atrium\output\dashboard_hero;
-use theme_atrium\output\footer;
+use theme_atrium\output\frontpage;
 use theme_atrium\output\sidebar;
 
 defined('MOODLE_INTERNAL') || die();
@@ -111,18 +111,35 @@ $courseurl = $PAGE->course ? new \core\url('/course/view.php', ['id' => $PAGE->c
 // Atrium additions.
 
 // The sidebar: the primary navigation as a left rail, with the user's collapsed state.
-$sidebarcollapsed = sidebar::starts_collapsed();
-$extraclasses[] = 'has-atrium-sidebar';
-if ($sidebarcollapsed) {
-    $extraclasses[] = 'atrium-sidebar-collapsed';
+$sidebardata = false;
+if (sidebar::wanted()) {
+    $sidebarcollapsed = sidebar::starts_collapsed();
+    $extraclasses[] = 'has-atrium-sidebar';
+    if ($sidebarcollapsed) {
+        $extraclasses[] = 'atrium-sidebar-collapsed';
+    }
+    $sidebar = new sidebar($primarymenu['moremenu']['nodearray'] ?? [], $sidebarcollapsed);
+    $sidebardata = $sidebar->export_for_template($renderer);
+} else {
+    $extraclasses[] = 'no-atrium-sidebar';
 }
-$sidebar = new sidebar($primarymenu['moremenu']['nodearray'] ?? [], $sidebarcollapsed);
-$sidebardata = $sidebar->export_for_template($renderer);
 
 // The dashboard hero.
 $hero = dashboard_hero::wanted() ? (new dashboard_hero($USER))->export_for_template($renderer) : false;
 if ($hero) {
     $extraclasses[] = 'has-atrium-hero';
+}
+
+// The designed front page.
+$frontpage = frontpage::wanted() ? (new frontpage())->export_for_template($renderer) : false;
+if ($frontpage) {
+    $extraclasses[] = 'has-atrium-frontpage';
+    if ($frontpage['transparentnavbar']) {
+        $extraclasses[] = 'atrium-transparent-navbar';
+    }
+    if (isset($frontpage['showcase'])) {
+        $extraclasses[] = 'has-atrium-showcase';
+    }
 }
 
 // The scheme switch in the navigation bar.
@@ -163,6 +180,7 @@ $templatecontext = [
     'addblockbutton' => $addblockbutton,
     'sidebar' => $sidebardata,
     'hero' => $hero,
+    'frontpage' => $frontpage,
     'schemetoggle' => $schemetoggle,
 ];
 

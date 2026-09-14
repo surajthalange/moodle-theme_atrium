@@ -54,14 +54,14 @@
         ]
     }
 }}
-<nav class="navbar fixed-top bg-body navbar-expand atrium-navbar" aria-label="{{#str}}sitemenubar, admin{{/str}}">
+<nav class="navbar fixed-top navbar-expand atrium-navbar" aria-label="{{#str}}sitemenubar, admin{{/str}}">
     <div class="container-fluid">
         <button class="navbar-toggler aabtn d-block d-md-none px-1 my-1 border-0" data-toggler="drawers" data-action="toggle" data-target="theme_boost-drawers-primary">
             <span class="navbar-toggler-icon"></span>
             <span class="visually-hidden">{{#str}}sidepanel, core{{/str}}</span>
         </button>
 
-        <a href="{{{ config.homeurl }}}" class="navbar-brand d-flex d-md-none align-items-center m-0 me-4 p-0 aabtn">
+        <a href="{{{ config.homeurl }}}" class="navbar-brand d-flex align-items-center m-0 me-4 p-0 aabtn atrium-navbar-brand">
             {{# output.should_display_navbar_logo }}
                 <img src="{{output.get_compact_logo_url}}" class="logo me-1" alt="{{sitename}}">
             {{/ output.should_display_navbar_logo }}

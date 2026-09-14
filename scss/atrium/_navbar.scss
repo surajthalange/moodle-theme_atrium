@@ -105,6 +105,18 @@
     }
 }
 
+// The brand lives in the sidebar when there is one.
+@include media-breakpoint-up(md) {
+    body.has-atrium-sidebar .atrium-navbar-brand {
+        display: none !important; // stylelint-disable-line declaration-no-important
+    }
+}
+
+// Without a sidebar (visitors, guests) the navbar spans the page and carries the brand.
+body.no-atrium-sidebar {
+    --atrium-sidebar-width: 0px;
+}
+
 // The message and notification popover panels.
 .popover-region-container {
     border-radius: var(--atrium-radius);
@@ -116,4 +128,16 @@
         background-color: var(--atrium-surface-2);
         border-bottom: 1px solid var(--atrium-border);
     }
+}
+
+// Without a sidebar the navbar aligns its content with the page gutters.
+@include media-breakpoint-up(md) {
+    body.no-atrium-sidebar .atrium-navbar.navbar > .container-fluid {
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+}
+
+.atrium-navbar .login {
+    font-weight: 500;
 }

@@ -1,0 +1,65 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_atrium/frontpage/features
+
+    Feature blocks: an icon, a title and a line of text each, three per row.
+
+    Context variables required for this template:
+    * heading - Section heading
+    * items - Blocks: icon (Font Awesome class), title, text, haslink, url
+    * columns - 1 to 3
+
+    Example context (json):
+    {
+        "heading": "Why learn here",
+        "columns": 3,
+        "items": [
+            {
+                "icon": "fa-graduation-cap",
+                "title": "Expert teachers",
+                "text": "Learn from people who do it.",
+                "haslink": false,
+                "url": ""
+            },
+            {
+                "icon": "fa-clock",
+                "title": "At your pace",
+                "text": "Study when it suits you.",
+                "haslink": true,
+                "url": "/course/index.php"
+            }
+        ]
+    }
+}}
+<section class="atrium-fp-section atrium-fp-features" data-region="atrium-fp-features">
+    <div class="atrium-fp-container">
+        {{#heading}}<h2 class="atrium-fp-heading">{{ heading }}</h2>{{/heading}}
+        <ul class="atrium-fp-feature-grid atrium-fp-feature-grid-{{ columns }} list-unstyled">
+            {{#items}}
+                <li class="atrium-fp-feature">
+                    <span class="atrium-fp-feature-icon" aria-hidden="true"><i class="fa {{ icon }}"></i></span>
+                    <h3 class="atrium-fp-feature-title">
+                        {{#haslink}}<a href="{{{ url }}}">{{ title }}</a>{{/haslink}}
+                        {{^haslink}}{{ title }}{{/haslink}}
+                    </h3>
+                    {{#text}}<p class="atrium-fp-feature-text">{{ text }}</p>{{/text}}
+                </li>
+            {{/items}}
+        </ul>
+    </div>
+</section>

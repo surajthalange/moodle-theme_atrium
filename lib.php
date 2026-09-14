@@ -150,7 +150,10 @@ function theme_atrium_get_extra_scss($theme) {
  * @return bool
  */
 function theme_atrium_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options = []) {
-    $areas = ['loginbackgroundimage', 'heroimage'];
+    $areas = ['loginbackgroundimage', 'heroimage', 'fp_heroimage', 'fp_aboutimage', 'fp_ctaimage'];
+    for ($i = 1; $i <= \theme_atrium\local\frontpage_settings::MAX_TESTIMONIALS; $i++) {
+        $areas[] = 'fp_testimonial' . $i . '_photo';
+    }
     if ($context->contextlevel !== CONTEXT_SYSTEM || !in_array($filearea, $areas, true)) {
         send_file_not_found();
     }

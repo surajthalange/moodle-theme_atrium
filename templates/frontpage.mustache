@@ -1,0 +1,56 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_atrium/frontpage
+
+    The designed front page: each enabled section in order. Core's own front page
+    content (site summary, course list, blocks) follows after this in the layout.
+
+    Context variables required for this template:
+    * hero - Hero context, or absent
+    * features - Feature blocks context, or absent
+    * showcase - Course showcase context, or absent
+    * stats - Stats strip context, or absent
+    * testimonials - Testimonials context, or absent
+    * about - About band context, or absent
+    * cta - Call to action context, or absent
+
+    Example context (json):
+    {
+        "hero": {"heading": "Welcome to Atrium", "subheading": "Learn at your pace.", "align": "left", "height": "standard",
+                 "button1": {"text": "Browse courses", "url": "/course/index.php"}, "button2": false, "hasimage": false},
+        "features": {"heading": "Why learn here", "columns": 3, "items": [
+            {"icon": "fa-graduation-cap", "title": "Expert teachers", "text": "Learn from people who do it.", "haslink": false}
+        ]},
+        "showcase": {"heading": "Latest courses", "browseurl": "/course/index.php", "cards": []},
+        "stats": {"items": [{"label": "Courses", "value": "42"}]},
+        "testimonials": {"heading": "What learners say", "items": [
+            {"quote": "Brilliant.", "name": "Ada", "role": "Student", "hasphoto": false, "initial": "A"}
+        ]},
+        "about": {"heading": "About us", "text": "<p>We teach.</p>", "hasimage": false, "imageleft": false, "button": false},
+        "cta": {"heading": "Ready?", "text": "Join today.", "button": {"text": "Log in", "url": "/login/index.php"}, "background": "accent"}
+    }
+}}
+<div class="atrium-frontpage" data-region="atrium-frontpage">
+    {{#hero}}{{> theme_atrium/frontpage/hero }}{{/hero}}
+    {{#features}}{{> theme_atrium/frontpage/features }}{{/features}}
+    {{#showcase}}{{> theme_atrium/frontpage/showcase }}{{/showcase}}
+    {{#stats}}{{> theme_atrium/frontpage/stats }}{{/stats}}
+    {{#testimonials}}{{> theme_atrium/frontpage/testimonials }}{{/testimonials}}
+    {{#about}}{{> theme_atrium/frontpage/about }}{{/about}}
+    {{#cta}}{{> theme_atrium/frontpage/cta }}{{/cta}}
+</div>

@@ -1,0 +1,68 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_atrium/frontpage/hero
+
+    The front page hero: heading, subheading, up to two buttons, optional image.
+
+    Context variables required for this template:
+    * heading, subheading - Formatted text
+    * button1, button2 - {text, url} or false
+    * hasimage, imageurl - Background image
+    * align - left or center
+    * height - compact, standard or tall
+    * transparentnavbar - Whether the navbar floats over the hero
+
+    Example context (json):
+    {
+        "heading": "Welcome to Atrium",
+        "subheading": "Learn at your pace.",
+        "align": "left",
+        "height": "standard",
+        "transparentnavbar": false,
+        "button1": {
+            "text": "Browse courses",
+            "url": "/course/index.php"
+        },
+        "button2": {
+            "text": "Log in",
+            "url": "/login/index.php"
+        },
+        "hasimage": false,
+        "imageurl": ""
+    }
+}}
+<section class="atrium-fp-hero atrium-fp-hero-{{ height }} atrium-fp-hero-{{ align }}{{#hasimage}} atrium-fp-hero-has-image{{/hasimage}}"
+         {{#hasimage}}style="--atrium-fp-hero-image: url('{{{ imageurl }}}');"{{/hasimage}} data-region="atrium-fp-hero">
+    <div class="atrium-fp-container">
+        <div class="atrium-fp-hero-content">
+            <h1 class="atrium-fp-hero-heading">{{ heading }}</h1>
+            {{#subheading}}<p class="atrium-fp-hero-subheading">{{ subheading }}</p>{{/subheading}}
+            {{#button1}}
+                <div class="atrium-fp-hero-actions">
+                    <a href="{{{ url }}}" class="btn btn-primary btn-lg atrium-fp-btn">{{ text }}</a>
+                    {{#button2}}<a href="{{{ url }}}" class="btn btn-lg atrium-fp-btn atrium-fp-btn-ghost">{{ text }}</a>{{/button2}}
+                </div>
+            {{/button1}}
+            {{^button1}}{{#button2}}
+                <div class="atrium-fp-hero-actions">
+                    <a href="{{{ url }}}" class="btn btn-lg atrium-fp-btn atrium-fp-btn-ghost">{{ text }}</a>
+                </div>
+            {{/button2}}{{/button1}}
+        </div>
+    </div>
+</section>

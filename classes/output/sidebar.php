@@ -65,6 +65,16 @@ class sidebar implements renderable, templatable {
     }
 
     /**
+     * Whether the sidebar is shown at all: only to real users. A visitor's primary
+     * navigation is one item, and a marketing front page reads better without a rail.
+     *
+     * @return bool
+     */
+    public static function wanted(): bool {
+        return isloggedin() && !isguestuser();
+    }
+
+    /**
      * Whether the current user's sidebar should start collapsed.
      *
      * The user's own choice wins; otherwise the site setting for first visits.

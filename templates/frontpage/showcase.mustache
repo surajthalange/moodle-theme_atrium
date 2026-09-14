@@ -1,0 +1,65 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_atrium/frontpage/showcase
+
+    Course showcase: a grid of course cards with a link to the catalogue.
+
+    Context variables required for this template:
+    * heading - Section heading
+    * cards - Contexts for theme_atrium/course_card
+    * browseurl - Catalogue URL
+
+    Example context (json):
+    {
+        "heading": "Latest courses",
+        "browseurl": "/course/index.php",
+        "cards": [
+            {
+                "id": 2,
+                "url": "/course/view.php?id=2",
+                "fullname": "Biology",
+                "summary": "",
+                "imageurl": "",
+                "gradient": "atrium-gradient-2",
+                "category": "Science",
+                "categoryurl": "#",
+                "contacts": [],
+                "firstcontactname": "",
+                "showenrolled": true,
+                "enrolledcount": 12,
+                "enrolled": false,
+                "hasprogress": false,
+                "progress": null,
+                "hidden": false
+            }
+        ]
+    }
+}}
+<section class="atrium-fp-section atrium-fp-showcase" data-region="atrium-fp-showcase">
+    <div class="atrium-fp-container">
+        <div class="atrium-fp-section-head">
+            {{#heading}}<h2 class="atrium-fp-heading">{{ heading }}</h2>{{/heading}}
+            <a href="{{{ browseurl }}}" class="btn btn-outline-secondary atrium-fp-browse">{{#str}} viewallcourses, core {{/str}}</a>
+        </div>
+        <div class="atrium-course-grid">
+            {{#cards}}
+                {{> theme_atrium/course_card }}
+            {{/cards}}
+        </div>
+    </div>
+</section>
