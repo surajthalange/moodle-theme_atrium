@@ -80,9 +80,10 @@ final class provider_test extends provider_testcase {
         $user = $this->getDataGenerator()->create_user();
         set_user_preference(scheme::PREFERENCE, scheme::DARK, $user);
         set_user_preference(sidebar::PREFERENCE, sidebar::COLLAPSED, $user);
-        $this->assertSame(2, $DB->count_records_select('user_preferences', "userid = ? AND name LIKE 'theme_atrium%'", [$user->id]));
+        $where = "userid = ? AND name LIKE 'theme_atrium%'";
+        $this->assertSame(2, $DB->count_records_select('user_preferences', $where, [$user->id]));
 
         delete_user($user);
-        $this->assertSame(0, $DB->count_records_select('user_preferences', "userid = ? AND name LIKE 'theme_atrium%'", [$user->id]));
+        $this->assertSame(0, $DB->count_records_select('user_preferences', $where, [$user->id]));
     }
 }

@@ -37,7 +37,8 @@ final class presets_test extends \advanced_testcase {
             $this->assertGreaterThanOrEqual(4.5, presets::contrast($accent, '#ffffff'), "$name: white text on accent");
             $this->assertGreaterThanOrEqual(4.5, presets::contrast($accent, presets::LIGHT_SURFACE), "$name: accent on light");
             $tinted = presets::tint($accent, presets::DARK_LINK_TINT);
-            $this->assertGreaterThanOrEqual(4.5, presets::contrast($tinted, presets::DARK_SURFACE), "$name: link on dark ($tinted)");
+            $darklink = presets::contrast($tinted, presets::DARK_SURFACE);
+            $this->assertGreaterThanOrEqual(4.5, $darklink, "$name: link on dark ($tinted)");
             $this->assertContains($preset['sidebar'], [presets::TONE_LIGHT, presets::TONE_DARK], "$name: sidebar tone");
         }
     }
