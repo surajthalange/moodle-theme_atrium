@@ -91,7 +91,7 @@ final class hook_callbacks {
         $item->url = scheme::toggle_url();
         $item->title = get_string($dark ? 'switchtolight' : 'switchtodark', 'theme_atrium');
         $item->titleidentifier = ($dark ? 'switchtolight' : 'switchtodark') . ',theme_atrium';
-        $item->pix = $dark ? 'i/sun' : 'i/moon';
+        $item->pix = ($dark ? 'sun' : 'moon') . ', theme_atrium';
         $hook->add_navitem($item);
     }
 }

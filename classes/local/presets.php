@@ -40,6 +40,15 @@ final class presets {
     /** @var string Dark sidebar tone. */
     public const TONE_DARK = 'dark';
 
+    /** @var float How far the accent is tinted towards white for link text in the dark scheme; matches _tokens.scss. */
+    public const DARK_LINK_TINT = 0.45;
+
+    /** @var string The light surface accents are read against. */
+    public const LIGHT_SURFACE = '#ffffff';
+
+    /** @var string The dark surface accents are read against; matches $body-secondary-bg-dark in pre.scss. */
+    public const DARK_SURFACE = '#171a23';
+
     /** @var array<string, array{accent: string, sidebar: string}> Preset definitions, in display order. */
     private const PRESETS = [
         'atrium' => ['accent' => '#4f46e5', 'sidebar' => self::TONE_LIGHT],
@@ -130,6 +139,22 @@ final class presets {
             $channels[] = $value <= 0.03928 ? $value / 12.92 : (($value + 0.055) / 1.055) ** 2.4;
         }
         return 0.2126 * $channels[0] + 0.7152 * $channels[1] + 0.0722 * $channels[2];
+    }
+
+    /**
+     * Mix a colour towards white, the way Bootstrap's tint-color() does.
+     *
+     * @param string $hex "#rrggbb"
+     * @param float $weight 0 (unchanged) to 1 (white)
+     * @return string "#rrggbb"
+     */
+    public static function tint(string $hex, float $weight): string {
+        $out = '#';
+        foreach (str_split(ltrim($hex, '#'), 2) as $pair) {
+            $value = hexdec($pair);
+            $out .= str_pad(dechex((int) round($value + (255 - $value) * $weight)), 2, '0', STR_PAD_LEFT);
+        }
+        return $out;
     }
 
     /**
