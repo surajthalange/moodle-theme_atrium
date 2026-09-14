@@ -1,0 +1,248 @@
+// The course catalogue.
+
+// The catalogue draws its own heading; core's page heading stays for assistive technology.
+body.path-course-index,
+body.path-course-search {
+    #page-header .page-header-headings {
+        @extend .visually-hidden;
+    }
+}
+
+.atrium-catalogue-header {
+    margin-bottom: 1.5rem;
+}
+
+.atrium-catalogue-crumbs {
+    font-size: 0.875rem;
+    color: var(--atrium-text-muted);
+    margin-bottom: 0.5rem;
+    a {
+        color: var(--atrium-text-muted);
+        &:hover {
+            color: var(--atrium-accent);
+        }
+    }
+}
+
+.atrium-catalogue-crumb-sep {
+    margin: 0 0.375rem;
+    color: var(--atrium-text-faint);
+}
+
+.atrium-catalogue-heading {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin: 0 0 0.5rem;
+}
+
+.atrium-catalogue-description {
+    color: var(--atrium-text-muted);
+    max-width: 720px;
+    line-height: 1.6;
+    p:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.atrium-catalogue-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 1rem 0 0;
+}
+
+.atrium-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.375rem 0.875rem;
+    border-radius: 999px;
+    background-color: var(--atrium-surface);
+    border: 1px solid var(--atrium-border);
+    color: var(--atrium-text);
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-decoration: none;
+    &:hover,
+    &:focus-visible {
+        border-color: var(--atrium-accent);
+        color: var(--atrium-accent);
+        text-decoration: none;
+    }
+}
+
+.atrium-chip-count {
+    padding: 0 0.4rem;
+    border-radius: 999px;
+    background-color: var(--atrium-surface-3);
+    color: var(--atrium-text-muted);
+    font-size: 0.75rem;
+}
+
+.atrium-catalogue-manage .action-menu .btn {
+    border-radius: var(--atrium-radius-sm);
+}
+
+.atrium-catalogue-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.atrium-catalogue-search {
+    display: flex;
+    gap: 0.5rem;
+    flex: 1 1 320px;
+    max-width: 480px;
+    .form-control {
+        border-radius: 999px;
+        padding-left: 1rem;
+    }
+    .btn {
+        border-radius: 999px;
+        padding-left: 0.875rem;
+        padding-right: 0.875rem;
+        .icon {
+            margin: 0;
+        }
+    }
+}
+
+.atrium-catalogue-controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.atrium-catalogue-total {
+    color: var(--atrium-text-muted);
+    font-size: 0.875rem;
+    white-space: nowrap;
+}
+
+.atrium-catalogue-view {
+    .btn {
+        padding-left: 0.625rem;
+        padding-right: 0.625rem;
+        .icon {
+            margin: 0;
+        }
+    }
+    .btn.active {
+        background-color: var(--atrium-accent-soft);
+        border-color: var(--atrium-accent);
+        color: var(--atrium-accent);
+    }
+}
+
+// List view: the same card, laid out as a row.
+.atrium-course-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    .atrium-course-card {
+        flex-direction: row;
+        align-items: stretch;
+        &:hover {
+            transform: none;
+        }
+    }
+    .atrium-course-card-media {
+        flex: 0 0 220px;
+        aspect-ratio: auto;
+        min-height: 140px;
+    }
+    .atrium-course-card-body {
+        flex: 1 1 auto;
+        padding: 1rem 1.25rem;
+    }
+    .atrium-course-card-foot {
+        flex: 0 0 220px;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        border-top: 0;
+        border-left: 1px solid var(--atrium-border);
+    }
+}
+
+// Empty state, shared with other pages.
+.atrium-empty {
+    @extend %atrium-card;
+    padding: 3rem 1.5rem;
+    text-align: center;
+    color: var(--atrium-text-muted);
+}
+
+.atrium-empty-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background-color: var(--atrium-accent-soft);
+    color: var(--atrium-accent);
+    margin-bottom: 1rem;
+    .icon {
+        margin: 0;
+        width: auto;
+        height: auto;
+        font-size: 1.5rem;
+    }
+}
+
+.atrium-empty-title {
+    font-size: 1.0625rem;
+    font-weight: 600;
+    color: var(--atrium-text);
+    margin: 0;
+}
+
+// Paging bar.
+.atrium-catalogue .pagination {
+    margin-top: 2rem;
+    justify-content: center;
+    .page-link {
+        border-radius: var(--atrium-radius-sm);
+        margin: 0 0.125rem;
+        border-color: transparent;
+        color: var(--atrium-text-muted);
+        &:hover {
+            background-color: var(--atrium-surface-3);
+            color: var(--atrium-text);
+        }
+    }
+    .page-item.active .page-link {
+        background-color: var(--atrium-accent);
+        border-color: var(--atrium-accent);
+        color: var(--atrium-accent-contrast);
+    }
+}
+
+@include media-breakpoint-down(md) {
+    .atrium-course-list {
+        .atrium-course-card {
+            flex-direction: column;
+        }
+        .atrium-course-card-media {
+            flex-basis: auto;
+            aspect-ratio: 16 / 9;
+        }
+        .atrium-course-card-foot {
+            flex-basis: auto;
+            flex-direction: row;
+            align-items: center;
+            border-left: 0;
+            border-top: 1px solid var(--atrium-border);
+        }
+    }
+    .atrium-catalogue-search {
+        max-width: none;
+    }
+}

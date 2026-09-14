@@ -543,6 +543,46 @@ if ($ADMIN->fulltree) {
 
     $settings->add($page);
 
+    // Catalogue.
+    $page = new admin_settingpage('theme_atrium_catalogue', get_string('cataloguesettings', 'theme_atrium'));
+    $page->add(new admin_setting_heading('theme_atrium/catalogue_intro', '', get_string('catalogue_intro', 'theme_atrium')));
+    $page->add(new admin_setting_configselect(
+        'theme_atrium/catalogue_perpage',
+        get_string('catalogue_perpage', 'theme_atrium'),
+        get_string('catalogue_perpage_desc', 'theme_atrium'),
+        12,
+        array_combine([6, 9, 12, 18, 24, 36, 48], [6, 9, 12, 18, 24, 36, 48])
+    ));
+    $page->add(new admin_setting_configselect(
+        'theme_atrium/catalogue_defaultsort',
+        get_string('catalogue_defaultsort', 'theme_atrium'),
+        '',
+        'name',
+        [
+            'name' => get_string('catalogue_sort_name', 'theme_atrium'),
+            'newest' => get_string('catalogue_sort_newest', 'theme_atrium'),
+            'popular' => get_string('catalogue_sort_popular', 'theme_atrium'),
+        ]
+    ));
+    $page->add(new admin_setting_configcheckbox(
+        'theme_atrium/catalogue_showenrolled',
+        get_string('catalogue_showenrolled', 'theme_atrium'),
+        get_string('catalogue_showenrolled_desc', 'theme_atrium'),
+        1
+    ));
+    $page->add(new admin_setting_configcheckbox(
+        'theme_atrium/catalogue_showprogress',
+        get_string('catalogue_showprogress', 'theme_atrium'),
+        get_string('catalogue_showprogress_desc', 'theme_atrium'),
+        1
+    ));
+    $page->add(new admin_setting_configcheckbox(
+        'theme_atrium/catalogue_showprice',
+        get_string('catalogue_showprice', 'theme_atrium'),
+        get_string('catalogue_showprice_desc', 'theme_atrium'),
+        1
+    ));
+    $settings->add($page);
     // Footer.
     $page = new admin_settingpage('theme_atrium_footer', get_string('footersettings', 'theme_atrium'));
 

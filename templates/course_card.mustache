@@ -33,6 +33,7 @@
     * enrolled - Whether the viewer is enrolled
     * hasprogress, progress - Completion percentage for the viewer
     * hidden - Whether the course is hidden from learners
+    * hasprice, price - A formatted price badge
 
     Example context (json):
     {
@@ -50,7 +51,9 @@
         "enrolled": true,
         "hasprogress": true,
         "progress": 40,
-        "hidden": false
+        "hidden": false,
+        "hasprice": true,
+        "price": "US$ 49.00"
     }
 }}
 <article class="atrium-course-card{{#hidden}} atrium-course-card-hidden{{/hidden}}" data-courseid="{{ id }}">
@@ -58,6 +61,7 @@
         {{#imageurl}}<img src="{{{ imageurl }}}" alt="" loading="lazy">{{/imageurl}}
         {{#hidden}}<span class="atrium-course-card-badge">{{#str}} hiddenfromstudents, core {{/str}}</span>{{/hidden}}
         {{^hidden}}{{#enrolled}}<span class="atrium-course-card-badge atrium-course-card-badge-enrolled">{{#str}} enrolledbadge, theme_atrium {{/str}}</span>{{/enrolled}}{{/hidden}}
+        {{#hasprice}}{{^enrolled}}<span class="atrium-course-card-badge atrium-course-card-badge-price">{{ price }}</span>{{/enrolled}}{{/hasprice}}
     </a>
     <div class="atrium-course-card-body">
         {{#category}}

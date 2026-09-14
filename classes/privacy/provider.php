@@ -19,11 +19,12 @@ namespace theme_atrium\privacy;
 use core_privacy\local\metadata\collection;
 use core_privacy\local\request\user_preference_provider;
 use core_privacy\local\request\writer;
+use theme_atrium\local\catalogue;
 use theme_atrium\local\scheme;
 use theme_atrium\output\sidebar;
 
 /**
- * Privacy provider: two user preferences, nothing else.
+ * Privacy provider: three user preferences, nothing else.
  *
  * @package    theme_atrium
  * @copyright  2026 Suraj Thalange
@@ -39,6 +40,7 @@ class provider implements \core_privacy\local\metadata\provider, user_preference
     public static function get_metadata(collection $collection): collection {
         $collection->add_user_preference(scheme::PREFERENCE, 'privacy:metadata:preference:theme_atrium_scheme');
         $collection->add_user_preference(sidebar::PREFERENCE, 'privacy:metadata:preference:theme_atrium_sidebar');
+        $collection->add_user_preference(catalogue::VIEW_PREFERENCE, 'privacy:metadata:preference:theme_atrium_catalogueview');
         return $collection;
     }
 
@@ -51,6 +53,7 @@ class provider implements \core_privacy\local\metadata\provider, user_preference
         $preferences = [
             scheme::PREFERENCE => ['light' => 'scheme:light', 'dark' => 'scheme:dark', 'system' => 'scheme:system'],
             sidebar::PREFERENCE => ['expanded' => 'sidebar:expanded', 'collapsed' => 'sidebar:collapsed'],
+            catalogue::VIEW_PREFERENCE => ['grid' => 'catalogue_view_grid', 'list' => 'catalogue_view_list'],
         ];
         foreach ($preferences as $name => $labels) {
             $value = get_user_preferences($name, null, $userid);

@@ -1,0 +1,146 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_atrium/catalogue
+
+    The course catalogue: header, subcategory chips, toolbar, cards or rows, paging.
+
+    Context variables required for this template:
+    * heading - Category name, "All courses", or the search heading
+    * description - Category description HTML
+    * hasparents, parents - Breadcrumb of parent categories: name, url
+    * allcoursesurl - Link to the whole catalogue
+    * iscategory - Whether a category (not the top) is being browsed
+    * hassubcategories, subcategories - Chips: name, count, url
+    * search, searchurl, categoryid - Search form state
+    * sorts - Sort options: key, label, url, active
+    * sortlabel - The active sort's label
+    * isgrid, gridurl, listurl - View toggle
+    * hascourses, cards - Course card contexts
+    * total, totaltext - Result count
+    * pagingbar - Rendered paging bar HTML
+    * manageactions - Core's "More" management menu HTML, for managers
+    * searchonly - The search page before a term is entered
+
+    Example context (json):
+    {
+        "heading": "Science",
+        "description": "<p>Everything from cells to stars.</p>",
+        "hasparents": true,
+        "parents": [{"name": "Faculties", "url": "/course/index.php?categoryid=1"}],
+        "allcoursesurl": "/course/index.php",
+        "iscategory": true,
+        "hassubcategories": true,
+        "subcategories": [{"name": "Biology", "count": 4, "url": "/course/index.php?categoryid=3"}],
+        "search": "",
+        "searchurl": "/course/search.php",
+        "categoryid": 2,
+        "sorts": [{"key": "name", "label": "Name", "url": "#", "active": true}],
+        "sortlabel": "Name",
+        "isgrid": true,
+        "gridurl": "#",
+        "listurl": "#",
+        "hascourses": true,
+        "cards": [],
+        "total": 4,
+        "totaltext": "4 courses",
+        "pagingbar": "",
+        "manageactions": "",
+        "searchonly": false
+    }
+}}
+<div class="atrium-catalogue" data-region="atrium-catalogue">
+    <header class="atrium-catalogue-header">
+        <nav aria-label="{{#str}} categories, core {{/str}}" class="atrium-catalogue-crumbs">
+            {{#iscategory}}
+                <a href="{{{ allcoursesurl }}}">{{#str}} fulllistofcourses, core {{/str}}</a>
+                {{#parents}}
+                    <span class="atrium-catalogue-crumb-sep" aria-hidden="true">/</span>
+                    <a href="{{{ url }}}">{{ name }}</a>
+                {{/parents}}
+            {{/iscategory}}
+        </nav>
+        <h1 class="atrium-catalogue-heading">{{{ heading }}}</h1>
+        {{#description}}<div class="atrium-catalogue-description">{{{ description }}}</div>{{/description}}
+        {{#hassubcategories}}
+            <ul class="atrium-catalogue-chips list-unstyled">
+                {{#subcategories}}
+                    <li><a href="{{{ url }}}" class="atrium-chip">{{ name }} <span class="atrium-chip-count">{{ count }}</span></a></li>
+                {{/subcategories}}
+            </ul>
+        {{/hassubcategories}}
+    </header>
+
+    <div class="atrium-catalogue-toolbar" data-region="atrium-catalogue-toolbar">
+        <form action="{{{ searchurl }}}" method="get" class="atrium-catalogue-search" role="search">
+            {{#categoryid}}<input type="hidden" name="categoryid" value="{{ categoryid }}">{{/categoryid}}
+            <label for="atrium-catalogue-search-input" class="visually-hidden">{{#str}} searchcourses, core {{/str}}</label>
+            <input type="text" id="atrium-catalogue-search-input" name="search" class="form-control" value="{{ search }}"
+                   placeholder="{{#str}} searchcourses, core {{/str}}">
+            <button type="submit" class="btn btn-primary">{{#pix}} a/search, core {{/pix}}<span class="visually-hidden">{{#str}} search, core {{/str}}</span></button>
+        </form>
+        <div class="atrium-catalogue-controls">
+            <span class="atrium-catalogue-total">{{ totaltext }}</span>
+            <div class="dropdown">
+                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    {{#str}} catalogue_sortby, theme_atrium {{/str}}: {{ sortlabel }}
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    {{#sorts}}
+                        <li><a class="dropdown-item{{#active}} active{{/active}}" href="{{{ url }}}"{{#active}} aria-current="true"{{/active}}>{{ label }}</a></li>
+                    {{/sorts}}
+                </ul>
+            </div>
+            {{#manageactions}}<div class="atrium-catalogue-manage">{{{ manageactions }}}</div>{{/manageactions}}
+            <div class="btn-group atrium-catalogue-view" role="group" aria-label="{{#str}} catalogue_view, theme_atrium {{/str}}">
+                <a href="{{{ gridurl }}}" class="btn btn-outline-secondary{{#isgrid}} active{{/isgrid}}" {{#isgrid}}aria-current="true"{{/isgrid}}
+                   title="{{#str}} catalogue_view_grid, theme_atrium {{/str}}">
+                    {{#pix}} grid, theme_atrium {{/pix}}<span class="visually-hidden">{{#str}} catalogue_view_grid, theme_atrium {{/str}}</span>
+                </a>
+                <a href="{{{ listurl }}}" class="btn btn-outline-secondary{{^isgrid}} active{{/isgrid}}" {{^isgrid}}aria-current="true"{{/isgrid}}
+                   title="{{#str}} catalogue_view_list, theme_atrium {{/str}}">
+                    {{#pix}} list, theme_atrium {{/pix}}<span class="visually-hidden">{{#str}} catalogue_view_list, theme_atrium {{/str}}</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    {{#hascourses}}
+        <div class="{{#isgrid}}atrium-course-grid{{/isgrid}}{{^isgrid}}atrium-course-list{{/isgrid}}" data-region="atrium-catalogue-courses">
+            {{#cards}}
+                {{> theme_atrium/course_card }}
+            {{/cards}}
+        </div>
+        {{{ pagingbar }}}
+    {{/hascourses}}
+    {{^hascourses}}
+        <div class="atrium-empty">
+            <span class="atrium-empty-icon" aria-hidden="true">{{#pix}} i/course, core {{/pix}}</span>
+            {{#searchonly}}
+                <p class="atrium-empty-title">{{#str}} catalogue_searchprompt, theme_atrium {{/str}}</p>
+            {{/searchonly}}
+            {{^searchonly}}
+                {{#search}}
+                    <p class="atrium-empty-title">{{#str}} nocoursesfound, core, {{ search }} {{/str}}</p>
+                {{/search}}
+                {{^search}}
+                    <p class="atrium-empty-title">{{#str}} catalogue_empty, theme_atrium {{/str}}</p>
+                {{/search}}
+            {{/searchonly}}
+        </div>
+    {{/hascourses}}
+</div>

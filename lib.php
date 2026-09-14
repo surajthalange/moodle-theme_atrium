@@ -183,6 +183,13 @@ function theme_atrium_user_preferences(): array {
             'choices' => ['expanded', 'collapsed'],
             'permissioncallback' => [core_user::class, 'is_current_user'],
         ],
+        \theme_atrium\local\catalogue::VIEW_PREFERENCE => [
+            'type' => PARAM_ALPHA,
+            'null' => NULL_NOT_ALLOWED,
+            'default' => 'grid',
+            'choices' => \theme_atrium\local\catalogue::VIEWS,
+            'permissioncallback' => [core_user::class, 'is_current_user'],
+        ],
     ];
 }
 
@@ -204,5 +211,7 @@ function theme_atrium_get_fontawesome_icon_map(): array {
         'theme_atrium:link' => 'fa-link',
         'theme_atrium:courseindex' => 'fa-list',
         'theme_atrium:blocks' => 'fa-table-columns',
+        'theme_atrium:grid' => 'fa-table-cells-large',
+        'theme_atrium:list' => 'fa-list-ul',
     ];
 }

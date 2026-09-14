@@ -38,6 +38,7 @@ class course_card implements renderable, templatable {
      * @param core_course_list_element $course
      * @param bool $showenrolled Whether to show the enrolled-user count.
      * @param bool $showprogress Whether to show the viewer's completion progress when enrolled.
+     * @param string|null $price A formatted price, when the course has a paid enrolment.
      */
     public function __construct(
         /** @var core_course_list_element The course. */
@@ -46,6 +47,8 @@ class course_card implements renderable, templatable {
         protected bool $showenrolled = true,
         /** @var bool Show completion progress. */
         protected bool $showprogress = true,
+        /** @var string|null A formatted price to badge the card with. */
+        protected ?string $price = null,
     ) {
     }
 
@@ -93,6 +96,8 @@ class course_card implements renderable, templatable {
             'progress' => $progress === null ? null : (int) round($progress),
             'hasprogress' => $progress !== null,
             'hidden' => !$course->visible,
+            'price' => $this->price,
+            'hasprice' => $this->price !== null && $this->price !== '',
         ];
     }
 }

@@ -104,3 +104,34 @@ Feature: Atrium theme
       | fp_enable | 0 | theme_atrium |
     And I am on site homepage
     Then ".atrium-frontpage" "css_element" should not exist
+
+  Scenario: The catalogue lists courses as cards, searches, and remembers the list view
+    Given the following "categories" exist:
+      | name    | category | idnumber |
+      | Science | 0        | SCI      |
+      | Arts    | 0        | ART      |
+    And the following "courses" exist:
+      | fullname          | shortname | category |
+      | Marine Biology    | MB1       | SCI      |
+      | Organic Chemistry | OC1       | SCI      |
+      | Sculpture         | SC1       | ART      |
+    And I log in as "student1"
+    And I am on course index
+    Then I should see "Marine Biology" in the ".atrium-catalogue" "css_element"
+    And I should see "Sculpture" in the ".atrium-catalogue" "css_element"
+    And I should see "Science" in the ".atrium-catalogue-chips" "css_element"
+    And ".atrium-course-grid" "css_element" should exist
+    When I click on "Science" "link" in the ".atrium-catalogue-chips" "css_element"
+    Then I should see "Organic Chemistry" in the ".atrium-catalogue" "css_element"
+    And I should not see "Sculpture" in the ".atrium-catalogue" "css_element"
+    When I click on "List" "link" in the ".atrium-catalogue-view" "css_element"
+    Then ".atrium-course-list" "css_element" should exist
+    And I am on course index
+    And ".atrium-course-list" "css_element" should exist
+    When I set the field "Search courses" to "sculpt"
+    And I press "Search"
+    Then I should see "Sculpture" in the ".atrium-catalogue" "css_element"
+    And I should not see "Marine Biology" in the ".atrium-catalogue" "css_element"
+    When I set the field "Search courses" to "nothinghere"
+    And I press "Search"
+    Then ".atrium-empty" "css_element" should exist
