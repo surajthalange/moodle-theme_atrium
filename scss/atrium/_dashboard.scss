@@ -139,6 +139,12 @@ body.has-atrium-hero #page-header .page-header-headings {
     @extend .visually-hidden;
 }
 
+// Core greets the user once per session in the header (core/welcome); the hero already
+// does, so hide that copy. If core changes the markup the greeting simply shows again.
+body.has-atrium-hero #page-header .me-auto.flex-column > div:last-child > .mb-2 > .h2 {
+    display: none;
+}
+
 // Course overview block.
 .block_myoverview {
     .dashboard-card {

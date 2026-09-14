@@ -25,8 +25,6 @@
 use theme_atrium\local\presets;
 use theme_atrium\local\scheme;
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * Build the theme's SCSS: Boost's whole sheet, then Atrium appended.
  *

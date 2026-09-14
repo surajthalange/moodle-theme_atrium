@@ -11,7 +11,7 @@
 :root,
 [data-bs-theme="light"] {
     --atrium-bg: #{$body-bg};
-    --atrium-surface: #ffffff;
+    --atrium-surface: #fff;
     --atrium-surface-2: #f8f9fc;
     --atrium-surface-3: #eef0f5;
     --atrium-border: #{$border-color};
@@ -21,24 +21,24 @@
     --atrium-text-faint: #94a3b8;
     --atrium-accent: #{$primary};
     --atrium-accent-rgb: #{to-rgb($primary)};
-    --atrium-accent-contrast: #ffffff;
+    --atrium-accent-contrast: #fff;
     --atrium-accent-soft: rgba(var(--atrium-accent-rgb), 0.1);
     --atrium-accent-softer: rgba(var(--atrium-accent-rgb), 0.06);
     --atrium-shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04), 0 1px 1px rgba(15, 23, 42, 0.02);
     --atrium-shadow-md: 0 4px 12px rgba(15, 23, 42, 0.08);
     --atrium-shadow-lg: 0 12px 32px rgba(15, 23, 42, 0.12);
-    --atrium-navbar-bg: #ffffff;
+    --atrium-navbar-bg: #fff;
     --atrium-navbar-border: #{$border-color};
     --atrium-sidebar-width: #{$atrium-sidebar-width};
     --atrium-radius: #{$atrium-radius};
     --atrium-radius-sm: #{$atrium-radius * 0.5};
     --atrium-radius-lg: #{$atrium-radius * 1.25};
     --atrium-hero-bg: #{$primary};
-    --atrium-hero-fg: #ffffff;
+    --atrium-hero-fg: #fff;
     --atrium-progress-track: #e6e8ef;
 
     // Sidebar, light tone.
-    --atrium-sidebar-bg: #ffffff;
+    --atrium-sidebar-bg: #fff;
     --atrium-sidebar-border: #{$border-color};
     --atrium-sidebar-fg: #334155;
     --atrium-sidebar-fg-muted: #64748b;
@@ -58,8 +58,8 @@
     --atrium-sidebar-fg-muted: #94a3b8;
     --atrium-sidebar-hover-bg: rgba(255, 255, 255, 0.06);
     --atrium-sidebar-active-bg: rgba(255, 255, 255, 0.1);
-    --atrium-sidebar-active-fg: #ffffff;
-    --atrium-sidebar-brand-fg: #ffffff;
+    --atrium-sidebar-active-fg: #fff;
+    --atrium-sidebar-brand-fg: #fff;
 }
 
 @if $atrium-sidebar-tone == dark {
@@ -97,12 +97,12 @@
     --#{$prefix}tertiary-bg: var(--atrium-surface-2);
     --#{$prefix}border-color: var(--atrium-border);
     --#{$prefix}secondary-color: var(--atrium-text-muted);
-    --#{$prefix}emphasis-color: #ffffff;
-    --#{$prefix}link-color: #{tint-color($primary, 35%)};
-    --#{$prefix}link-hover-color: #{tint-color($primary, 50%)};
-    --#{$prefix}link-color-rgb: #{to-rgb(tint-color($primary, 35%))};
-    --#{$prefix}link-hover-color-rgb: #{to-rgb(tint-color($primary, 50%))};
-    --#{$prefix}heading-color: #ffffff;
+    --#{$prefix}emphasis-color: #fff;
+    --#{$prefix}link-color: #{tint-color($primary, 45%)};
+    --#{$prefix}link-hover-color: #{tint-color($primary, 60%)};
+    --#{$prefix}link-color-rgb: #{to-rgb(tint-color($primary, 45%))};
+    --#{$prefix}link-hover-color-rgb: #{to-rgb(tint-color($primary, 60%))};
+    --#{$prefix}heading-color: #fff;
 
     color-scheme: dark;
 }

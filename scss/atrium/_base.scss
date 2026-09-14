@@ -208,6 +208,7 @@ h6,
     border-radius: var(--atrium-radius);
     overflow: hidden;
     border: 1px solid var(--atrium-border);
+    background-color: var(--atrium-surface);
     > thead > tr > th {
         background-color: var(--atrium-surface-2);
         font-weight: 600;
@@ -225,8 +226,8 @@ h6,
     *,
     *::before,
     *::after {
-        transition-duration: 0.01ms !important; // stylelint-disable-line declaration-no-important
-        animation-duration: 0.01ms !important; // stylelint-disable-line declaration-no-important
+        transition-duration: 100ms !important; // stylelint-disable-line declaration-no-important
+        animation-duration: 100ms !important; // stylelint-disable-line declaration-no-important
         scroll-behavior: auto !important; // stylelint-disable-line declaration-no-important
     }
 }

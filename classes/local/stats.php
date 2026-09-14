@@ -120,6 +120,8 @@ final class stats {
      * @return int
      */
     private static function count_due(int $userid): int {
+        global $CFG;
+        require_once($CFG->dirroot . '/calendar/lib.php');
         $user = \core_user::get_user($userid);
         if (!$user) {
             return 0;

@@ -33,18 +33,13 @@ defined('MOODLE_INTERNAL') || die();
 if ($ADMIN->fulltree) {
     $settings = new theme_boost_admin_settingspage_tabs('themesettingatrium', get_string('configtitle', 'theme_atrium'));
 
-    /**
-     * Add a setting whose value reaches the compiled stylesheet.
-     *
-     * @param admin_settingpage $page
-     * @param admin_setting $setting
-     */
+    // Add a setting whose value reaches the compiled stylesheet.
     $addcss = function (admin_settingpage $page, admin_setting $setting): void {
         $setting->set_updatedcallback('theme_reset_all_caches');
         $page->add($setting);
     };
 
-    // --- General -----------------------------------------------------------------
+    // General.
     $page = new admin_settingpage('theme_atrium_general', get_string('generalsettings', 'theme_atrium'));
 
     $addcss($page, new admin_setting_configselect(
@@ -106,7 +101,7 @@ if ($ADMIN->fulltree) {
 
     $settings->add($page);
 
-    // --- Sidebar -----------------------------------------------------------------
+    // Sidebar.
     $page = new admin_settingpage('theme_atrium_sidebar', get_string('sidebarsettings', 'theme_atrium'));
 
     $page->add(new admin_setting_configselect(
@@ -130,7 +125,7 @@ if ($ADMIN->fulltree) {
 
     $settings->add($page);
 
-    // --- Login page ---------------------------------------------------------------
+    // Login page.
     $page = new admin_settingpage('theme_atrium_login', get_string('loginsettings', 'theme_atrium'));
 
     $addcss($page, new admin_setting_configstoredfile(
@@ -159,7 +154,7 @@ if ($ADMIN->fulltree) {
 
     $settings->add($page);
 
-    // --- Dashboard ----------------------------------------------------------------
+    // Dashboard.
     $page = new admin_settingpage('theme_atrium_dashboard', get_string('dashboardsettings', 'theme_atrium'));
 
     $page->add(new admin_setting_configcheckbox(
@@ -197,7 +192,7 @@ if ($ADMIN->fulltree) {
 
     $settings->add($page);
 
-    // --- Footer -------------------------------------------------------------------
+    // Footer.
     $page = new admin_settingpage('theme_atrium_footer', get_string('footersettings', 'theme_atrium'));
 
     $page->add(new admin_setting_configselect(
@@ -249,7 +244,7 @@ if ($ADMIN->fulltree) {
 
     $settings->add($page);
 
-    // --- Advanced -----------------------------------------------------------------
+    // Advanced.
     $page = new admin_settingpage('theme_atrium_advanced', get_string('advancedsettings', 'theme_atrium'));
 
     $addcss($page, new admin_setting_scsscode(

@@ -103,7 +103,7 @@ $coursefullname = ($PAGE->course?->fullname) ? format_string(
 ) : '';
 $courseurl = $PAGE->course ? new \core\url('/course/view.php', ['id' => $PAGE->course->id]) : null;
 
-// --- Atrium additions -------------------------------------------------------------
+// Atrium additions.
 
 // The sidebar: the primary navigation as a left rail, with the user's collapsed state.
 $sidebarcollapsed = sidebar::starts_collapsed();

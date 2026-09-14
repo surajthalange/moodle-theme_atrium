@@ -57,7 +57,8 @@ class dashboard_hero implements renderable, templatable {
      */
     public static function wanted(): bool {
         global $PAGE;
-        if ($PAGE->pagelayout !== 'mydashboard' || !isloggedin() || isguestuser()) {
+        // The dashboard itself, not every page that borrows its layout (messaging does).
+        if ($PAGE->pagetype !== 'my-index' || $PAGE->pagelayout !== 'mydashboard' || !isloggedin() || isguestuser()) {
             return false;
         }
         $show = get_config('theme_atrium', 'showhero');
