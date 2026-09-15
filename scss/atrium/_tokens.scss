@@ -36,6 +36,13 @@
     --atrium-hero-bg: #{$primary};
     --atrium-hero-fg: #fff;
     --atrium-progress-track: #e6e8ef;
+    // Status colours: text on the page, and a soft fill behind it.
+    --atrium-success: #15803d;
+    --atrium-success-soft: #dcfce7;
+    --atrium-warning: #b45309;
+    --atrium-warning-soft: #fef3c7;
+    --atrium-danger: #b91c1c;
+    --atrium-danger-soft: #fee2e2;
 
     // Sidebar, light tone.
     --atrium-sidebar-bg: #fff;
@@ -87,6 +94,12 @@
     --atrium-navbar-bg: #{$body-secondary-bg-dark};
     --atrium-navbar-border: #{$border-color-dark};
     --atrium-progress-track: #2a2f3f;
+    --atrium-success: #4ade80;
+    --atrium-success-soft: #0f2e1d;
+    --atrium-warning: #fbbf24;
+    --atrium-warning-soft: #3b2a0a;
+    --atrium-danger: #f87171;
+    --atrium-danger-soft: #3f1212;
 
     @include atrium-sidebar-dark;
 

@@ -1,0 +1,1089 @@
+// The long tail: gradebook, quiz, calendar, messaging, admin, forum, and the smaller
+// module and management pages. Nothing here is a template: every rule targets core's
+// own class names so upgrades keep working.
+
+// Tables: transparent, token borders, and a rounded frame on the plain listing tables
+// core builds with .generaltable (the grader has its own furniture and is left alone).
+.table,
+.generaltable {
+    --#{$prefix}table-bg: transparent;
+    --#{$prefix}table-color: var(--atrium-text);
+    --#{$prefix}table-border-color: var(--atrium-border);
+    --#{$prefix}table-striped-bg: var(--atrium-surface-2);
+    --#{$prefix}table-hover-bg: var(--atrium-surface-2);
+    --#{$prefix}table-accent-bg: transparent;
+}
+
+.generaltable:not(.gradereport-grader-table):not(.quizreviewsummary) {
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 1px solid var(--atrium-border);
+    border-radius: var(--atrium-radius);
+    overflow: hidden;
+    > thead > tr > th {
+        background-color: var(--atrium-surface-2);
+        color: var(--atrium-text-muted);
+        font-size: 0.8125rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        border-bottom-width: 1px;
+    }
+    > tbody > tr:last-child > td,
+    > tbody > tr:last-child > th {
+        border-bottom: 0;
+    }
+}
+
+.table-responsive {
+    border-radius: var(--atrium-radius);
+}
+
+// Gradebook: the grader on the surface tokens (core paints it white), category and
+// average rows tinted, rows lit on hover; the setup tree and the user report to match.
+.path-grade-report-grader {
+    .gradeparent {
+        border-radius: var(--atrium-radius);
+        border: 1px solid var(--atrium-border);
+        background-color: var(--atrium-surface);
+        table,
+        .cell {
+            border-color: var(--atrium-border);
+        }
+        tr .cell,
+        .floater .cell {
+            background-color: var(--atrium-surface);
+            color: var(--atrium-text);
+        }
+        .heading .cell,
+        .cell.category,
+        .avg .cell {
+            background-color: var(--atrium-surface-2);
+        }
+        .heading .cell {
+            font-weight: 600;
+        }
+        .avg .cell {
+            font-weight: 600;
+        }
+        tr.userrow:hover .cell {
+            background-color: var(--atrium-surface-2);
+        }
+        .gradevalue,
+        .grade input,
+        [data-collapse="avgrowcell"] {
+            font-variant-numeric: tabular-nums;
+        }
+        .cellmenubtn,
+        .arrow_link {
+            color: var(--atrium-text-muted);
+        }
+        input.text {
+            border-radius: var(--atrium-radius-sm);
+        }
+    }
+    .gradepass {
+        color: var(--atrium-success);
+    }
+    .gradefail {
+        color: var(--atrium-danger);
+    }
+    .overriddengrade {
+        color: var(--atrium-text);
+    }
+    .usersearchdropdown .unsearchablecontentcontainer {
+        background-color: var(--atrium-surface);
+    }
+}
+
+.path-grade {
+    .gradetree-wrapper {
+        background-color: var(--atrium-surface-2);
+        border-radius: var(--atrium-radius);
+        .setup-grades.table tr {
+            th,
+            td {
+                background-color: var(--atrium-surface-2);
+            }
+            &.category td,
+            &.item td {
+                background-color: var(--atrium-surface);
+                border-color: var(--atrium-border);
+            }
+            &.item td {
+                border-top-color: var(--atrium-surface-2);
+            }
+            &.categoryitem td,
+            &.courseitem td {
+                background-color: var(--atrium-surface-2);
+            }
+        }
+    }
+    .initialbar .initialbarall a,
+    .initialbar .initialbarall button,
+    .initialbar .letter {
+        border-radius: var(--atrium-radius-sm);
+    }
+}
+
+.path-grade-report-user .user-grade {
+    &.table {
+        .levelodd {
+            background-color: var(--atrium-surface-2);
+        }
+        .leveleven {
+            background-color: transparent;
+        }
+    }
+    .column-grade,
+    .column-range,
+    .column-percentage {
+        font-variant-numeric: tabular-nums;
+        white-space: nowrap;
+    }
+    tr.category td,
+    tr.category th,
+    .categoryitem {
+        font-weight: 600;
+    }
+}
+
+// Quiz: questions as cards with a tinted info column, the navigation block as tiles.
+.que {
+    border: 1px solid var(--atrium-border);
+    border-radius: var(--atrium-radius);
+    background-color: var(--atrium-surface);
+    box-shadow: var(--atrium-shadow-sm);
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+    align-items: stretch;
+    gap: 0;
+    .info {
+        width: 8em;
+        background-color: var(--atrium-surface-2);
+        border: 0;
+        border-right: 1px solid var(--atrium-border);
+        border-radius: 0;
+        padding: 1rem;
+        .no {
+            font-weight: 600;
+        }
+        .state,
+        .grade {
+            color: var(--atrium-text-muted);
+        }
+    }
+    .content {
+        flex: 1 1 auto;
+        min-width: 0;
+        padding: 1.25rem 1.5rem;
+    }
+    .formulation {
+        background-color: transparent;
+        border: 0;
+        color: var(--atrium-text);
+        padding: 0;
+    }
+    .outcome,
+    .comment {
+        background-color: var(--atrium-accent-softer);
+        border: 1px solid var(--atrium-border);
+        border-radius: var(--atrium-radius-sm);
+        color: var(--atrium-text);
+    }
+    .outcome .feedback,
+    .outcome .generalfeedback,
+    .outcome .rightanswer {
+        background-color: transparent;
+        border: 0;
+        padding: 0.25rem 0;
+    }
+    .validationerror,
+    .invalid-feedback {
+        color: var(--atrium-danger);
+    }
+    &.correct .info {
+        border-left: 4px solid var(--atrium-success);
+    }
+    &.incorrect .info,
+    &.notanswered .info {
+        border-left: 4px solid var(--atrium-danger);
+    }
+    &.partiallycorrect .info {
+        border-left: 4px solid var(--atrium-warning);
+    }
+    .answer {
+        > div,
+        .r0,
+        .r1 {
+            padding: 0.375rem 0.25rem;
+            border-radius: var(--atrium-radius-sm);
+            background-color: transparent;
+        }
+        .r0:hover,
+        .r1:hover {
+            background-color: var(--atrium-surface-2);
+        }
+    }
+}
+
+.path-mod-quiz {
+    .quizreviewsummary {
+        border: 1px solid var(--atrium-border);
+        border-radius: var(--atrium-radius);
+        overflow: hidden;
+        margin-bottom: 1.5rem;
+        th {
+            background-color: var(--atrium-surface-2);
+            color: var(--atrium-text-muted);
+            font-weight: 500;
+            width: 12rem;
+        }
+    }
+    #mod_quiz_navblock {
+        .qn_buttons {
+            gap: 0.375rem;
+        }
+        .qnbutton {
+            border-radius: var(--atrium-radius-sm);
+            border: 1px solid var(--atrium-border);
+            background-color: var(--atrium-surface);
+            .trafficlight {
+                border-radius: 0 0 var(--atrium-radius-sm) var(--atrium-radius-sm);
+            }
+            &.thispage {
+                border-color: var(--atrium-accent);
+                box-shadow: 0 0 0 2px var(--atrium-accent-soft);
+            }
+        }
+    }
+    .quizattemptsummary,
+    .quizattempt .generaltable {
+        th,
+        td {
+            vertical-align: middle;
+        }
+    }
+    .quizstartbuttondiv .btn {
+        padding: 0.625rem 1.5rem;
+    }
+    .submitbtns {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 1rem;
+    }
+    // Quiz editing: slots as rows.
+    .mod_quiz-edit-content {
+        .slot {
+            border-bottom: 1px solid var(--atrium-border);
+            &:hover {
+                background-color: var(--atrium-surface-2);
+            }
+        }
+        .section-heading {
+            background-color: var(--atrium-surface-2);
+            border-radius: var(--atrium-radius-sm);
+            border: 1px solid var(--atrium-border);
+        }
+        .page-split-join,
+        .editing_move,
+        .editing_delete {
+            border-radius: var(--atrium-radius-sm);
+        }
+        .add-menu .dropdown-toggle {
+            border-radius: 999px;
+        }
+    }
+}
+
+// Question bank.
+.questionbankwindow {
+    .generaltable {
+        margin-top: 1rem;
+    }
+    .categoryname,
+    .questionname {
+        font-weight: 500;
+    }
+    .qbank-column-list .header {
+        background-color: var(--atrium-surface-2);
+    }
+}
+
+// Calendar: the month as a card, cells with room, events as chips, today marked.
+.calendarwrapper {
+    .calendartable.calendarmonth {
+        border-collapse: separate;
+        border-spacing: 4px;
+        border: 0;
+        margin-bottom: 1rem;
+        th,
+        td {
+            border: 0;
+        }
+        th {
+            padding: 0.5rem 0.75rem;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: var(--atrium-text-muted);
+            text-align: center;
+        }
+        td.day {
+            height: 6.5rem;
+            background-color: var(--atrium-surface);
+            border: 1px solid var(--atrium-border);
+            border-radius: var(--atrium-radius-sm);
+            padding: 0.5rem;
+            &.today {
+                background-color: var(--atrium-accent-softer);
+                border-color: var(--atrium-accent);
+            }
+            &.weekend {
+                background-color: var(--atrium-surface-2);
+            }
+            .day-number-circle {
+                font-weight: 600;
+            }
+        }
+        td.dayblank {
+            background-color: transparent;
+        }
+        [data-region="day-content"] li {
+            margin-top: 0.25rem;
+            a {
+                display: block;
+                padding: 0.125rem 0.5rem;
+                border-radius: 999px;
+                background-color: var(--atrium-surface-2);
+                font-size: 0.8125rem;
+                color: var(--atrium-text);
+                text-decoration: none;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                &:hover {
+                    background-color: var(--atrium-accent-softer);
+                    color: var(--atrium-accent);
+                }
+            }
+            .calendar-circle {
+                margin-right: 0.375rem;
+            }
+        }
+    }
+    .calendar-controls {
+        .arrow_link {
+            border-radius: var(--atrium-radius-sm);
+        }
+        .current {
+            font-size: 1.375rem;
+            font-weight: 600;
+        }
+    }
+    // Day and upcoming views: each event a card.
+    .event,
+    .eventlist .event {
+        @extend %atrium-card;
+        margin-bottom: 1rem;
+        .card-header,
+        .card-body {
+            background-color: transparent;
+        }
+        .card-header {
+            border-bottom: 1px solid var(--atrium-border);
+        }
+        .card-footer {
+            background-color: var(--atrium-surface-2);
+            border-top: 1px solid var(--atrium-border);
+        }
+    }
+}
+
+.block_calendar_month .calendartable.calendarmonth td.day {
+    padding: 0.25rem;
+    border: 0;
+}
+
+// Messaging: the app as one card that fills the viewport.
+#page-message-index {
+    #page.drawers .main-inner {
+        max-width: 1320px;
+    }
+    .message-app {
+        border: 1px solid var(--atrium-border);
+        border-radius: var(--atrium-radius-lg);
+        background-color: var(--atrium-surface);
+        overflow: hidden;
+        min-height: calc(100vh - #{$navbar-height} - 5rem);
+        .header-container,
+        .body-container,
+        .footer-container {
+            border-color: var(--atrium-border);
+        }
+        .list-group-item {
+            border-color: var(--atrium-border);
+        }
+        .contacts-container,
+        .view-overview-body {
+            border-right: 1px solid var(--atrium-border);
+        }
+    }
+}
+
+.message-app {
+    .btn-link {
+        color: var(--atrium-text);
+    }
+    .bg-light,
+    .bg-white {
+        background-color: var(--atrium-surface) !important; // stylelint-disable-line declaration-no-important
+    }
+    [data-region="message"] .message {
+        border-radius: var(--atrium-radius);
+        background-color: var(--atrium-surface-2);
+        border: 0;
+        &.send {
+            background-color: var(--atrium-accent);
+            color: #fff;
+            .text,
+            .time {
+                color: #fff;
+            }
+        }
+    }
+    .day-container .day {
+        color: var(--atrium-text-muted);
+    }
+    .lazy-load-list .list-group-item:hover {
+        background-color: var(--atrium-surface-2);
+    }
+    .view-overview-body [data-region="view-overview-section"] > .btn {
+        color: var(--atrium-text);
+    }
+}
+
+// Notifications page.
+.path-message-output-popup .notification-area {
+    @extend %atrium-card;
+    overflow: hidden;
+    .control-area,
+    .content-area {
+        border-color: var(--atrium-border);
+    }
+    .notification:hover {
+        background-color: var(--atrium-surface-2);
+    }
+}
+
+// Forum: the discussion list and the posts.
+.path-mod-forum {
+    .discussion-list {
+        border: 1px solid var(--atrium-border);
+        border-radius: var(--atrium-radius);
+        overflow: hidden;
+        > .table {
+            margin-bottom: 0;
+        }
+        thead th {
+            background-color: var(--atrium-surface-2);
+            border-bottom: 1px solid var(--atrium-border);
+        }
+        tbody tr:hover {
+            background-color: var(--atrium-surface-2);
+        }
+    }
+    .forumpost,
+    .forum-post-container .post {
+        @extend %atrium-card;
+        margin-bottom: 1rem;
+        .header {
+            border-bottom: 1px solid var(--atrium-border);
+        }
+    }
+    .forumpost.unread,
+    .forum-post-container .post.unread {
+        border-left: 3px solid var(--atrium-accent);
+    }
+    .forum-post-container .post .post-actions .btn-link {
+        color: var(--atrium-text-muted);
+        &:hover {
+            color: var(--atrium-accent);
+        }
+    }
+    .reply-author,
+    .userdate {
+        color: var(--atrium-text-muted);
+    }
+    .forumsearch input {
+        border-radius: 999px 0 0 999px;
+    }
+}
+
+// Assignment: the status and grading tables, and the grader.
+.path-mod-assign {
+    .submissionsummarytable,
+    .gradingsummary .generaltable,
+    .submissionstatustable .generaltable,
+    .feedbacktable .generaltable {
+        th {
+            background-color: var(--atrium-surface-2);
+            color: var(--atrium-text-muted);
+            font-weight: 500;
+            width: 14rem;
+        }
+    }
+    .submissionstatussubmitted,
+    .submissionstatus,
+    .earlysubmission {
+        color: var(--atrium-text);
+    }
+    .submissionstatussubmitted td.c1,
+    .submissionstatussubmitted {
+        background-color: var(--atrium-success-soft);
+    }
+    .latesubmission,
+    .overdue {
+        background-color: var(--atrium-warning-soft);
+    }
+    .path-mod-assign .gradingtable .flexible thead th {
+        white-space: nowrap;
+    }
+    .grade-actions .btn {
+        border-radius: var(--atrium-radius-sm);
+    }
+}
+
+// Workshop: the phases as a stepper.
+.path-mod-workshop .userplan {
+    border: 1px solid var(--atrium-border);
+    border-radius: var(--atrium-radius);
+    overflow: hidden;
+    thead th,
+    th.phase {
+        background-color: var(--atrium-surface-2);
+        color: var(--atrium-text-muted);
+        font-weight: 600;
+        border-color: var(--atrium-border);
+    }
+    th.phase.active,
+    td.phase.active {
+        background-color: var(--atrium-accent-softer);
+        color: var(--atrium-accent);
+    }
+    td {
+        border-color: var(--atrium-border);
+        vertical-align: top;
+    }
+    .actions {
+        color: var(--atrium-text-muted);
+    }
+}
+
+// Glossary, wiki, book, lesson, choice, feedback: content on cards.
+.path-mod-glossary .glossarypost,
+.path-mod-book .book_content,
+.path-mod-lesson .lesson-content,
+.path-mod-lesson .contents,
+.path-mod-wiki .wiki-contentbox,
+.path-mod-wiki .wiki_contentbox,
+.path-mod-choice .choices,
+.path-mod-feedback .feedback_form,
+.path-mod-feedback .feedback-item-list,
+.path-mod-page .box.generalbox.center {
+    @extend %atrium-card;
+    padding: 1.5rem;
+    margin-bottom: 1.25rem;
+}
+
+.path-mod-glossary {
+    .glossarypost {
+        .concept {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .entryheader,
+        .entrylowersection {
+            border-color: var(--atrium-border);
+        }
+        .commands a {
+            color: var(--atrium-text-muted);
+        }
+    }
+    .glossarycontrol,
+    .glossaryexplain {
+        color: var(--atrium-text-muted);
+    }
+    .entrybox {
+        border: 0;
+    }
+}
+
+.path-mod-book {
+    .book_toc {
+        @extend %atrium-card;
+        padding: 1rem 1.25rem;
+        ul {
+            margin: 0;
+        }
+        a {
+            display: block;
+            padding: 0.25rem 0;
+        }
+    }
+    .navtop,
+    .navbottom {
+        .btn,
+        a.btn-link {
+            border-radius: 999px;
+        }
+    }
+}
+
+.path-mod-choice {
+    .choices .option {
+        padding: 0.5rem 0;
+        border-bottom: 1px solid var(--atrium-border);
+        &:last-child {
+            border-bottom: 0;
+        }
+    }
+    .results .bar {
+        background-color: var(--atrium-accent);
+    }
+}
+
+.path-mod-lesson {
+    .lesson-content .branchbuttoncontainer .btn,
+    .branchbuttoncontainer .btn {
+        border-radius: var(--atrium-radius-sm);
+        margin: 0.25rem;
+    }
+    .progress_bar {
+        border-radius: 999px;
+        overflow: hidden;
+    }
+}
+
+.path-mod-wiki {
+    .wiki_headingtitle,
+    .wiki_headingtime {
+        margin-bottom: 0.5rem;
+    }
+    .wiki-toc {
+        @extend %atrium-card;
+        padding: 1rem;
+    }
+}
+
+// Participants, enrolment methods, groups, cohorts: management tables and toolbars.
+.path-user #participantsform,
+.path-enrol,
+.path-group,
+.path-cohort,
+.path-admin-roles {
+    .initialbar {
+        gap: 0.25rem;
+        .letter,
+        .initialbarall a {
+            border-radius: var(--atrium-radius-sm);
+        }
+    }
+    .table-dynamic thead th {
+        background-color: var(--atrium-surface-2);
+    }
+    .fitem select,
+    select.form-select {
+        border-radius: var(--atrium-radius-sm);
+    }
+}
+
+.path-group #groupeditform,
+.path-group .groupmanagementtable {
+    select {
+        min-height: 12rem;
+        border-radius: var(--atrium-radius-sm);
+    }
+}
+
+// Backup and restore: the stage bar as steps, the sections as cards.
+.path-backup {
+    .backup_progress {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-bottom: 1.5rem;
+        list-style: none;
+        padding: 0;
+        .backup_stage {
+            padding: 0.375rem 0.875rem;
+            border-radius: 999px;
+            background-color: var(--atrium-surface-2);
+            color: var(--atrium-text-muted);
+            font-size: 0.875rem;
+            &.backup_stage_current {
+                background-color: var(--atrium-accent);
+                color: #fff;
+                font-weight: 600;
+            }
+            &.backup_stage_complete {
+                background-color: var(--atrium-accent-softer);
+                color: var(--atrium-accent);
+            }
+        }
+        .backup_stage_next {
+            display: none;
+        }
+    }
+    .backup-section,
+    .restore-course-search,
+    .box.generalbox.restoreselect {
+        @extend %atrium-card;
+        padding: 1.25rem 1.5rem;
+        margin-bottom: 1.25rem;
+    }
+    .backup-section > h2 {
+        font-size: 1.125rem;
+        margin-bottom: 1rem;
+    }
+    .grouped_settings .fitem .felement,
+    .grouped_settings .fitem .fitemtitle {
+        padding: 0.25rem 0;
+    }
+    .grouped_settings.section_level {
+        border-top: 1px solid var(--atrium-border);
+        padding-top: 0.75rem;
+        margin-top: 0.75rem;
+    }
+    .grouped_settings.activity_level {
+        padding-left: 1.5rem;
+    }
+}
+
+// Site administration: the search, settings rows with a sticky save bar, plugin tables,
+// the notifications page and the status report.
+#adminsettings {
+    .settingsform h2,
+    .settingsform h3 {
+        margin: 1.5rem 0 1rem;
+    }
+    .form-item {
+        padding: 1rem 0;
+        border-bottom: 1px solid var(--atrium-border);
+        margin: 0;
+        &:last-child {
+            border-bottom: 0;
+        }
+    }
+    .form-label label {
+        font-weight: 600;
+    }
+    .form-shortname {
+        font-size: 0.75rem;
+    }
+    .form-description,
+    .form-defaultinfo {
+        color: var(--atrium-text-muted);
+        font-size: 0.875rem;
+    }
+    .form-defaultinfo {
+        margin-left: 0.5rem;
+    }
+    .form-overridden,
+    .form-warning {
+        border-radius: var(--atrium-radius-sm);
+    }
+    // The save bar floats at the bottom while the form scrolls.
+    .settingsform > fieldset + .row {
+        position: sticky;
+        bottom: 0;
+        z-index: 5;
+        margin: 1rem 0 0;
+        padding: 0.75rem 0;
+        background-color: var(--atrium-surface);
+        border-top: 1px solid var(--atrium-border);
+        box-shadow: 0 -0.5rem 1rem -0.75rem rgba(0, 0, 0, 0.15);
+    }
+}
+
+#page-admin-search {
+    .adminsearchform {
+        margin-bottom: 1.5rem;
+        .form-control {
+            border-radius: 999px 0 0 999px;
+        }
+    }
+    .searchresults .adminsettings {
+        @extend %atrium-card;
+        padding: 1.25rem 1.5rem;
+        margin-bottom: 1.25rem;
+    }
+}
+
+#page-admin-index {
+    .releasenoteslink,
+    .box.generalbox,
+    .adminwarning {
+        border-radius: var(--atrium-radius);
+    }
+    .registration-status,
+    .statusok {
+        border-radius: var(--atrium-radius);
+    }
+}
+
+#page-admin-plugins,
+#page-admin-tool-task-scheduledtasks,
+#page-admin-user,
+#page-admin-roles-manage,
+#page-report-status-index,
+#page-report-configlog-index,
+#page-admin-tool-customlang-index {
+    .generaltable,
+    .admintable,
+    .table {
+        font-size: 0.9375rem;
+        td,
+        th {
+            vertical-align: middle;
+        }
+    }
+    .plugintypesection,
+    .plugintype-header {
+        h3,
+        .h3 {
+            font-size: 1.0625rem;
+            margin: 2rem 0 0.75rem;
+        }
+    }
+    #plugins-control-panel {
+        .pluginname .displayname {
+            font-weight: 600;
+        }
+        .missingfromdisk,
+        .notdownloadable {
+            background-color: var(--atrium-danger-soft);
+        }
+        .disabled {
+            opacity: 0.6;
+        }
+    }
+    .badge {
+        border-radius: 999px;
+    }
+}
+
+#page-admin-tool-task-scheduledtasks {
+    .task-disabled {
+        opacity: 0.55;
+    }
+    .task-runnow,
+    .task-edit {
+        border-radius: var(--atrium-radius-sm);
+    }
+}
+
+// The course management page: three panes as cards.
+#page-course-management {
+    .course-listing,
+    .category-listing,
+    .course-detail {
+        @extend %atrium-card;
+        > .card-header,
+        .listing-actions {
+            background-color: transparent;
+            border-bottom: 1px solid var(--atrium-border);
+        }
+    }
+    .listitem-course:hover,
+    .listitem-category:hover {
+        background-color: var(--atrium-surface-2);
+    }
+    .listitem-category.listitem-selected,
+    .listitem-course.listitem-selected {
+        background-color: var(--atrium-accent-softer);
+    }
+}
+
+// Reports (logs, outline, completion).
+.path-report,
+.path-course-report {
+    .logtable,
+    .generaltable {
+        font-size: 0.9375rem;
+    }
+    .completion-progress,
+    .completion-report {
+        overflow-x: auto;
+    }
+    .completion-progresscell {
+        text-align: center;
+    }
+}
+
+// Badges, competencies, tags, blogs.
+.path-badges {
+    .badges-list .badge-card,
+    .card.badge-card {
+        @extend %atrium-card;
+    }
+    .badge-image {
+        border-radius: var(--atrium-radius-sm);
+    }
+}
+
+.path-admin-tool-lp {
+    .competency-tree-container,
+    .competencytree,
+    .plan-summary,
+    [data-region="plan-page"] > .card {
+        @extend %atrium-card;
+        padding: 1rem 1.25rem;
+    }
+    .competencytree .list-group-item {
+        border-color: var(--atrium-border);
+    }
+}
+
+.path-tag {
+    .tag-index-items > div,
+    .tag_list .tag {
+        border-radius: 999px;
+    }
+    .tag-management-table .badge {
+        border-radius: 999px;
+    }
+}
+
+.path-blog {
+    .forumpost.blogpost {
+        @extend %atrium-card;
+        margin-bottom: 1.25rem;
+    }
+}
+
+// User preferences and account pages.
+.path-user-preferences,
+#page-user-preferences {
+    .preferences-group,
+    .card.preferences-group {
+        @extend %atrium-card;
+        h3,
+        .card-title {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        .list-unstyled li {
+            padding: 0.25rem 0;
+        }
+    }
+}
+
+#page-user-files,
+.path-user-files {
+    .filemanager {
+        .fp-navbar,
+        .filemanager-container,
+        .fm-content-wrapper {
+            border-color: var(--atrium-border);
+            background-color: var(--atrium-surface);
+        }
+        .fp-navbar {
+            border-radius: var(--atrium-radius) var(--atrium-radius) 0 0;
+        }
+        .filemanager-container {
+            border-radius: 0 0 var(--atrium-radius) var(--atrium-radius);
+        }
+    }
+}
+
+// Error pages: one card, the message first, a way back.
+.errorbox,
+#page-error .box.errorbox {
+    @extend %atrium-card;
+    max-width: 640px;
+    margin: 2rem auto;
+    padding: 1.5rem 1.75rem;
+    border-left: 4px solid var(--atrium-danger);
+    .errormessage {
+        font-size: 1.0625rem;
+        color: var(--atrium-text);
+    }
+    .continuebutton {
+        margin-top: 1rem;
+        .btn {
+            border-radius: var(--atrium-radius-sm);
+        }
+    }
+}
+
+// Maintenance, secure (policies, safe exam) and embedded layouts: minimal and legible.
+.pagelayout-maintenance,
+.pagelayout-secure {
+    #page {
+        background-color: var(--atrium-bg);
+    }
+    #page-content,
+    .main-inner {
+        max-width: 960px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+    }
+    #region-main {
+        @extend %atrium-card;
+        padding: 2rem;
+    }
+}
+
+.pagelayout-embedded,
+.pagelayout-popup {
+    #page {
+        background-color: var(--atrium-bg);
+    }
+}
+
+// Printing: the chrome goes, the content stays.
+@media print {
+    .atrium-sidebar,
+    .atrium-navbar,
+    .atrium-announcement,
+    .atrium-focus-bar,
+    .atrium-footer,
+    .drawer,
+    .drawer-toggles {
+        display: none !important; // stylelint-disable-line declaration-no-important
+    }
+    body,
+    #page.drawers {
+        margin: 0 !important; // stylelint-disable-line declaration-no-important
+        padding: 0 !important; // stylelint-disable-line declaration-no-important
+        background-color: #fff;
+    }
+    .card,
+    %atrium-card {
+        box-shadow: none;
+    }
+}
+
+// My courses: the page heading says it, so the block title can go; the toolbar breathes.
+.path-my-courses {
+    .block_myoverview > .card-body > .card-title,
+    .block_myoverview .card-body > h5.card-title {
+        display: none;
+    }
+    .block_myoverview [data-region="courses-view"] {
+        margin-top: 0.5rem;
+    }
+    .block_myoverview .dashboard-card-deck .dashboard-card {
+        @extend %atrium-card;
+    }
+    .block_myoverview .text-xs-center.text-md-left.mt-3,
+    .block_myoverview [data-region="empty-message"] {
+        padding: 3rem 1rem;
+        text-align: center;
+        color: var(--atrium-text-muted);
+    }
+}

@@ -109,4 +109,8 @@
     @extend %atrium-card;
     padding: 1.25rem;
     margin-bottom: 1.25rem;
+    // Core prints the container on every module page, content or not.
+    &:not(:has(*)) {
+        display: none;
+    }
 }

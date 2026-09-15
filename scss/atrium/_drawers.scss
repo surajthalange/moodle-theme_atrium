@@ -17,10 +17,14 @@
             left: var(--atrium-sidebar-width);
         }
 
-        // The course index toggle sits at the sidebar's edge, not under it.
+        // The course index toggle sits at the sidebar's edge, not under it, and the
+        // page leaves it room while the drawer is closed.
         .drawer-left-toggle {
             left: var(--atrium-sidebar-width);
             transition: left 0.2s ease;
+        }
+        #page.drawers:has(.drawer-left-toggle):not(.show-drawer-left) {
+            padding-left: 4.75rem;
         }
 
         // Boost's mobile primary drawer never shows at this size.
