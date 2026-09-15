@@ -170,6 +170,9 @@ function theme_atrium_get_extra_scss($theme) {
  */
 function theme_atrium_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options = []) {
     $areas = ['loginbackgroundimage', 'heroimage', 'fp_heroimage', 'fp_aboutimage', 'fp_ctaimage', 'footerlogo'];
+    for ($i = 2; $i <= \theme_atrium\local\frontpage_settings::MAX_SLIDES; $i++) {
+        $areas[] = 'fp_hero_slide' . $i . '_image';
+    }
     for ($i = 1; $i <= \theme_atrium\local\frontpage_settings::MAX_TESTIMONIALS; $i++) {
         $areas[] = 'fp_testimonial' . $i . '_photo';
     }

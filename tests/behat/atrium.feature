@@ -296,3 +296,39 @@ Feature: Atrium theme
       | navbarsticky | 1 | theme_atrium |
     And I reload the page
     Then "body.atrium-navbar-static" "css_element" should not exist
+
+  Scenario: Extra slides turn the front page hero into a carousel
+    Given the following config values are set as admin:
+      | forcelogin             | 0                    |              |
+      | enablemyhome           | 1                    |              |
+      | fp_hero_slide2_heading | Enrolments are open  | theme_atrium |
+      | fp_hero_slide2_buttontext | See the courses   | theme_atrium |
+      | fp_hero_slide2_buttonurl  | /course/index.php | theme_atrium |
+      | fp_hero_autoplay       | 0                    | theme_atrium |
+    And I am on site homepage
+    Then ".atrium-fp-hero.carousel" "css_element" should exist
+    And I should see "Welcome to" in the ".atrium-fp-hero .carousel-item.active" "css_element"
+    And "Enrolments are open" "text" should not be visible
+    When I click on "Next" "button" in the ".atrium-fp-hero" "css_element"
+    Then I should see "Enrolments are open" in the ".atrium-fp-hero .carousel-item.active" "css_element"
+    And "Welcome to" "text" should not be visible
+    When I click on "See the courses" "link" in the ".atrium-fp-hero" "css_element"
+    Then ".atrium-catalogue" "css_element" should exist
+
+  Scenario: The recent courses menu lists what the user opened, and teaching staff see the course's numbers
+    Given the following "activities" exist:
+      | activity | course | name         | section | completion |
+      | page     | C1     | Reading list | 1       | 1          |
+    And I am on the "C1" "Course" page logged in as "teacher1"
+    Then I should see "Enrolled" in the ".atrium-course-banner-stats" "css_element"
+    And I should see "Activities" in the ".atrium-course-banner-stats" "css_element"
+    When I click on "Recent courses" "button" in the ".atrium-recentcourses" "css_element"
+    Then I should see "Course 1" in the ".atrium-recentcourses-menu" "css_element"
+    When I click on "Course 1" "link" in the ".atrium-recentcourses-menu" "css_element"
+    Then I should see "Course 1" in the ".atrium-course-banner" "css_element"
+    When I am on the "C1" "Course" page logged in as "student1"
+    Then ".atrium-course-banner-stats" "css_element" should not exist
+    When the following config values are set as admin:
+      | navbar_recentcourses | 0 | theme_atrium |
+    And I reload the page
+    Then ".atrium-recentcourses" "css_element" should not exist

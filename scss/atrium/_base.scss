@@ -73,7 +73,16 @@ h6,
     --#{$prefix}btn-active-border-color: var(--atrium-border-strong);
 }
 
-// Content sits directly on the page background; cards provide the surfaces.
+// Content sits directly on the page background; cards provide the surfaces. The
+// maximum width is the page width setting.
+body.atrium-width-narrow #page.drawers .main-inner {
+    max-width: 1040px;
+}
+
+body.atrium-width-wide #page.drawers .main-inner {
+    max-width: none;
+}
+
 #page.drawers .main-inner {
     max-width: 1320px;
     background-color: transparent;

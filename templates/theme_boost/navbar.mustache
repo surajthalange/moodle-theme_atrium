@@ -46,6 +46,7 @@
             "logourl": "",
             "showname": true
         },
+        "recentcourses": false,
         "quicklinks": false,
         "schemetoggle": {
             "url": "/theme/atrium/scheme.php?scheme=dark",
@@ -89,6 +90,9 @@
                 {{{ output.search_box }}}
                 <div class="divider border-start h-75 align-self-center mx-1"></div>
             {{/output.search_box}}
+            {{#recentcourses}}
+                {{> theme_atrium/recentcourses }}
+            {{/recentcourses}}
             {{#quicklinks}}
                 {{> theme_atrium/quicklinks }}
                 <div class="divider border-start h-75 align-self-center mx-1"></div>

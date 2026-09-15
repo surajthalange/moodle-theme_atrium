@@ -153,6 +153,25 @@ if ($ADMIN->fulltree) {
         1
     ));
 
+    $page->add(new admin_setting_configcheckbox(
+        'theme_atrium/navbar_recentcourses',
+        get_string('navbar_recentcourses', 'theme_atrium'),
+        get_string('navbar_recentcourses_desc', 'theme_atrium'),
+        1
+    ));
+
+    $page->add(new admin_setting_configselect(
+        'theme_atrium/pagewidth',
+        get_string('pagewidth', 'theme_atrium'),
+        get_string('pagewidth_desc', 'theme_atrium'),
+        'standard',
+        [
+            'standard' => get_string('pagewidth:standard', 'theme_atrium'),
+            'narrow' => get_string('pagewidth:narrow', 'theme_atrium'),
+            'wide' => get_string('pagewidth:wide', 'theme_atrium'),
+        ]
+    ));
+
     $settings->add($page);
 
     // Sidebar.
@@ -276,6 +295,12 @@ if ($ADMIN->fulltree) {
         'theme_atrium/course_enablefocus',
         get_string('course_enablefocus', 'theme_atrium'),
         get_string('course_enablefocus_desc', 'theme_atrium'),
+        1
+    ));
+    $page->add(new admin_setting_configcheckbox(
+        'theme_atrium/course_showstats',
+        get_string('course_showstats', 'theme_atrium'),
+        get_string('course_showstats_desc', 'theme_atrium'),
         1
     ));
     $settings->add($page);
@@ -410,12 +435,76 @@ if ($ADMIN->fulltree) {
             'theme_atrium'
         )]
     ));
+    $page->add(new admin_setting_configselect(
+        'theme_atrium/fp_hero_overlay',
+        get_string('fp_hero_overlay', 'theme_atrium'),
+        get_string('fp_hero_overlay_desc', 'theme_atrium'),
+        '0.5',
+        ['0.2' => '20%', '0.35' => '35%', '0.5' => '50%', '0.65' => '65%', '0.8' => '80%']
+    ));
     $page->add(new admin_setting_configcheckbox(
         'theme_atrium/fp_hero_transparentnavbar',
         get_string('fp_hero_transparentnavbar', 'theme_atrium'),
         get_string('fp_hero_transparentnavbar_desc', 'theme_atrium'),
         0
     ));
+    // Extra slides turn the hero into a carousel.
+    $page->add(new admin_setting_heading(
+        'theme_atrium/fp_hero_slides',
+        get_string('fp_hero_slides', 'theme_atrium'),
+        get_string('fp_hero_slides_desc', 'theme_atrium')
+    ));
+    $page->add(new admin_setting_configcheckbox(
+        'theme_atrium/fp_hero_autoplay',
+        get_string('fp_hero_autoplay', 'theme_atrium'),
+        get_string('fp_hero_autoplay_desc', 'theme_atrium'),
+        1
+    ));
+    $page->add(new admin_setting_configselect(
+        'theme_atrium/fp_hero_interval',
+        get_string('fp_hero_interval', 'theme_atrium'),
+        '',
+        '6',
+        ['4' => '4', '6' => '6', '8' => '8', '10' => '10']
+    ));
+    for ($i = 2; $i <= frontpage_settings::MAX_SLIDES; $i++) {
+        $page->add(new admin_setting_configtext(
+            'theme_atrium/fp_hero_slide' . $i . '_heading',
+            get_string('fp_hero_slide_heading', 'theme_atrium', $i),
+            get_string('fp_hero_slide_heading_desc', 'theme_atrium'),
+            '',
+            PARAM_TEXT
+        ));
+        $page->add(new admin_setting_configtextarea(
+            'theme_atrium/fp_hero_slide' . $i . '_subheading',
+            get_string('fp_hero_slide_subheading', 'theme_atrium', $i),
+            '',
+            '',
+            PARAM_TEXT
+        ));
+        $page->add(new admin_setting_configtext(
+            'theme_atrium/fp_hero_slide' . $i . '_buttontext',
+            get_string('fp_hero_slide_buttontext', 'theme_atrium', $i),
+            '',
+            '',
+            PARAM_TEXT
+        ));
+        $page->add(new admin_setting_configtext(
+            'theme_atrium/fp_hero_slide' . $i . '_buttonurl',
+            get_string('fp_hero_slide_buttonurl', 'theme_atrium', $i),
+            '',
+            '',
+            PARAM_URL
+        ));
+        $addcss($page, new admin_setting_configstoredfile(
+            'theme_atrium/fp_hero_slide' . $i . '_image',
+            get_string('fp_hero_slide_image', 'theme_atrium', $i),
+            '',
+            'fp_hero_slide' . $i . '_image',
+            0,
+            ['maxfiles' => 1, 'accepted_types' => ['web_image']]
+        ));
+    }
 
     // Feature blocks.
     $page->add(new admin_setting_heading(
@@ -693,6 +782,12 @@ if ($ADMIN->fulltree) {
         'theme_atrium/catalogue_showenrolled',
         get_string('catalogue_showenrolled', 'theme_atrium'),
         get_string('catalogue_showenrolled_desc', 'theme_atrium'),
+        1
+    ));
+    $page->add(new admin_setting_configcheckbox(
+        'theme_atrium/catalogue_showactivities',
+        get_string('catalogue_showactivities', 'theme_atrium'),
+        get_string('catalogue_showactivities_desc', 'theme_atrium'),
         1
     ));
     $page->add(new admin_setting_configcheckbox(

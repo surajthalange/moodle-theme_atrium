@@ -17,52 +17,99 @@
 {{!
     @template theme_atrium/frontpage/hero
 
-    The front page hero: heading, subheading, up to two buttons, optional image.
+    The front page hero: heading, subheading, up to two buttons, optional image. With
+    extra slides configured it becomes a carousel (Bootstrap's, loaded by Boost), with
+    previous/next controls and indicators, paused on hover and focus, and no autoplay for
+    people who asked for reduced motion (see _frontpage.scss).
 
     Context variables required for this template:
-    * heading, subheading - Formatted text
-    * button1, button2 - {text, url} or false
-    * hasimage, imageurl - Background image
+    * slides - One or more of {heading, subheading, button1, button2, hasimage, imageurl, active, index, number}
+    * hasslides, slidecount - More than one slide
+    * autoplay, interval - Carousel autoplay and its interval in milliseconds
     * align - left or center
     * height - compact, standard or tall
+    * overlay - Strength of the wash over an image, 0 to 1
     * transparentnavbar - Whether the navbar floats over the hero
 
     Example context (json):
     {
-        "heading": "Welcome to Atrium",
-        "subheading": "Learn at your pace.",
+        "slides": [
+            {
+                "heading": "Welcome to Atrium",
+                "subheading": "Learn at your pace.",
+                "button1": {"text": "Browse courses", "url": "/course/index.php"},
+                "button2": {"text": "Log in", "url": "/login/index.php"},
+                "hasimage": false,
+                "imageurl": "",
+                "active": true,
+                "index": 0,
+                "number": 1
+            },
+            {
+                "heading": "Enrolments open",
+                "subheading": "Term 2 starts in October.",
+                "button1": {"text": "See the courses", "url": "/course/index.php"},
+                "button2": false,
+                "hasimage": false,
+                "imageurl": "",
+                "active": false,
+                "index": 1,
+                "number": 2
+            }
+        ],
+        "hasslides": true,
+        "slidecount": 2,
+        "autoplay": true,
+        "interval": 6000,
         "align": "left",
         "height": "standard",
-        "transparentnavbar": false,
-        "button1": {
-            "text": "Browse courses",
-            "url": "/course/index.php"
-        },
-        "button2": {
-            "text": "Log in",
-            "url": "/login/index.php"
-        },
-        "hasimage": false,
-        "imageurl": ""
+        "overlay": "0.5",
+        "transparentnavbar": false
     }
 }}
-<section class="atrium-fp-hero atrium-fp-hero-{{ height }} atrium-fp-hero-{{ align }}{{#hasimage}} atrium-fp-hero-has-image{{/hasimage}}"
-         {{#hasimage}}style="--atrium-fp-hero-image: url('{{{ imageurl }}}');"{{/hasimage}} data-region="atrium-fp-hero">
-    <div class="atrium-fp-container">
-        <div class="atrium-fp-hero-content">
-            <h1 class="atrium-fp-hero-heading">{{ heading }}</h1>
-            {{#subheading}}<p class="atrium-fp-hero-subheading">{{ subheading }}</p>{{/subheading}}
-            {{#button1}}
-                <div class="atrium-fp-hero-actions">
-                    <a href="{{{ url }}}" class="btn btn-primary btn-lg atrium-fp-btn">{{ text }}</a>
-                    {{#button2}}<a href="{{{ url }}}" class="btn btn-lg atrium-fp-btn atrium-fp-btn-ghost">{{ text }}</a>{{/button2}}
+<section class="atrium-fp-hero atrium-fp-hero-{{ height }} atrium-fp-hero-{{ align }}{{#hasslides}} atrium-fp-hero-slider carousel slide{{/hasslides}}"
+         style="--atrium-fp-hero-overlay: {{ overlay }};" data-region="atrium-fp-hero"
+         {{#hasslides}}id="atrium-fp-hero-carousel"{{#autoplay}} data-bs-ride="carousel" data-bs-interval="{{ interval }}"{{/autoplay}}{{^autoplay}} data-bs-interval="false"{{/autoplay}} data-bs-pause="hover"{{/hasslides}}>
+    <div class="{{#hasslides}}carousel-inner{{/hasslides}}{{^hasslides}}atrium-fp-hero-single{{/hasslides}}">
+        {{#slides}}
+            <div class="atrium-fp-hero-slide{{#hasimage}} atrium-fp-hero-has-image{{/hasimage}}{{#hasslides}} carousel-item{{#active}} active{{/active}}{{/hasslides}}"
+                 {{#hasimage}}style="--atrium-fp-hero-image: url('{{{ imageurl }}}');"{{/hasimage}}>
+                <div class="atrium-fp-container">
+                    <div class="atrium-fp-hero-content">
+                        {{#active}}<h1 class="atrium-fp-hero-heading">{{ heading }}</h1>{{/active}}
+                        {{^active}}<p class="atrium-fp-hero-heading h1">{{ heading }}</p>{{/active}}
+                        {{#subheading}}<p class="atrium-fp-hero-subheading">{{ subheading }}</p>{{/subheading}}
+                        {{#button1}}
+                            <div class="atrium-fp-hero-actions">
+                                <a href="{{{ url }}}" class="btn btn-primary btn-lg atrium-fp-btn">{{ text }}</a>
+                                {{#button2}}<a href="{{{ url }}}" class="btn btn-lg atrium-fp-btn atrium-fp-btn-ghost">{{ text }}</a>{{/button2}}
+                            </div>
+                        {{/button1}}
+                        {{^button1}}{{#button2}}
+                            <div class="atrium-fp-hero-actions">
+                                <a href="{{{ url }}}" class="btn btn-lg atrium-fp-btn atrium-fp-btn-ghost">{{ text }}</a>
+                            </div>
+                        {{/button2}}{{/button1}}
+                    </div>
                 </div>
-            {{/button1}}
-            {{^button1}}{{#button2}}
-                <div class="atrium-fp-hero-actions">
-                    <a href="{{{ url }}}" class="btn btn-lg atrium-fp-btn atrium-fp-btn-ghost">{{ text }}</a>
-                </div>
-            {{/button2}}{{/button1}}
-        </div>
+            </div>
+        {{/slides}}
     </div>
+    {{#hasslides}}
+        <div class="carousel-indicators atrium-fp-hero-indicators">
+            {{#slides}}
+                <button type="button" data-bs-target="#atrium-fp-hero-carousel" data-bs-slide-to="{{ index }}"
+                        {{#active}}class="active" aria-current="true"{{/active}}
+                        aria-label="{{#str}} fp_hero_slide_n, theme_atrium, {{ number }} {{/str}}"></button>
+            {{/slides}}
+        </div>
+        <button class="carousel-control-prev atrium-fp-hero-control" type="button" data-bs-target="#atrium-fp-hero-carousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">{{#str}} previous, core {{/str}}</span>
+        </button>
+        <button class="carousel-control-next atrium-fp-hero-control" type="button" data-bs-target="#atrium-fp-hero-carousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">{{#str}} next, core {{/str}}</span>
+        </button>
+    {{/hasslides}}
 </section>

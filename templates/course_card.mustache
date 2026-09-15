@@ -30,6 +30,7 @@
     * category, categoryurl - Category name and link
     * contacts - Teachers: name, pictureurl, url
     * showenrolled, enrolledcount - Enrolled user count
+    * showactivities, activitycount - Visible activity count
     * enrolled - Whether the viewer is enrolled
     * hasprogress, progress - Completion percentage for the viewer
     * hidden - Whether the course is hidden from learners
@@ -48,6 +49,8 @@
         "contacts": [{"name": "Grace Hopper", "pictureurl": "/user/pix.php/3/f2.jpg", "url": "/user/view.php?id=3"}],
         "showenrolled": true,
         "enrolledcount": 128,
+        "showactivities": true,
+        "activitycount": 12,
         "enrolled": true,
         "hasprogress": true,
         "progress": 40,
@@ -89,6 +92,11 @@
             {{/contacts}}
             {{#firstcontactname}}<span class="atrium-course-card-contact-name">{{ firstcontactname }}</span>{{/firstcontactname}}
         </div>
+        {{#showactivities}}
+            <span class="atrium-course-card-activities" title="{{#str}} activities, core {{/str}}">
+                {{#pix}} i/course, core {{/pix}}{{ activitycount }}
+            </span>
+        {{/showactivities}}
         {{#showenrolled}}
             <span class="atrium-course-card-enrolled" title="{{#str}} enrolledusers, enrol {{/str}}">
                 {{#pix}} i/users, core {{/pix}}{{ enrolledcount }}

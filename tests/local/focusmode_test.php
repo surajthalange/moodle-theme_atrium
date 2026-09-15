@@ -123,5 +123,22 @@ final class focusmode_test extends \advanced_testcase {
         $data = (new course_banner(get_course($course->id)))->export_for_template($output);
         $this->assertSame(100, $data['progress']);
         $this->assertTrue($data['complete']);
+        $this->assertNull($data['stats'], 'Learners do not see the numbers');
+
+        // Teaching staff see the course's numbers.
+        $teacher = $generator->create_user();
+        $generator->enrol_user($teacher->id, $course->id, 'editingteacher');
+        $this->setUser($teacher);
+        \cache_helper::purge_by_definition('theme_atrium', 'coursecounts');
+        $stats = course_banner::teacher_stats(get_course($course->id));
+        $this->assertSame(2, $stats['enrolled']);
+        $this->assertSame(1, $stats['started']);
+        $this->assertSame(1, $stats['activities']);
+        $this->assertTrue($stats['hascompletion']);
+        $data = (new course_banner(get_course($course->id)))->export_for_template($output);
+        $this->assertSame($stats, $data['stats']);
+
+        set_config('course_showstats', 0, 'theme_atrium');
+        $this->assertNull(course_banner::teacher_stats(get_course($course->id)));
     }
 }

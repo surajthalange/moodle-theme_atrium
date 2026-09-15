@@ -7,13 +7,15 @@ Every page, not only the shell. Moodle 5.1 and 5.2.
 - Front page: seven designed sections (hero, features, course showcase, numbers,
   testimonials, about, call to action), each with its own settings and switch, shown to
   visitors and to logged-in users alike; the navigation bar can go transparent over the
-  hero.
+  hero; the hero becomes a carousel of up to five slides, with autoplay, interval and
+  image wash settings.
 - Course catalogue: category and search pages as course cards or a list, with category
-  chips, sorting, paging, enrolment counts, progress for enrolled users and the price from
-  fee or PayPal enrolment; the view is remembered per user.
+  chips, sorting, paging, enrolment and activity counts, progress for enrolled users and
+  the price from fee or PayPal enrolment; the view is remembered per user.
 - Enrolment page: a course landing page around the enrolment forms, with a banner, the
   facts, the course outline, the teachers and related courses.
-- Course page: a banner with the learner's progress and a resume link; focus mode, which
+- Course page: a banner with the learner's progress and a resume link, and the course's
+  numbers (enrolled, started, completed, activities) for teaching staff; focus mode, which
   strips the course and its activities down to the content and is remembered per user;
   activity page polish.
 - Dashboard block polish; a site-wide announcement bar with four tones, dismissible per
@@ -24,7 +26,7 @@ Every page, not only the shell. Moodle 5.1 and 5.2.
   switch and "Create new account" as a button; sign up, forgotten password and MFA share
   the card.
 - Header: brand as logo, site name or both; standard or compact navigation bar; sticky or
-  scrolling.
+  scrolling; a recent courses menu; page width standard, narrow or wide.
 - Footer: up to four columns, each custom HTML, a menu, the social links or the contact
   details; a footer logo, privacy and terms links.
 - Typography: Inter (bundled) or the system font; heading weight.

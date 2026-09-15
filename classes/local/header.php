@@ -35,6 +35,9 @@ final class header {
     /** @var array<string, int> Navigation bar heights in pixels. */
     public const HEIGHTS = ['standard' => 56, 'compact' => 48];
 
+    /** @var string[] Page widths: the content's maximum width. */
+    public const WIDTHS = ['standard', 'narrow', 'wide'];
+
     /**
      * The configured brand style.
      *
@@ -66,12 +69,26 @@ final class header {
     }
 
     /**
+     * The configured page width.
+     *
+     * @return string
+     */
+    public static function pagewidth(): string {
+        $width = (string) get_config('theme_atrium', 'pagewidth');
+        return in_array($width, self::WIDTHS, true) ? $width : 'standard';
+    }
+
+    /**
      * Body classes for the switches.
      *
      * @return string[]
      */
     public static function body_classes(): array {
-        return self::sticky() ? [] : ['atrium-navbar-static'];
+        $classes = ['atrium-width-' . self::pagewidth()];
+        if (!self::sticky()) {
+            $classes[] = 'atrium-navbar-static';
+        }
+        return $classes;
     }
 
     /**

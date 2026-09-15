@@ -27,6 +27,7 @@ use PHPUnit\Framework\Attributes\CoversClass;
  * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 #[CoversClass(\theme_atrium\local\catalogue::class)]
+#[CoversClass(\theme_atrium\local\courses::class)]
 #[CoversClass(\theme_atrium\output\core\course_renderer::class)]
 final class catalogue_test extends \advanced_testcase {
     /**
@@ -155,6 +156,32 @@ final class catalogue_test extends \advanced_testcase {
         $this->assertSame([(int) $paid->id], array_map('intval', array_keys($prices)));
         $this->assertStringContainsString('49.50', $prices[$paid->id]);
         $this->assertSame([], catalogue::prices([]));
+    }
+
+    /**
+     * Cards count the course's visible activities, labels excluded, and the count can be hidden.
+     */
+    public function test_activity_count(): void {
+        global $PAGE;
+        $this->resetAfterTest();
+        $generator = $this->getDataGenerator();
+        $course = $generator->create_course();
+        $generator->create_module('page', ['course' => $course->id]);
+        $generator->create_module('forum', ['course' => $course->id]);
+        $generator->create_module('label', ['course' => $course->id]);
+        $generator->create_module('page', ['course' => $course->id, 'visible' => 0]);
+        $this->setAdminUser();
+
+        $this->assertSame(2, courses::activity_count($course->id));
+        $output = $PAGE->get_renderer('core');
+        $card = (new \theme_atrium\output\course_card(new \core_course_list_element($course)))->export_for_template($output);
+        $this->assertTrue($card['showactivities']);
+        $this->assertSame(2, $card['activitycount']);
+
+        set_config('catalogue_showactivities', 0, 'theme_atrium');
+        $card = (new \theme_atrium\output\course_card(new \core_course_list_element($course)))->export_for_template($output);
+        $this->assertFalse($card['showactivities']);
+        $this->assertNull($card['activitycount']);
     }
 
     /**

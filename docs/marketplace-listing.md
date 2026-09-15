@@ -36,15 +36,15 @@ everything Boost does keeps working.
 ### Front page
 
 Seven sections, each with its own settings and switch: a hero with image and two
-buttons, feature blocks, a course showcase (the latest courses, a category, or courses
+buttons, or a carousel of up to five slides, feature blocks, a course showcase (the latest courses, a category, or courses
 you choose), a numbers strip, testimonials, an about band and a call to action. The
 navigation bar can go transparent over the hero.
 
 ### Catalogue and enrolment
 
 Category and search pages become course cards or a list, with image, category,
-teachers, enrolled count, progress for enrolled users and the price from fee or PayPal
-enrolment; category chips, sorting, paging and search, the view remembered per user.
+teachers, enrolled and activity counts, progress for enrolled users and the price from
+fee or PayPal enrolment; category chips, sorting, paging and search, the view remembered per user.
 The enrolment page is a course landing page: banner, summary, facts, outline, teachers,
 related courses, and the enrolment card kept in view.
 
@@ -65,7 +65,8 @@ is not slowed.
 ### Course page
 
 Sections as cards, activities as rows with the activity icon in its purpose colour, and
-a banner with the learner's progress and a resume link. Focus mode strips the course and
+a banner with the learner's progress and a resume link, or the course's numbers for the
+people who run it. Focus mode strips the course and
 its activities down to the content with one switch, remembered per user. No template is
 overridden here, which means editing mode, drag and drop, bulk editing and the activity
 chooser are exactly Boost's.
@@ -82,7 +83,8 @@ the rest on the same tokens in both schemes.
 Three login layouts: the card centred over the image, or beside an image panel on the
 left or the right, with panel copy, text above and below the form, a language menu
 switch and "Create new account" as a button. The brand as logo, site name or both; a
-standard or compact navigation bar, sticky or scrolling. Up to four footer columns, each
+standard or compact navigation bar, sticky or scrolling, with a recent courses menu; page
+width standard, narrow or wide. Up to four footer columns, each
 custom HTML, a menu, the social links or the contact details, with a footer logo and
 privacy and terms links.
 

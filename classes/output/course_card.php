@@ -73,6 +73,8 @@ class course_card implements renderable, templatable {
         }
 
         $contacts = courses::contacts($course);
+        $showactivities = get_config('theme_atrium', 'catalogue_showactivities');
+        $showactivities = $showactivities === false || $showactivities === '' ? true : (bool) $showactivities;
         $summary = '';
         if ($course->has_summary()) {
             $formatted = format_text($course->summary, $course->summaryformat, ['context' => $context]);
@@ -92,6 +94,8 @@ class course_card implements renderable, templatable {
             'firstcontactname' => $contacts[0]['name'] ?? '',
             'enrolledcount' => $this->showenrolled ? courses::enrolled_count($course->id) : null,
             'showenrolled' => $this->showenrolled,
+            'activitycount' => $showactivities ? courses::activity_count($course->id) : null,
+            'showactivities' => $showactivities,
             'enrolled' => $enrolled,
             'progress' => $progress === null ? null : (int) round($progress),
             'hasprogress' => $progress !== null,

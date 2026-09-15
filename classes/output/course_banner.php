@@ -110,6 +110,51 @@ class course_banner implements renderable, templatable {
     }
 
     /**
+     * The course's numbers for people who run it: enrolled learners, how many finished,
+     * how many have started, and the activity count.
+     *
+     * Shown to anyone who can see the activity completion report, when the site setting is
+     * on. Returns null for everyone else.
+     *
+     * @param stdClass $course
+     * @return array{enrolled: int, completed: int, started: int, activities: int, hascompletion: bool}|null
+     */
+    public static function teacher_stats(stdClass $course): ?array {
+        global $CFG, $DB;
+        $setting = get_config('theme_atrium', 'course_showstats');
+        if (!($setting === false || $setting === '' || $setting)) {
+            return null;
+        }
+        $context = \context_course::instance($course->id);
+        if (!isloggedin() || isguestuser() || !has_capability('report/progress:view', $context)) {
+            return null;
+        }
+        $hascompletion = !empty($CFG->enablecompletion) && !empty($course->enablecompletion);
+        $stats = [
+            'enrolled' => courses::enrolled_count($course->id),
+            'completed' => 0,
+            'started' => 0,
+            'activities' => courses::activity_count($course->id),
+            'hascompletion' => $hascompletion,
+        ];
+        if ($hascompletion) {
+            $stats['completed'] = $DB->count_records_select(
+                'course_completions',
+                'course = :course AND timecompleted IS NOT NULL',
+                ['course' => $course->id]
+            );
+            $stats['started'] = (int) $DB->count_records_sql(
+                "SELECT COUNT(DISTINCT cmc.userid)
+                   FROM {course_modules_completion} cmc
+                   JOIN {course_modules} cm ON cm.id = cmc.coursemoduleid
+                  WHERE cm.course = :course AND cmc.completionstate > 0",
+                ['course' => $course->id]
+            );
+        }
+        return $stats;
+    }
+
+    /**
      * Export for template.
      *
      * @param renderer_base $output
@@ -137,6 +182,7 @@ class course_banner implements renderable, templatable {
             'hasresume' => $state['resumeurl'] !== '',
             'focusurl' => focusmode::applies() ? focusmode::toggle_url()->out(false) : '',
             'focuson' => focusmode::on(),
+            'stats' => self::teacher_stats($course),
         ];
     }
 }

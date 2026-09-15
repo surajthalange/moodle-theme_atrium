@@ -23,14 +23,14 @@ requests to outside services.
 | Course page | Sections as cards, activities as rows, with the activity icon in its purpose colour. No template is overridden: editing mode, drag and drop, bulk editing and the activity chooser are Boost's. |
 | Dark mode | A per-user switch in the navigation bar and in the user menu, saved as a preference. The scheme is applied on the server before the page is sent, so there is no flash on load. A site default of light, dark, or *follow the device*. Dark mode can be disabled site-wide. |
 | Presets | Five colour presets, each an accent and a sidebar tone. A brand colour setting overrides the accent; a sidebar tone setting overrides the tone. |
-| Front page | A designed site home for visitors: hero with image and two buttons, feature blocks, a course showcase (latest, a category, or chosen courses), a numbers strip, testimonials, an about band and a call to action. Every section is a setting and has a switch. |
-| Catalogue | Category and search pages as course cards or a list: image, category, teachers, enrolled count, progress for enrolled users, and the price from fee or PayPal enrolment. Category chips, sort, paging, a search box; the view is remembered per user. |
+| Front page | A designed site home for visitors: hero with image and two buttons (or a carousel of up to five slides), feature blocks, a course showcase (latest, a category, or chosen courses), a numbers strip, testimonials, an about band and a call to action. Every section is a setting and has a switch. |
+| Catalogue | Category and search pages as course cards or a list: image, category, teachers, enrolled count, activity count, progress for enrolled users, and the price from fee or PayPal enrolment. Category chips, sort, paging, a search box; the view is remembered per user. |
 | Enrolment page | A course landing page around the enrolment forms: banner, summary, facts, outline, teachers, related courses, and the enrolment card kept in view. |
-| Course banner and focus mode | A banner with the learner's progress and a resume link. Focus mode strips the course and its activities down to the content, with one switch, remembered per user. |
+| Course banner and focus mode | A banner with the learner's progress and a resume link, and for teaching staff the course's numbers (enrolled, started, completed, activities). Focus mode strips the course and its activities down to the content, with one switch, remembered per user. |
 | Announcement and quick links | A site-wide bar with four tones, dismissible per user until the text changes; a quick links menu of icon links in the navigation bar. |
 | Profile | Core's profile sections as a grid of cards under a cover band. |
 | Login | Three layouts: the card centred over the image, or beside an image panel on the left or the right, with panel copy, text above and below the form, the language menu switch, and "Create new account" as a button. Sign up, forgotten password and MFA share the card. |
-| Header | Brand as logo, site name or both; standard or compact bar; sticky or scrolling; transparent over the front page hero. |
+| Header | Brand as logo, site name or both; standard or compact bar; sticky or scrolling; transparent over the front page hero; a recent courses menu; page width standard, narrow or wide. |
 | Footer | Up to four columns, each custom HTML, a menu, the social links or the contact details; a footer logo, a legal line with `{year}` and `{sitename}`, privacy and terms links, the Moodle credit as a setting. |
 | Type | Inter, bundled in four weights, or the system font. Heading weight, text size and corner radius are settings. |
 | The long tail | Gradebook, quiz, question bank, calendar, messaging, forum, assignment, workshop, backup, participants, admin pages and the rest, on the same tokens in both schemes. |
@@ -116,9 +116,10 @@ the setting says so.
 
 *Site administration → Appearance → Themes → Atrium.* Tabs: General (preset, brand
 colour, text size, corner radius, dark mode, font, heading weight), Header (brand,
-height, sticky), Sidebar (first-visit state, tone), Login page (image, wash, layout,
+height, sticky, recent courses menu, page width), Sidebar (first-visit state, tone), Login page (image, wash, layout,
 panel copy, text around the form, language menu, sign-up button), Course (banner, focus
-mode), Dashboard (hero, image, greeting, the four tiles), Front page (every section),
+mode, the numbers for teaching staff), Dashboard (hero, image, greeting, the four tiles),
+Front page (every section, hero slides),
 Catalogue (per page, sort, what the cards show, the enrolment page), Site (announcement,
 quick links), Footer (columns and their types, contact details, logo, legal line,
 privacy and terms links, Moodle credit), Advanced (raw SCSS before and after, custom

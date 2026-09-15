@@ -177,6 +177,30 @@ final class courses {
     }
 
     /**
+     * Visible activities in a course (labels and subsections excluded), cached for ten minutes.
+     *
+     * @param int $courseid
+     * @return int
+     */
+    public static function activity_count(int $courseid): int {
+        global $DB;
+        $cache = cache::make('theme_atrium', 'coursecounts');
+        $count = $cache->get('activities_' . $courseid);
+        if ($count === false) {
+            $count = $DB->count_records_sql(
+                "SELECT COUNT(cm.id)
+                   FROM {course_modules} cm
+                   JOIN {modules} m ON m.id = cm.module
+                  WHERE cm.course = :course AND cm.visible = 1 AND cm.deletioninprogress = 0
+                        AND m.name NOT IN ('label', 'subsection')",
+                ['course' => $courseid]
+            );
+            $cache->set('activities_' . $courseid, $count);
+        }
+        return (int) $count;
+    }
+
+    /**
      * Site-wide counters for the front page stats strip, cached for ten minutes.
      *
      * @return array{courses: int, users: int, categories: int, completions: int}

@@ -85,13 +85,11 @@ body.has-atrium-showcase {
     }
 }
 
-// Hero.
+// Hero: one slide, or a carousel of them. The section carries the colour and the
+// height; each slide carries its own image and the wash over it.
 .atrium-fp-hero {
+    --atrium-fp-hero-min-height: 420px;
     position: relative;
-    display: flex;
-    align-items: center;
-    min-height: 420px;
-    padding: 4rem 0;
     color: #fff;
     background-color: var(--atrium-accent);
     background-image:
@@ -100,15 +98,10 @@ body.has-atrium-showcase {
     overflow: hidden;
 
     &.atrium-fp-hero-compact {
-        min-height: 320px;
+        --atrium-fp-hero-min-height: 320px;
     }
     &.atrium-fp-hero-tall {
-        min-height: 560px;
-    }
-    &.atrium-fp-hero-has-image {
-        background-image: linear-gradient(90deg, rgba(15, 23, 42, 0.78), rgba(15, 23, 42, 0.3)), var(--atrium-fp-hero-image);
-        background-size: cover;
-        background-position: center;
+        --atrium-fp-hero-min-height: 560px;
     }
     &.atrium-fp-hero-center {
         text-align: center;
@@ -118,6 +111,90 @@ body.has-atrium-showcase {
         .atrium-fp-hero-actions {
             justify-content: center;
         }
+    }
+}
+
+.atrium-fp-hero-slide {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    min-height: var(--atrium-fp-hero-min-height);
+    padding: 4rem 0;
+    &.atrium-fp-hero-has-image {
+        background-image: var(--atrium-fp-hero-image);
+        background-size: cover;
+        background-position: center;
+        // The wash: its strength is the overlay setting.
+        &::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image: linear-gradient(90deg, rgba(15, 23, 42, 1), rgba(15, 23, 42, 0.45));
+            opacity: var(--atrium-fp-hero-overlay, 0.5);
+        }
+    }
+    > .atrium-fp-container {
+        position: relative;
+    }
+}
+
+// The carousel: Bootstrap shows items as blocks; the slides are flex boxes.
+.atrium-fp-hero-slider {
+    .carousel-inner {
+        min-height: var(--atrium-fp-hero-min-height);
+    }
+    .carousel-item {
+        display: none;
+    }
+    .carousel-item.active,
+    .carousel-item-next,
+    .carousel-item-prev {
+        display: flex;
+    }
+    .atrium-fp-hero-control {
+        width: 4rem;
+        opacity: 0.7;
+        &:hover,
+        &:focus-visible {
+            opacity: 1;
+        }
+        .carousel-control-prev-icon,
+        .carousel-control-next-icon {
+            width: 2.25rem;
+            height: 2.25rem;
+            padding: 0.5rem;
+            border-radius: 999px;
+            background-color: rgba(15, 23, 42, 0.35);
+            background-size: 55%;
+        }
+    }
+    .atrium-fp-hero-indicators {
+        margin-bottom: 1rem;
+        button {
+            width: 0.625rem;
+            height: 0.625rem;
+            border-radius: 999px;
+            border: 0;
+            margin: 0 0.25rem;
+            opacity: 0.5;
+            &.active {
+                opacity: 1;
+            }
+        }
+    }
+    // The padding leaves the copy clear of the controls.
+    .atrium-fp-hero-content {
+        padding: 0 3rem;
+    }
+    &.atrium-fp-hero-left .atrium-fp-hero-content {
+        padding-left: 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .atrium-fp-hero-slider .carousel-item {
+        transition: none;
     }
 }
 
@@ -186,7 +263,7 @@ body.has-atrium-showcase {
         #page.drawers {
             margin-top: 0;
         }
-        .atrium-fp-hero {
+        .atrium-fp-hero-slide {
             padding-top: calc(4rem + #{$navbar-height});
         }
     }
@@ -464,8 +541,13 @@ body.has-atrium-showcase {
         padding: 2.5rem 0;
     }
     .atrium-fp-hero {
-        min-height: 0;
+        --atrium-fp-hero-min-height: 0;
+    }
+    .atrium-fp-hero-slide {
         padding: 3rem 0;
+    }
+    .atrium-fp-hero-slider .atrium-fp-hero-content {
+        padding: 0 1.5rem;
     }
     .atrium-course-grid,
     .atrium-fp-feature-grid,

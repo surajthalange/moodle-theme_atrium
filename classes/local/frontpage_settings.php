@@ -33,6 +33,9 @@ final class frontpage_settings {
     /** @var string[] Section keys in display order. */
     public const SECTIONS = ['hero', 'features', 'showcase', 'stats', 'testimonials', 'about', 'cta'];
 
+    /** @var int Hero slides at most, the hero itself included. */
+    public const MAX_SLIDES = 5;
+
     /** @var int Feature blocks the settings page offers. */
     public const MAX_FEATURES = 6;
 
@@ -78,7 +81,8 @@ final class frontpage_settings {
      * Hero settings.
      *
      * @return array{heading: string, subheading: string, button1text: string, button1url: string,
-     *     button2text: string, button2url: string, align: string, height: string, transparentnavbar: bool}
+     *     button2text: string, button2url: string, align: string, height: string, overlay: string,
+     *     transparentnavbar: bool, autoplay: bool, interval: int, slides: array}
      */
     public static function hero(): array {
         return [
@@ -90,8 +94,38 @@ final class frontpage_settings {
             'button2url' => self::text('fp_hero_button2url', ''),
             'align' => self::choice('fp_hero_align', ['left', 'center'], 'left'),
             'height' => self::choice('fp_hero_height', ['compact', 'standard', 'tall'], 'standard'),
+            'overlay' => self::choice('fp_hero_overlay', ['0.2', '0.35', '0.5', '0.65', '0.8'], '0.5'),
             'transparentnavbar' => self::bool('fp_hero_transparentnavbar', false),
+            'autoplay' => self::bool('fp_hero_autoplay', true),
+            'interval' => (int) self::choice('fp_hero_interval', ['4', '6', '8', '10'], '6'),
+            'slides' => self::hero_slides(),
         ];
+    }
+
+    /**
+     * The extra hero slides that have a heading, in order.
+     *
+     * The first slide is the hero itself; slides 2 to MAX_SLIDES are optional and turn the
+     * hero into a carousel.
+     *
+     * @return array<int, array{index: int, heading: string, subheading: string, buttontext: string, buttonurl: string}>
+     */
+    public static function hero_slides(): array {
+        $slides = [];
+        for ($i = 2; $i <= self::MAX_SLIDES; $i++) {
+            $heading = self::text('fp_hero_slide' . $i . '_heading', '');
+            if (trim($heading) === '') {
+                continue;
+            }
+            $slides[] = [
+                'index' => $i,
+                'heading' => $heading,
+                'subheading' => self::text('fp_hero_slide' . $i . '_subheading', ''),
+                'buttontext' => self::text('fp_hero_slide' . $i . '_buttontext', ''),
+                'buttonurl' => self::text('fp_hero_slide' . $i . '_buttonurl', ''),
+            ];
+        }
+        return $slides;
     }
 
     /**

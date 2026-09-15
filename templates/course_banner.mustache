@@ -26,6 +26,7 @@
     * contacts - Teachers: name, pictureurl, url
     * hasprogress, progress, complete - The learner's completion
     * hasresume, resumeurl, resumename - Last accessed activity
+    * stats - For teaching staff: enrolled, started, completed, activities, hascompletion; or null
     * focusurl, focuson - Focus mode switch
 
     Example context (json):
@@ -43,7 +44,8 @@
         "resumeurl": "/mod/page/view.php?id=12",
         "resumename": "Week 3 reading",
         "focusurl": "/theme/atrium/focus.php?state=1",
-        "focuson": false
+        "focuson": false,
+        "stats": {"enrolled": 42, "started": 30, "completed": 12, "activities": 15, "hascompletion": true}
     }
 }}
 <section class="atrium-course-banner {{ gradient }}" data-region="atrium-course-banner"{{#imageurl}} style="--atrium-course-image: url('{{{ imageurl }}}');"{{/imageurl}}>
@@ -70,6 +72,16 @@
             </div>
         </div>
         <div class="atrium-course-banner-actions">
+            {{#stats}}
+                <ul class="atrium-course-banner-stats list-unstyled m-0">
+                    <li><strong>{{ enrolled }}</strong> <span>{{#str}} course_stats_enrolled, theme_atrium {{/str}}</span></li>
+                    {{#hascompletion}}
+                        <li><strong>{{ started }}</strong> <span>{{#str}} course_stats_started, theme_atrium {{/str}}</span></li>
+                        <li><strong>{{ completed }}</strong> <span>{{#str}} course_stats_completed, theme_atrium {{/str}}</span></li>
+                    {{/hascompletion}}
+                    <li><strong>{{ activities }}</strong> <span>{{#str}} course_stats_activities, theme_atrium {{/str}}</span></li>
+                </ul>
+            {{/stats}}
             {{#hasresume}}
                 <a href="{{{ resumeurl }}}" class="btn btn-light atrium-course-banner-resume" title="{{ resumename }}">
                     {{#pix}} play, theme_atrium {{/pix}}{{#str}} course_resume, theme_atrium {{/str}}

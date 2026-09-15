@@ -78,15 +78,44 @@ class frontpage implements renderable, templatable {
         $hero = settings::hero();
         $theme = \theme_config::load('atrium');
         $imageurl = $theme->setting_file_url('fp_heroimage', 'fp_heroimage');
-        return [
+        $slides = [];
+        foreach ($hero['slides'] as $slide) {
+            $area = 'fp_hero_slide' . $slide['index'] . '_image';
+            $slideimage = $theme->setting_file_url($area, $area);
+            $slides[] = [
+                'heading' => $this->format(settings::resolve($slide['heading'], $counts)),
+                'subheading' => $this->format(settings::resolve($slide['subheading'], $counts)),
+                'button1' => $this->button($slide['buttontext'], $slide['buttonurl']),
+                'button2' => false,
+                'imageurl' => $slideimage ?: '',
+                'hasimage' => !empty($slideimage),
+                'active' => false,
+            ];
+        }
+        $first = [
             'heading' => $this->format(settings::resolve($hero['heading'], $counts)),
             'subheading' => $this->format(settings::resolve($hero['subheading'], $counts)),
             'button1' => $this->button($hero['button1text'], $hero['button1url']),
             'button2' => $this->button($hero['button2text'], $hero['button2url']),
             'imageurl' => $imageurl ?: '',
             'hasimage' => !empty($imageurl),
+            'active' => true,
+        ];
+        array_unshift($slides, $first);
+        foreach ($slides as $i => &$slide) {
+            $slide['index'] = $i;
+            $slide['number'] = $i + 1;
+        }
+        unset($slide);
+        return $first + [
+            'slides' => $slides,
+            'hasslides' => count($slides) > 1,
+            'slidecount' => count($slides),
+            'autoplay' => $hero['autoplay'],
+            'interval' => $hero['interval'] * 1000,
             'align' => $hero['align'],
             'height' => $hero['height'],
+            'overlay' => $hero['overlay'],
             'transparentnavbar' => $hero['transparentnavbar'],
         ];
     }

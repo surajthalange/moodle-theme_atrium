@@ -53,6 +53,28 @@ final class frontpage_test extends \advanced_testcase {
         $this->assertStringContainsString('Welcome to', $data['hero']['heading']);
         $this->assertSame('Browse courses', $data['hero']['button1']['text']);
         $this->assertFalse($data['hero']['button2']);
+        $this->assertFalse($data['hero']['hasslides'], 'One slide: no carousel');
+        $this->assertCount(1, $data['hero']['slides']);
+        $this->assertSame('0.5', $data['hero']['overlay']);
+
+        set_config('fp_hero_slide3_heading', 'Enrolments open', 'theme_atrium');
+        set_config('fp_hero_slide3_buttontext', 'See more', 'theme_atrium');
+        set_config('fp_hero_slide3_buttonurl', '/course/index.php', 'theme_atrium');
+        set_config('fp_hero_slide2_subheading', 'No heading, so not a slide', 'theme_atrium');
+        set_config('fp_hero_autoplay', 0, 'theme_atrium');
+        set_config('fp_hero_interval', '8', 'theme_atrium');
+        set_config('fp_hero_overlay', '0.8', 'theme_atrium');
+        $hero = (new frontpage())->export_for_template($output)['hero'];
+        $this->assertTrue($hero['hasslides']);
+        $this->assertSame(2, $hero['slidecount']);
+        $this->assertTrue($hero['slides'][0]['active']);
+        $this->assertFalse($hero['slides'][1]['active']);
+        $this->assertSame('Enrolments open', $hero['slides'][1]['heading']);
+        $this->assertSame('See more', $hero['slides'][1]['button1']['text']);
+        $this->assertSame(2, $hero['slides'][1]['number']);
+        $this->assertFalse($hero['autoplay']);
+        $this->assertSame(8000, $hero['interval']);
+        $this->assertSame('0.8', $hero['overlay']);
         $this->assertCount(3, $data['features']['items']);
         $this->assertSame(3, $data['features']['columns']);
 

@@ -31,6 +31,7 @@ use theme_atrium\local\announcement;
 use theme_atrium\local\focusmode;
 use theme_atrium\local\header;
 use theme_atrium\local\quicklinks;
+use theme_atrium\local\recentcourses;
 use theme_atrium\local\scheme;
 use theme_atrium\output\course_banner;
 use theme_atrium\output\dashboard_hero;
@@ -143,7 +144,8 @@ if ($hero) {
 $frontpage = frontpage::wanted() ? (new frontpage())->export_for_template($renderer) : false;
 if ($frontpage) {
     $extraclasses[] = 'has-atrium-frontpage';
-    if ($frontpage['transparentnavbar']) {
+    // The navigation bar floats over the hero only when nothing sits between them.
+    if ($frontpage['transparentnavbar'] && !announcement::wanted()) {
         $extraclasses[] = 'atrium-transparent-navbar';
     }
     if (isset($frontpage['showcase'])) {
@@ -180,8 +182,9 @@ if ($announcement) {
     $extraclasses[] = 'has-atrium-announcement';
 }
 $quicklinks = quicklinks::export();
+$recentcourses = recentcourses::export();
 
-// Header options: a static navigation bar, and what the brand shows.
+// Header options: a static navigation bar, the page width, and what the brand shows.
 $extraclasses = array_merge($extraclasses, header::body_classes());
 $brand = header::brand($OUTPUT);
 
@@ -228,6 +231,7 @@ $templatecontext = [
     'focus' => $focus,
     'announcement' => $announcement,
     'quicklinks' => $quicklinks,
+    'recentcourses' => $recentcourses,
     'brand' => $brand,
     'schemetoggle' => $schemetoggle,
 ];

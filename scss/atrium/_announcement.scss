@@ -157,6 +157,59 @@ body.has-atrium-announcement {
     max-width: 100%;
 }
 
+// Recent courses menu.
+.atrium-recentcourses-menu {
+    width: 300px;
+    padding: 0.5rem;
+}
+
+.atrium-recentcourses-heading {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--atrium-text-muted);
+    margin: 0.25rem 0.75rem 0.5rem;
+}
+
+.atrium-recentcourse {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 0.75rem;
+    border-radius: var(--atrium-radius-sm);
+    white-space: normal;
+    &:hover,
+    &:focus-visible {
+        background-color: var(--atrium-surface-3);
+    }
+}
+
+.atrium-recentcourse-image {
+    flex: 0 0 auto;
+    width: 48px;
+    height: 32px;
+    border-radius: var(--atrium-radius-sm);
+    background-size: cover;
+    background-position: center;
+    background-color: var(--atrium-accent-soft);
+}
+
+.atrium-recentcourse-name {
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.3;
+}
+
+.atrium-recentcourses-all {
+    margin-top: 0.25rem;
+    padding: 0.5rem 0.75rem;
+    border-top: 1px solid var(--atrium-border);
+    border-radius: 0 0 var(--atrium-radius-sm) var(--atrium-radius-sm);
+    font-size: 0.875rem;
+    color: var(--atrium-accent);
+}
+
 // Dashboard and course blocks.
 .block_timeline,
 .block_recentlyaccessedcourses,
