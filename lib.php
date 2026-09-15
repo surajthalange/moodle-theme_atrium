@@ -183,6 +183,12 @@ function theme_atrium_user_preferences(): array {
             'choices' => ['expanded', 'collapsed'],
             'permissioncallback' => [core_user::class, 'is_current_user'],
         ],
+        \theme_atrium\local\focusmode::PREFERENCE => [
+            'type' => PARAM_BOOL,
+            'null' => NULL_NOT_ALLOWED,
+            'default' => 0,
+            'permissioncallback' => [core_user::class, 'is_current_user'],
+        ],
         \theme_atrium\local\catalogue::VIEW_PREFERENCE => [
             'type' => PARAM_ALPHA,
             'null' => NULL_NOT_ALLOWED,
@@ -213,5 +219,8 @@ function theme_atrium_get_fontawesome_icon_map(): array {
         'theme_atrium:blocks' => 'fa-table-columns',
         'theme_atrium:grid' => 'fa-table-cells-large',
         'theme_atrium:list' => 'fa-list-ul',
+        'theme_atrium:play' => 'fa-play',
+        'theme_atrium:focus' => 'fa-expand',
+        'theme_atrium:exitfocus' => 'fa-compress',
     ];
 }

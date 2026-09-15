@@ -1,0 +1,121 @@
+// Focus mode: the course content alone, under a slim bar.
+
+body.atrium-focus {
+    // The chrome goes.
+    .atrium-navbar,
+    .atrium-sidebar,
+    .atrium-footer,
+    .drawer-toggles,
+    #theme_boost-drawers-courseindex,
+    #theme_boost-drawers-blocks,
+    #theme_boost-drawers-primary,
+    .atrium-course-banner-focus {
+        display: none !important; // stylelint-disable-line declaration-no-important
+    }
+
+    // The page takes the whole width, offset only by the bar.
+    #page.drawers {
+        margin: $navbar-height 0 0;
+        padding: 0 1.5rem;
+    }
+    #page.drawers .main-inner {
+        max-width: 960px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    // Course pages keep their own width limit otherwise.
+    &.limitedwidth #page.drawers .main-inner {
+        max-width: 960px;
+    }
+}
+
+.atrium-focus-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: $navbar-height;
+    z-index: $zindex-fixed;
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    padding: 0 1.5rem;
+    background-color: var(--atrium-navbar-bg);
+    border-bottom: 1px solid var(--atrium-navbar-border);
+}
+
+.atrium-focus-bar-course {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-width: 0;
+    font-weight: 600;
+    color: var(--atrium-text);
+    span {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .icon {
+        color: var(--atrium-accent);
+        margin: 0;
+    }
+    &:hover {
+        color: var(--atrium-accent);
+        text-decoration: none;
+    }
+}
+
+.atrium-focus-bar-progress {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex: 0 1 260px;
+    margin-left: auto;
+}
+
+.atrium-focus-bar-track {
+    flex: 1 1 auto;
+    height: 6px;
+    border-radius: 999px;
+    background-color: var(--atrium-progress-track);
+    overflow: hidden;
+}
+
+.atrium-focus-bar-fill {
+    display: block;
+    height: 100%;
+    border-radius: 999px;
+    background-color: var(--atrium-accent);
+}
+
+.atrium-focus-bar-text {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--atrium-text-muted);
+}
+
+.atrium-focus-bar-exit {
+    flex: 0 0 auto;
+    border-radius: 999px;
+    .icon {
+        margin-right: 0.375rem;
+    }
+    margin-left: auto;
+    .atrium-focus-bar-progress + & {
+        margin-left: 0;
+    }
+}
+
+@include media-breakpoint-down(md) {
+    .atrium-focus-bar {
+        padding: 0 1rem;
+        gap: 0.75rem;
+    }
+    .atrium-focus-bar-progress {
+        display: none;
+    }
+    body.atrium-focus #page.drawers {
+        padding: 0 1rem;
+    }
+}

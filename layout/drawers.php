@@ -27,7 +27,9 @@
  * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+use theme_atrium\local\focusmode;
 use theme_atrium\local\scheme;
+use theme_atrium\output\course_banner;
 use theme_atrium\output\dashboard_hero;
 use theme_atrium\output\frontpage;
 use theme_atrium\output\sidebar;
@@ -146,6 +148,29 @@ if ($frontpage) {
     }
 }
 
+// The course banner.
+$coursebanner = course_banner::wanted() ? (new course_banner($COURSE))->export_for_template($renderer) : false;
+if ($coursebanner) {
+    $extraclasses[] = 'has-atrium-course-banner';
+}
+
+// Focus mode: the course alone on the page, with a slim bar in place of the chrome.
+$focus = false;
+if (focusmode::active()) {
+    $extraclasses[] = 'atrium-focus';
+    $learner = course_banner::learner_state($COURSE);
+    $focus = [
+        'courseurl' => (new moodle_url('/course/view.php', ['id' => $COURSE->id]))->out(false),
+        'fullname' => format_string($COURSE->fullname, true, ['context' => context_course::instance($COURSE->id)]),
+        'hasprogress' => $learner['hasprogress'],
+        'progress' => $learner['progress'],
+        'exiturl' => focusmode::toggle_url()->out(false),
+    ];
+    // No drawers in focus mode: the content is the point.
+    $courseindexopen = false;
+    $blockdraweropen = false;
+}
+
 // The scheme switch in the navigation bar.
 $showschemetoggle = get_config('theme_atrium', 'showschemetoggle');
 $schemetoggle = false;
@@ -185,6 +210,8 @@ $templatecontext = [
     'sidebar' => $sidebardata,
     'hero' => $hero,
     'frontpage' => $frontpage,
+    'coursebanner' => $coursebanner,
+    'focus' => $focus,
     'schemetoggle' => $schemetoggle,
 ];
 

@@ -155,6 +155,22 @@ if ($ADMIN->fulltree) {
 
     $settings->add($page);
 
+    // Course.
+    $page = new admin_settingpage('theme_atrium_course', get_string('coursesettings', 'theme_atrium'));
+    $page->add(new admin_setting_configcheckbox(
+        'theme_atrium/course_showbanner',
+        get_string('course_showbanner', 'theme_atrium'),
+        get_string('course_showbanner_desc', 'theme_atrium'),
+        1
+    ));
+    $page->add(new admin_setting_configcheckbox(
+        'theme_atrium/course_enablefocus',
+        get_string('course_enablefocus', 'theme_atrium'),
+        get_string('course_enablefocus_desc', 'theme_atrium'),
+        1
+    ));
+    $settings->add($page);
+
     // Dashboard.
     $page = new admin_settingpage('theme_atrium_dashboard', get_string('dashboardsettings', 'theme_atrium'));
 

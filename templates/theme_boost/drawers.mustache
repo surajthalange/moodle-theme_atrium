@@ -36,6 +36,8 @@
     * sidebar - Context for theme_atrium/sidebar
     * hero - Context for theme_atrium/dashboard_hero, or false
     * frontpage - Context for theme_atrium/frontpage, or false
+    * coursebanner - Context for theme_atrium/course_banner, or false
+    * focus - Context for theme_atrium/focus_bar, or false
 
     Example context (json):
     {
@@ -57,7 +59,9 @@
         "addblockbutton": "",
         "sidebar": {"homeurl": "/", "sitename": "Moodle", "haslogo": false, "collapsed": false, "hasitems": false, "items": []},
         "hero": false,
-        "frontpage": false
+        "frontpage": false,
+        "coursebanner": false,
+        "focus": false
     }
 }}
 {{> theme_boost/head }}
@@ -69,6 +73,10 @@
     {{{ output.standard_top_of_body_html }}}
 
     {{> theme_boost/navbar }}
+    {{! Atrium: the focus mode bar. }}
+    {{#focus}}
+        {{> theme_atrium/focus_bar }}
+    {{/focus}}
     {{! Atrium: the sidebar. }}
     {{#sidebar}}
         {{> theme_atrium/sidebar }}
@@ -165,6 +173,10 @@
             {{#hero}}
                 {{> theme_atrium/dashboard_hero }}
             {{/hero}}
+            {{! Atrium: the course banner. }}
+            {{#coursebanner}}
+                {{> theme_atrium/course_banner }}
+            {{/coursebanner}}
             {{{ output.full_header }}}
             {{#secondarymoremenu}}
                 <div class="secondary-navigation d-print-none">

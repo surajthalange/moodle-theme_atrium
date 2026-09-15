@@ -162,3 +162,22 @@ Feature: Atrium theme
     When I press "Enrol me"
     Then I should see "Reading list"
     And ".atrium-enrol" "css_element" should not exist
+
+  Scenario: The course banner shows progress and focus mode strips the page down and remembers it
+    Given the following "activities" exist:
+      | activity | course | name         | section | completion |
+      | page     | C1     | Reading list | 1       | 1          |
+    And I am on the "C1" "Course" page logged in as "student1"
+    Then I should see "Course 1" in the ".atrium-course-banner" "css_element"
+    And I should see "0% complete" in the ".atrium-course-banner" "css_element"
+    And "#atrium-sidebar" "css_element" should be visible
+    When I click on "Focus mode" "link" in the ".atrium-course-banner" "css_element"
+    Then "body.atrium-focus" "css_element" should exist
+    And "#atrium-sidebar" "css_element" should not be visible
+    And I should see "Exit focus mode" in the ".atrium-focus-bar" "css_element"
+    When I click on "Reading list" "link" in the ".course-content" "css_element"
+    Then "body.atrium-focus" "css_element" should exist
+    And I should see "Reading list"
+    When I click on "Exit focus mode" "link" in the ".atrium-focus-bar" "css_element"
+    Then "body.atrium-focus" "css_element" should not exist
+    And "#atrium-sidebar" "css_element" should be visible

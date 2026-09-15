@@ -1,0 +1,85 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_atrium/course_banner
+
+    The course banner at the top of the course page.
+
+    Context variables required for this template:
+    * fullname - Course name
+    * imageurl, gradient - Course image or gradient class
+    * category, categoryurl - Category
+    * contacts - Teachers: name, pictureurl, url
+    * hasprogress, progress, complete - The learner's completion
+    * hasresume, resumeurl, resumename - Last accessed activity
+    * focusurl, focuson - Focus mode switch
+
+    Example context (json):
+    {
+        "fullname": "Marine Biology",
+        "imageurl": "",
+        "gradient": "atrium-gradient-1",
+        "category": "Science",
+        "categoryurl": "/course/index.php?categoryid=2",
+        "contacts": [{"name": "Grace Hopper", "pictureurl": "/user/pix.php/3/f2.jpg", "url": "/user/view.php?id=3"}],
+        "hasprogress": true,
+        "progress": 40,
+        "complete": false,
+        "hasresume": true,
+        "resumeurl": "/mod/page/view.php?id=12",
+        "resumename": "Week 3 reading",
+        "focusurl": "/theme/atrium/focus.php?state=1",
+        "focuson": false
+    }
+}}
+<section class="atrium-course-banner {{ gradient }}" data-region="atrium-course-banner"{{#imageurl}} style="--atrium-course-image: url('{{{ imageurl }}}');"{{/imageurl}}>
+    <div class="atrium-course-banner-inner">
+        <div class="atrium-course-banner-text">
+            {{#category}}<a href="{{{ categoryurl }}}" class="atrium-course-banner-category">{{ category }}</a>{{/category}}
+            <p class="atrium-course-banner-title">{{ fullname }}</p>
+            <div class="atrium-course-banner-meta">
+                {{#contacts}}
+                    <a href="{{{ url }}}" class="atrium-course-banner-contact" title="{{ name }}">
+                        <img src="{{{ pictureurl }}}" alt="{{ name }}">
+                    </a>
+                {{/contacts}}
+                {{#hasprogress}}
+                    <span class="atrium-course-banner-progress" role="progressbar" aria-label="{{#str}} progress, core {{/str}}"
+                          aria-valuenow="{{ progress }}" aria-valuemin="0" aria-valuemax="100">
+                        <span class="atrium-course-banner-progress-track"><span class="atrium-course-banner-progress-bar" style="width: {{ progress }}%"></span></span>
+                        <span class="atrium-course-banner-progress-text">
+                            {{#complete}}{{#str}} course_complete, theme_atrium {{/str}}{{/complete}}
+                            {{^complete}}{{#str}} course_progress, theme_atrium, {{ progress }} {{/str}}{{/complete}}
+                        </span>
+                    </span>
+                {{/hasprogress}}
+            </div>
+        </div>
+        <div class="atrium-course-banner-actions">
+            {{#hasresume}}
+                <a href="{{{ resumeurl }}}" class="btn btn-light atrium-course-banner-resume" title="{{ resumename }}">
+                    {{#pix}} play, theme_atrium {{/pix}}{{#str}} course_resume, theme_atrium {{/str}}
+                </a>
+            {{/hasresume}}
+            {{#focusurl}}
+                <a href="{{{ focusurl }}}" class="btn atrium-course-banner-focus" data-action="atrium-focus-toggle">
+                    {{#pix}} focus, theme_atrium {{/pix}}{{#focuson}}{{#str}} focus_exit, theme_atrium {{/str}}{{/focuson}}{{^focuson}}{{#str}} focus_enter, theme_atrium {{/str}}{{/focuson}}
+                </a>
+            {{/focusurl}}
+        </div>
+    </div>
+</section>

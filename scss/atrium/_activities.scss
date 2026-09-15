@@ -1,0 +1,278 @@
+// Activity pages: the header, the previous/next bar, and each module's own furniture.
+
+// The activity header core renders above every module page.
+.path-mod .activity-header {
+    .activity-information {
+        color: var(--atrium-text-muted);
+    }
+    .activity-dates .date-item {
+        color: var(--atrium-text-muted);
+    }
+    .activity-description {
+        line-height: 1.7;
+    }
+    .completion-info .btn,
+    .automatic-completion-conditions .badge {
+        border-radius: 999px;
+    }
+    .automatic-completion-conditions .badge.badge-light,
+    .automatic-completion-conditions .badge.bg-light {
+        background-color: var(--atrium-surface-3) !important; // stylelint-disable-line declaration-no-important
+        color: var(--atrium-text);
+    }
+}
+
+// Previous / next activity.
+#page-content .activity-navigation {
+    margin-top: 2rem;
+    .row {
+        gap: 0.75rem 0;
+    }
+    .btn,
+    a.btn-link {
+        @extend %atrium-card;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1rem;
+        color: var(--atrium-text);
+        text-decoration: none;
+        max-width: 100%;
+        &:hover,
+        &:focus-visible {
+            border-color: var(--atrium-accent);
+            color: var(--atrium-accent);
+            text-decoration: none;
+        }
+    }
+    .custom-select,
+    .form-select {
+        border-radius: 999px;
+    }
+}
+
+// Intro boxes that modules still print themselves.
+.path-mod {
+    .box.generalbox,
+    .mod_introbox,
+    .box.mod_introbox {
+        @extend %atrium-card;
+        padding: 1.25rem 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    // Assignment.
+    .submissionstatustable,
+    .submissionsummarytable,
+    .feedback,
+    .gradingsummary,
+    .editsubmissionform,
+    .submissionaction {
+        @extend %atrium-card;
+        padding: 1.25rem 1.5rem;
+        margin-bottom: 1.5rem;
+        .generaltable {
+            border: 0;
+            border-radius: 0;
+            background-color: transparent;
+        }
+        .cell.c0 {
+            font-weight: 600;
+            color: var(--atrium-text-muted);
+            width: 30%;
+        }
+        .submissionstatussubmitted,
+        .latesubmission,
+        .earlysubmission {
+            border-radius: var(--atrium-radius-sm);
+        }
+    }
+    .submissionsummarytable h3,
+    .feedback h3,
+    .gradingsummary h3 {
+        font-size: 1.125rem;
+        margin-bottom: 1rem;
+    }
+
+    // Quiz.
+    .quizattempt,
+    .quizinfo,
+    .quizattemptsummary {
+        @extend %atrium-card;
+        padding: 1.25rem 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+    .quizattemptsummary .generaltable {
+        border: 0;
+        border-radius: 0;
+    }
+    .que {
+        @extend %atrium-card;
+        margin-bottom: 1.5rem;
+        .info {
+            background-color: var(--atrium-surface-2);
+            border-right: 1px solid var(--atrium-border);
+            border-radius: var(--atrium-radius) 0 0 var(--atrium-radius);
+            .no {
+                font-weight: 700;
+                color: var(--atrium-accent);
+            }
+        }
+        .content {
+            padding: 1.25rem 1.5rem;
+        }
+        .formulation {
+            background-color: transparent;
+            border: 0;
+            color: var(--atrium-text);
+        }
+        .outcome,
+        .comment {
+            border-radius: var(--atrium-radius-sm);
+        }
+        .answer .r0,
+        .answer .r1 {
+            border-radius: var(--atrium-radius-sm);
+            padding: 0.5rem 0.75rem;
+        }
+    }
+    #mod_quiz_navblock {
+        @extend %atrium-card;
+        padding: 1rem;
+        .qnbutton {
+            border-radius: var(--atrium-radius-sm);
+            border-color: var(--atrium-border);
+        }
+    }
+
+    // Forum.
+    .forumpost,
+    .forum-post-container {
+        @extend %atrium-card;
+        padding: 1.25rem 1.5rem;
+        margin-bottom: 1rem;
+        .forum-post-container {
+            box-shadow: none;
+            border: 0;
+            border-top: 1px solid var(--atrium-border);
+            border-radius: 0;
+            margin: 0;
+        }
+    }
+    .forum-post-container .post-actions .btn-link,
+    .forumpost .commands a {
+        color: var(--atrium-text-muted);
+        &:hover {
+            color: var(--atrium-accent);
+        }
+    }
+    .discussion-list,
+    .forumheaderlist {
+        @extend %atrium-card;
+        overflow: hidden;
+        tbody tr:hover {
+            background-color: var(--atrium-surface-2);
+        }
+    }
+
+    // Book.
+    .book_toc {
+        @extend %atrium-card;
+        padding: 1rem;
+        ul li a {
+            border-radius: var(--atrium-radius-sm);
+            padding: 0.25rem 0.5rem;
+            display: block;
+            &:hover {
+                background-color: var(--atrium-surface-2);
+                text-decoration: none;
+            }
+        }
+    }
+    .book_content {
+        @extend %atrium-card;
+        padding: 1.5rem;
+        line-height: 1.7;
+    }
+    .book_navigation {
+        @extend %atrium-card;
+        padding: 0.75rem 1rem;
+        margin-top: 1rem;
+    }
+
+    // Page and resource: the content itself.
+    &.path-mod-page #region-main .box.generalbox.center,
+    &.path-mod-page .box.generalbox.pagecontent {
+        @extend %atrium-card;
+        padding: 1.5rem;
+        line-height: 1.7;
+        text-align: left;
+    }
+    .resourcecontent {
+        @extend %atrium-card;
+        padding: 1.5rem;
+    }
+
+    // Choice, feedback, survey.
+    .choices .option,
+    .feedback_form .feedback_item_box,
+    .surveyform .qn-container {
+        @extend %atrium-card;
+        padding: 1rem 1.25rem;
+        margin-bottom: 0.75rem;
+    }
+    .feedback_form .feedback_item_box {
+        .feedback_item_label,
+        legend {
+            font-weight: 600;
+        }
+    }
+
+    // Lesson.
+    .lessonpage,
+    .lesson-timer,
+    .lessonbutton {
+        border-radius: var(--atrium-radius);
+    }
+    .lessonpage {
+        @extend %atrium-card;
+        padding: 1.5rem;
+    }
+
+    // Workshop.
+    .path-mod-workshop .userplan {
+        @extend %atrium-card;
+        overflow: hidden;
+        .phase {
+            border-color: var(--atrium-border);
+            &.active {
+                background-color: var(--atrium-accent-softer);
+            }
+        }
+    }
+
+    // Wiki and glossary.
+    .wikipage,
+    .glossarypost {
+        @extend %atrium-card;
+        padding: 1.25rem 1.5rem;
+        margin-bottom: 1rem;
+    }
+    .glossarypost .entryheader {
+        font-weight: 600;
+    }
+
+    // H5P and SCORM frames.
+    .h5p-placeholder,
+    .h5pactivity-container,
+    #scormpage {
+        @extend %atrium-card;
+        overflow: hidden;
+    }
+}
+
+// Grade and attempt review tables everywhere in a module.
+.path-mod .generaltable,
+.path-mod .flexible {
+    background-color: var(--atrium-surface);
+}
