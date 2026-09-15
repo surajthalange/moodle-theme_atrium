@@ -135,3 +135,30 @@ Feature: Atrium theme
     When I set the field "Search courses" to "nothinghere"
     And I press "Search"
     Then ".atrium-empty" "css_element" should exist
+
+  Scenario: The enrolment page is a course landing page around the enrolment forms
+    Given the following "courses" exist:
+      | fullname     | shortname | summary                     |
+      | Astrophysics | AP1       | Stars, from birth to death. |
+    And the following "activities" exist:
+      | activity | course | name          | section |
+      | page     | AP1    | Reading list  | 1       |
+      | forum    | AP1    | Questions     | 1       |
+    And the following "course enrolments" exist:
+      | user     | course | role           |
+      | teacher1 | AP1    | editingteacher |
+    And I log in as "admin"
+    And I add "Self enrolment" enrolment method in "Astrophysics" with:
+      | Custom instance name | Join Astrophysics |
+    And I log out
+    When I log in as "student1"
+    And I am on "Astrophysics" course homepage
+    Then I should see "Astrophysics" in the ".atrium-enrol-banner" "css_element"
+    And I should see "Stars, from birth to death." in the ".atrium-enrol-summary" "css_element"
+    And I should see "Reading list" in the ".atrium-enrol-outline" "css_element"
+    And I should see "Grace Hopper" in the ".atrium-enrol-instructors" "css_element"
+    And I should see "Enrolment options" in the ".atrium-enrol-card" "css_element"
+    And "#theme_boost-drawers-courseindex" "css_element" should not exist
+    When I press "Enrol me"
+    Then I should see "Reading list"
+    And ".atrium-enrol" "css_element" should not exist

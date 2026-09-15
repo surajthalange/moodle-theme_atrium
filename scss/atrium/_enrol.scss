@@ -1,0 +1,368 @@
+// The enrolment page: a course landing page.
+
+body.path-enrol {
+    // The page draws its own heading and crumbs.
+    #page-header {
+        display: none;
+    }
+    // The landing page uses the full width the layout offers.
+    &.limitedwidth #page.drawers .main-inner {
+        max-width: 1320px;
+    }
+}
+
+.atrium-enrol-banner {
+    position: relative;
+    border-radius: var(--atrium-radius-lg);
+    min-height: 260px;
+    display: flex;
+    align-items: flex-end;
+    color: #fff;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    background-size: cover;
+    background-position: center;
+    &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-image: linear-gradient(180deg, rgba(15, 23, 42, 0.1), rgba(15, 23, 42, 0.75));
+    }
+    &[style*="--atrium-enrol-image"] {
+        background-image: var(--atrium-enrol-image);
+    }
+}
+
+.atrium-enrol-banner-inner {
+    position: relative;
+    padding: 2rem;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 1rem;
+}
+
+.atrium-enrol-crumbs {
+    flex-basis: 100%;
+    font-size: 0.875rem;
+    opacity: 0.9;
+    a {
+        color: #fff;
+    }
+    span {
+        margin: 0 0.375rem;
+    }
+}
+
+.atrium-enrol-title {
+    flex: 1 1 auto;
+    color: #fff;
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin: 0;
+}
+
+.atrium-enrol-price {
+    padding: 0.5rem 1rem;
+    border-radius: 999px;
+    background-color: #fff;
+    color: var(--atrium-text);
+    font-weight: 700;
+}
+
+.atrium-enrol-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 340px;
+    gap: 2rem;
+    align-items: start;
+}
+
+.atrium-enrol-facts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 0.75rem;
+    margin: 0 0 2rem;
+}
+
+.atrium-enrol-fact {
+    @extend %atrium-card;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.875rem 1rem;
+}
+
+.atrium-enrol-fact-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    flex: 0 0 36px;
+    border-radius: var(--atrium-radius-sm);
+    background-color: var(--atrium-accent-soft);
+    color: var(--atrium-accent);
+    .icon {
+        margin: 0;
+        width: auto;
+        height: auto;
+    }
+}
+
+.atrium-enrol-fact-body {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+    min-width: 0;
+}
+
+.atrium-enrol-fact-value {
+    font-weight: 700;
+    font-size: 1.0625rem;
+}
+
+.atrium-enrol-fact-label {
+    font-size: 0.75rem;
+    color: var(--atrium-text-muted);
+}
+
+.atrium-enrol-section {
+    margin-bottom: 2rem;
+}
+
+.atrium-enrol-heading {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0 0 1rem;
+}
+
+.atrium-enrol-summary {
+    @extend %atrium-card;
+    padding: 1.5rem;
+    line-height: 1.7;
+    p:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.atrium-enrol-outline {
+    @extend %atrium-card;
+    margin: 0;
+    overflow: hidden;
+}
+
+.atrium-enrol-outline-section {
+    padding: 1rem 1.25rem;
+    & + & {
+        border-top: 1px solid var(--atrium-border);
+    }
+}
+
+.atrium-enrol-outline-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+}
+
+.atrium-enrol-outline-name {
+    font-weight: 600;
+}
+
+.atrium-enrol-outline-count {
+    font-size: 0.8125rem;
+    color: var(--atrium-text-muted);
+    white-space: nowrap;
+}
+
+.atrium-enrol-outline-items {
+    margin: 0.625rem 0 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 0.375rem 1rem;
+}
+
+.atrium-enrol-outline-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9375rem;
+    color: var(--atrium-text-muted);
+    min-width: 0;
+    > span:last-child {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+}
+
+.atrium-enrol-outline-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    flex: 0 0 26px;
+    border-radius: 6px;
+    background-color: var(--atrium-surface-3);
+    img,
+    .icon {
+        width: 16px;
+        height: 16px;
+        margin: 0;
+        filter: brightness(0) invert(1);
+    }
+}
+
+// Activity icon tiles by purpose, matching core's palette.
+$atrium-purposes: (
+    content: #0099ad,
+    assessment: #f90086,
+    collaboration: #5b40ff,
+    communication: #eb6200,
+    interactivecontent: #8d3d1b,
+    administration: #da58ef,
+    other: #64748b,
+    interface: #64748b,
+);
+
+@each $purpose, $colour in $atrium-purposes {
+    .atrium-purpose-#{$purpose} {
+        background-color: $colour;
+    }
+}
+
+.atrium-enrol-outline-more {
+    font-size: 0.8125rem;
+    color: var(--atrium-text-faint);
+    margin: 0.5rem 0 0;
+}
+
+.atrium-enrol-instructors {
+    display: grid;
+    gap: 1rem;
+    margin: 0;
+}
+
+.atrium-enrol-instructor {
+    @extend %atrium-card;
+    display: flex;
+    gap: 1rem;
+    padding: 1.25rem;
+}
+
+.atrium-enrol-instructor-photo {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    flex: 0 0 64px;
+    object-fit: cover;
+}
+
+.atrium-enrol-instructor-name {
+    display: block;
+    font-weight: 600;
+}
+
+.atrium-enrol-instructor-role {
+    display: block;
+    font-size: 0.8125rem;
+    color: var(--atrium-accent);
+    font-weight: 500;
+}
+
+.atrium-enrol-instructor-bio {
+    margin: 0.5rem 0 0;
+    color: var(--atrium-text-muted);
+    font-size: 0.9375rem;
+    line-height: 1.55;
+}
+
+// The enrolment card.
+.atrium-enrol-side {
+    position: sticky;
+    top: calc(#{$navbar-height} + 1rem);
+}
+
+.atrium-enrol-card {
+    @extend %atrium-card;
+    padding: 1.5rem;
+    box-shadow: var(--atrium-shadow-md);
+}
+
+.atrium-enrol-card-heading {
+    font-size: 1.0625rem;
+    font-weight: 600;
+    margin: 0 0 1rem;
+}
+
+.atrium-enrol-card-price {
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin: 0 0 1rem;
+}
+
+.atrium-enrol-widget {
+    & + & {
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid var(--atrium-border);
+    }
+    // Core's enrol forms come as boxes with headings; make them fit the card.
+    .box,
+    .generalbox {
+        padding: 0;
+        margin: 0;
+        border: 0;
+    }
+    h2,
+    h3,
+    legend {
+        font-size: 1rem;
+        font-weight: 600;
+        margin-bottom: 0.75rem;
+    }
+    .mform .fitem .col-form-label,
+    .mform .col-md-3,
+    .mform .col-md-9 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    .btn-primary {
+        width: 100%;
+        border-radius: 999px;
+    }
+}
+
+.atrium-enrol-message {
+    color: var(--atrium-text-muted);
+}
+
+.atrium-enrol-related {
+    margin-top: 1rem;
+}
+
+@include media-breakpoint-down(lg) {
+    .atrium-enrol-layout {
+        grid-template-columns: minmax(0, 1fr);
+    }
+    .atrium-enrol-side {
+        position: static;
+        order: -1;
+    }
+}
+
+@include media-breakpoint-down(md) {
+    .atrium-enrol-banner {
+        min-height: 200px;
+    }
+    .atrium-enrol-banner-inner {
+        padding: 1.25rem;
+    }
+    .atrium-enrol-title {
+        font-size: 1.5rem;
+    }
+}

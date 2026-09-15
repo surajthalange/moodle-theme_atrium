@@ -222,7 +222,7 @@ final class frontpage_settings {
      * Replace {sitename} and the stat tokens in a string.
      *
      * @param string $text
-     * @param array<string, int> $counts Token (without braces) => value.
+     * @param array $counts Token (without braces) => value.
      * @return string
      */
     public static function resolve(string $text, array $counts): string {

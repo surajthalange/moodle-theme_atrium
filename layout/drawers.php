@@ -63,6 +63,10 @@ if (!$hasblocks) {
     $blockdraweropen = false;
 }
 $courseindex = core_course_drawer();
+// Atrium: the enrolment page is a landing page for people outside the course; no index.
+if ($PAGE->pagetype === 'enrol-index') {
+    $courseindex = false;
+}
 if (!$courseindex) {
     $courseindexopen = false;
 }

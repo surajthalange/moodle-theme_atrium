@@ -1,0 +1,173 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_atrium/enrolpage
+
+    The enrolment page: banner, facts, outline, instructors, a sticky card with core's
+    enrolment forms, and related courses.
+
+    Context variables required for this template:
+    * fullname, summary - Course name and formatted summary
+    * imageurl, gradient - Course image or gradient class
+    * category, categoryurl, catalogueurl - Category and catalogue links
+    * facts - label, value, icon (pix key)
+    * showoutline, sections, outlinemore - Outline: name, activities (name, modname, purpose), count, hasmore, more
+    * showinstructors, instructors - name, role, pictureurl, bio
+    * haswidgets, widgets - Core's enrolment plugin forms
+    * message, continuebutton - When there is no way to enrol
+    * hasprice, price - Price badge
+    * hasrelated, related - Course card contexts
+
+    Example context (json):
+    {
+        "fullname": "Marine Biology",
+        "summary": "<p>Life in the oceans.</p>",
+        "imageurl": "",
+        "gradient": "atrium-gradient-3",
+        "category": "Science",
+        "categoryurl": "/course/index.php?categoryid=2",
+        "catalogueurl": "/course/index.php",
+        "facts": [{"label": "Sections", "value": "6", "icon": "i/section"}],
+        "showoutline": true,
+        "sections": [{"name": "Week 1", "count": 2, "hasmore": false, "more": 0,
+            "activities": [{"name": "Introduction", "modname": "page", "purpose": "content"}]}],
+        "outlinemore": 0,
+        "showinstructors": true,
+        "instructors": [{"name": "Grace Hopper", "role": "Teacher", "pictureurl": "/user/pix.php/3/f1.jpg", "bio": "Marine scientist."}],
+        "haswidgets": true,
+        "widgets": ["<form>Self enrolment</form>"],
+        "message": "",
+        "continuebutton": "",
+        "hasprice": false,
+        "price": "",
+        "hasrelated": false,
+        "related": []
+    }
+}}
+<div class="atrium-enrol" data-region="atrium-enrol">
+    <header class="atrium-enrol-banner {{ gradient }}"{{#imageurl}} style="--atrium-enrol-image: url('{{{ imageurl }}}');"{{/imageurl}}>
+        <div class="atrium-enrol-banner-inner">
+            <nav class="atrium-enrol-crumbs" aria-label="{{#str}} categories, core {{/str}}">
+                <a href="{{{ catalogueurl }}}">{{#str}} fulllistofcourses, core {{/str}}</a>
+                {{#category}}
+                    <span aria-hidden="true">/</span>
+                    <a href="{{{ categoryurl }}}">{{ category }}</a>
+                {{/category}}
+            </nav>
+            <h1 class="atrium-enrol-title">{{ fullname }}</h1>
+            {{#hasprice}}<span class="atrium-enrol-price">{{ price }}</span>{{/hasprice}}
+        </div>
+    </header>
+
+    <div class="atrium-enrol-layout">
+        <div class="atrium-enrol-main">
+            <ul class="atrium-enrol-facts list-unstyled">
+                {{#facts}}
+                    <li class="atrium-enrol-fact">
+                        <span class="atrium-enrol-fact-icon" aria-hidden="true">{{#pix}} {{ icon }}, core {{/pix}}</span>
+                        <span class="atrium-enrol-fact-body">
+                            <span class="atrium-enrol-fact-value">{{ value }}</span>
+                            <span class="atrium-enrol-fact-label">{{ label }}</span>
+                        </span>
+                    </li>
+                {{/facts}}
+            </ul>
+
+            {{#summary}}
+                <section class="atrium-enrol-section">
+                    <h2 class="atrium-enrol-heading">{{#str}} enrol_about, theme_atrium {{/str}}</h2>
+                    <div class="atrium-enrol-summary">{{{ summary }}}</div>
+                </section>
+            {{/summary}}
+
+            {{#showoutline}}
+                <section class="atrium-enrol-section">
+                    <h2 class="atrium-enrol-heading">{{#str}} enrol_outline, theme_atrium {{/str}}</h2>
+                    <ol class="atrium-enrol-outline list-unstyled">
+                        {{#sections}}
+                            <li class="atrium-enrol-outline-section">
+                                <div class="atrium-enrol-outline-head">
+                                    <span class="atrium-enrol-outline-name">{{ name }}</span>
+                                    <span class="atrium-enrol-outline-count">{{#str}} enrol_activitycount, theme_atrium, {{ count }} {{/str}}</span>
+                                </div>
+                                {{#activities.0}}
+                                <ul class="atrium-enrol-outline-items list-unstyled">
+                                    {{#activities}}
+                                        <li class="atrium-enrol-outline-item">
+                                            <span class="atrium-enrol-outline-icon atrium-purpose-{{ purpose }}" aria-hidden="true">
+                                                {{#pix}} monologo, mod_{{ modname }} {{/pix}}
+                                            </span>
+                                            <span>{{ name }}</span>
+                                        </li>
+                                    {{/activities}}
+                                    {{#hasmore}}<li class="atrium-enrol-outline-more">{{#str}} enrol_andmore, theme_atrium, {{ more }} {{/str}}</li>{{/hasmore}}
+                                </ul>
+                                {{/activities.0}}
+                            </li>
+                        {{/sections}}
+                    </ol>
+                    {{#outlinemore}}<p class="atrium-enrol-outline-more">{{#str}} enrol_andmoresections, theme_atrium, {{ outlinemore }} {{/str}}</p>{{/outlinemore}}
+                </section>
+            {{/showoutline}}
+
+            {{#showinstructors}}
+                <section class="atrium-enrol-section">
+                    <h2 class="atrium-enrol-heading">{{#str}} enrol_instructors, theme_atrium {{/str}}</h2>
+                    <ul class="atrium-enrol-instructors list-unstyled">
+                        {{#instructors}}
+                            <li class="atrium-enrol-instructor">
+                                <img src="{{{ pictureurl }}}" alt="" class="atrium-enrol-instructor-photo">
+                                <div>
+                                    <span class="atrium-enrol-instructor-name">{{ name }}</span>
+                                    {{#role}}<span class="atrium-enrol-instructor-role">{{ role }}</span>{{/role}}
+                                    {{#bio}}<p class="atrium-enrol-instructor-bio">{{ bio }}</p>{{/bio}}
+                                </div>
+                            </li>
+                        {{/instructors}}
+                    </ul>
+                </section>
+            {{/showinstructors}}
+        </div>
+
+        <aside class="atrium-enrol-side">
+            <div class="atrium-enrol-card">
+                <h2 class="atrium-enrol-card-heading">{{#str}} enrolmentoptions, enrol {{/str}}</h2>
+                {{#hasprice}}<p class="atrium-enrol-card-price">{{ price }}</p>{{/hasprice}}
+                {{#haswidgets}}
+                    {{#widgets}}
+                        <div class="atrium-enrol-widget">{{{ . }}}</div>
+                    {{/widgets}}
+                {{/haswidgets}}
+                {{^haswidgets}}
+                    <p class="atrium-enrol-message">{{ message }}</p>
+                    {{{ continuebutton }}}
+                {{/haswidgets}}
+            </div>
+        </aside>
+    </div>
+
+    {{#hasrelated}}
+        <section class="atrium-enrol-section atrium-enrol-related">
+            <h2 class="atrium-enrol-heading">{{#str}} enrol_related, theme_atrium {{/str}}</h2>
+            <div class="atrium-course-grid">
+                {{#related}}
+                    {{> theme_atrium/course_card }}
+                {{/related}}
+            </div>
+        </section>
+    {{/hasrelated}}
+</div>

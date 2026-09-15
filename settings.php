@@ -582,7 +582,31 @@ if ($ADMIN->fulltree) {
         get_string('catalogue_showprice_desc', 'theme_atrium'),
         1
     ));
+    $page->add(new admin_setting_heading(
+        'theme_atrium/enrol_heading',
+        get_string('enrolpagesettings', 'theme_atrium'),
+        get_string('enrolpagesettings_desc', 'theme_atrium')
+    ));
+    $page->add(new admin_setting_configcheckbox(
+        'theme_atrium/enrol_showoutline',
+        get_string('enrol_showoutline', 'theme_atrium'),
+        get_string('enrol_showoutline_desc', 'theme_atrium'),
+        1
+    ));
+    $page->add(new admin_setting_configcheckbox(
+        'theme_atrium/enrol_showinstructors',
+        get_string('enrol_showinstructors', 'theme_atrium'),
+        get_string('enrol_showinstructors_desc', 'theme_atrium'),
+        1
+    ));
+    $page->add(new admin_setting_configcheckbox(
+        'theme_atrium/enrol_showrelated',
+        get_string('enrol_showrelated', 'theme_atrium'),
+        get_string('enrol_showrelated_desc', 'theme_atrium'),
+        1
+    ));
     $settings->add($page);
+
     // Footer.
     $page = new admin_settingpage('theme_atrium_footer', get_string('footersettings', 'theme_atrium'));
 

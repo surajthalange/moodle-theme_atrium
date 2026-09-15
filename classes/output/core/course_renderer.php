@@ -19,14 +19,16 @@ namespace theme_atrium\output\core;
 use core_course_category;
 use moodle_url;
 use theme_atrium\local\catalogue;
+use theme_atrium\local\courses;
+use theme_atrium\local\enrolpage;
 use theme_atrium\output\course_card;
 
 /**
  * Course renderer: the catalogue replaces core's category listing and search results.
  *
- * Only course_category() and search_courses() are overridden. Everything else the
- * course renderer draws (the front page combo list, the course search form, activity
- * chooser fragments) is core's.
+ * course_category() and search_courses() draw the catalogue; enrolment_options() draws
+ * the enrolment page. Everything else the course renderer draws (the front page combo
+ * list, the course search form, activity chooser fragments) is core's.
  *
  * @package    theme_atrium
  * @copyright  2026 Suraj Thalange
@@ -198,6 +200,80 @@ class course_renderer extends \core_course_renderer {
             'manageactions' => $manageactions,
             'searchonly' => $searchonly,
         ];
+    }
+
+    /**
+     * The enrolment page: a course landing page with core's enrolment forms in a side card.
+     *
+     * @param \stdClass $course
+     * @param array $widgets Enrolment plugin forms, keyed by instance id.
+     * @param \core\url|null $returnurl
+     * @return string
+     */
+    public function enrolment_options(\stdClass $course, array $widgets, ?\core\url $returnurl = null): string {
+        $message = '';
+        $continuebutton = '';
+        if (!$widgets) {
+            if (isguestuser()) {
+                $message = get_string('noguestaccess', 'enrol');
+                $continuebutton = $this->output->continue_button(get_login_url());
+            } else {
+                $url = $returnurl ?: (get_local_referer(false) ?: new moodle_url('/index.php'));
+                $message = get_string('notenrollable', 'enrol');
+                $continuebutton = $this->output->continue_button($url);
+            }
+        }
+
+        $element = new \core_course_list_element($course);
+        $page = new enrolpage($course);
+        $outline = $page->outline();
+        $image = courses::image($element);
+        $category = core_course_category::get($course->category, IGNORE_MISSING);
+        $context = \context_course::instance($course->id);
+        $prices = catalogue::prices([$course->id]);
+
+        $summary = '';
+        if ($element->has_summary()) {
+            $summary = format_text($course->summary, $course->summaryformat, ['context' => $context]);
+        }
+
+        $sections = [];
+        foreach ($outline['sections'] as $section) {
+            $sections[] = $section + ['hasmore' => $section['more'] > 0, 'count' => count($section['activities'])];
+        }
+
+        $related = [];
+        if ($this->setting('enrol_showrelated', true)) {
+            foreach ($page->related() as $other) {
+                $related[] = (new course_card($other, true, false))->export_for_template($this);
+            }
+        }
+
+        $data = [
+            'fullname' => $element->get_formatted_name(),
+            'summary' => $summary,
+            'imageurl' => $image['imageurl'],
+            'gradient' => $image['gradient'],
+            'category' => $category ? $category->get_formatted_name() : '',
+            'categoryurl' => $category ? (new moodle_url('/course/index.php', ['categoryid' => $category->id]))->out(false) : '',
+            'catalogueurl' => (new moodle_url('/course/index.php'))->out(false),
+            'facts' => $page->facts($outline),
+            'showoutline' => $this->setting('enrol_showoutline', true) && !empty($sections),
+            'sections' => $sections,
+            'outlinemore' => $outline['more'],
+            'showinstructors' => $this->setting('enrol_showinstructors', true),
+            'instructors' => $page->instructors(),
+            'widgets' => array_values($widgets),
+            'haswidgets' => !empty($widgets),
+            'message' => $message,
+            'continuebutton' => $continuebutton,
+            'price' => $prices[$course->id] ?? '',
+            'hasprice' => isset($prices[$course->id]),
+            'related' => $related,
+            'hasrelated' => !empty($related),
+        ];
+        $data['showinstructors'] = $data['showinstructors'] && !empty($data['instructors']);
+        return $this->render_from_template('theme_atrium/enrolpage', $data);
     }
 
     /**
