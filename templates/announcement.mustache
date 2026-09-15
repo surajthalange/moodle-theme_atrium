@@ -1,0 +1,48 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_atrium/announcement
+
+    The site-wide announcement bar above the page.
+
+    Context variables required for this template:
+    * text - Formatted announcement HTML
+    * type - info, success, warning or danger
+    * dismissible - Whether the current user may dismiss it
+    * hash - Identifies the announcement text for dismissal
+
+    Example context (json):
+    {
+        "text": "<p>Maintenance on Saturday from 08:00 to 10:00.</p>",
+        "type": "warning",
+        "dismissible": true,
+        "hash": "abc123"
+    }
+}}
+<div class="atrium-announcement atrium-announcement-{{ type }}" data-region="atrium-announcement" data-hash="{{ hash }}" role="status">
+    <div class="atrium-announcement-text">{{{ text }}}</div>
+    {{#dismissible}}
+        <form method="post" action="{{ config.wwwroot }}/theme/atrium/announcement.php" class="atrium-announcement-dismiss">
+            <input type="hidden" name="sesskey" value="{{ config.sesskey }}">
+            <input type="hidden" name="hash" value="{{ hash }}">
+            <button type="submit" class="btn btn-icon" data-action="atrium-announcement-dismiss"
+                    aria-label="{{#str}} announcement_dismiss, theme_atrium {{/str}}" title="{{#str}} announcement_dismiss, theme_atrium {{/str}}">
+                {{#pix}} e/cancel, core {{/pix}}
+            </button>
+        </form>
+    {{/dismissible}}
+</div>

@@ -1,0 +1,249 @@
+// The announcement bar, the quick links menu, and dashboard block polish.
+
+// Announcement bar: above the page, under the navigation bar.
+.atrium-announcement {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.625rem 1.5rem;
+    font-size: 0.9375rem;
+    border-bottom: 1px solid transparent;
+    p:last-child {
+        margin-bottom: 0;
+    }
+    a {
+        font-weight: 600;
+        color: inherit;
+        text-decoration: underline;
+    }
+}
+
+.atrium-announcement-text {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.atrium-announcement-dismiss .btn {
+    color: inherit;
+    opacity: 0.8;
+    &:hover,
+    &:focus-visible {
+        opacity: 1;
+        background-color: rgba(0, 0, 0, 0.08);
+    }
+}
+
+$atrium-announcement-tones: (
+    info: (#e0f2fe, #0c4a6e, #bae6fd),
+    success: (#dcfce7, #14532d, #bbf7d0),
+    warning: (#fef3c7, #78350f, #fde68a),
+    danger: (#fee2e2, #7f1d1d, #fecaca),
+);
+
+@each $tone, $colours in $atrium-announcement-tones {
+    .atrium-announcement-#{$tone} {
+        background-color: nth($colours, 1);
+        color: nth($colours, 2);
+        border-bottom-color: nth($colours, 3);
+    }
+}
+
+[data-bs-theme="dark"] {
+    .atrium-announcement-info {
+        background-color: #0c2a3d;
+        color: #bae6fd;
+        border-bottom-color: #164e63;
+    }
+    .atrium-announcement-success {
+        background-color: #0f2e1d;
+        color: #bbf7d0;
+        border-bottom-color: #166534;
+    }
+    .atrium-announcement-warning {
+        background-color: #3b2a0a;
+        color: #fde68a;
+        border-bottom-color: #92400e;
+    }
+    .atrium-announcement-danger {
+        background-color: #3f1212;
+        color: #fecaca;
+        border-bottom-color: #991b1b;
+    }
+}
+
+// The bar sits between the navbar and the page; the page moves down by its height.
+body.has-atrium-announcement {
+    .atrium-announcement {
+        position: fixed;
+        top: $navbar-height;
+        left: 0;
+        right: 0;
+        z-index: $zindex-fixed - 1;
+        min-height: 44px;
+    }
+    #page.drawers {
+        margin-top: $navbar-height + 44px;
+    }
+    .drawer.drawer-left,
+    .drawer.drawer-right {
+        top: $navbar-height + 44px;
+        height: calc(100vh - #{$navbar-height + 44px});
+    }
+}
+
+@include media-breakpoint-up(md) {
+    body.has-atrium-announcement.has-atrium-sidebar .atrium-announcement {
+        left: var(--atrium-sidebar-width);
+    }
+}
+
+// Quick links menu.
+.atrium-quicklinks-menu {
+    width: 320px;
+    padding: 0.75rem;
+}
+
+.atrium-quicklinks-heading {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--atrium-text-muted);
+    margin: 0 0.25rem 0.5rem;
+}
+
+.atrium-quicklinks-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.375rem;
+}
+
+.atrium-quicklink {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.75rem 0.5rem;
+    border-radius: var(--atrium-radius-sm);
+    color: var(--atrium-text);
+    text-align: center;
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-decoration: none;
+    &:hover,
+    &:focus-visible {
+        background-color: var(--atrium-surface-3);
+        color: var(--atrium-accent);
+        text-decoration: none;
+    }
+}
+
+.atrium-quicklink-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: var(--atrium-radius-sm);
+    background-color: var(--atrium-accent-soft);
+    color: var(--atrium-accent);
+    font-size: 1.125rem;
+}
+
+.atrium-quicklink-label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
+}
+
+// Dashboard and course blocks.
+.block_timeline,
+.block_recentlyaccessedcourses,
+.block_recentlyaccesseditems,
+.block_starredcourses,
+.block_calendar_month,
+.block_calendar_upcoming,
+.block_badges,
+.block_private_files,
+.block_online_users,
+.block_activity_results,
+.block_html {
+    .card-title {
+        font-size: 0.9375rem;
+    }
+}
+
+.block_recentlyaccesseditems,
+.block_recentlyaccessedcourses {
+    .card-body .course-info-container,
+    .card-body .list-group-item {
+        border-color: var(--atrium-border);
+        border-radius: var(--atrium-radius-sm);
+    }
+    .card.course-card {
+        @extend %atrium-card;
+    }
+}
+
+.block_timeline {
+    .timeline-event-list-item,
+    .event-list-item {
+        border-color: var(--atrium-border);
+        &:hover {
+            background-color: var(--atrium-surface-2);
+        }
+    }
+    .event-name-container a {
+        font-weight: 500;
+    }
+    .list-group {
+        --#{$prefix}list-group-bg: transparent;
+        --#{$prefix}list-group-border-color: var(--atrium-border);
+    }
+    .btn-outline-secondary.dropdown-toggle {
+        border-radius: var(--atrium-radius-sm);
+    }
+}
+
+.block_calendar_month {
+    .calendarwrapper {
+        padding: 0;
+    }
+    .calendartable {
+        border: 0;
+        border-collapse: separate;
+        border-spacing: 2px;
+        td,
+        th {
+            border: 0;
+            border-radius: var(--atrium-radius-sm);
+        }
+        td.today {
+            background-color: var(--atrium-accent);
+            color: #fff;
+            a {
+                color: #fff;
+            }
+        }
+        td.hasevent {
+            background-color: var(--atrium-accent-softer);
+        }
+    }
+}
+
+.block_online_users .list-group-item,
+.block_badges .badges-wrapper .badge-image {
+    border-color: var(--atrium-border);
+}
+
+// The "add a block" affordance and block editing controls.
+.block .action-menu .btn-icon,
+.block-controls .btn {
+    border-radius: var(--atrium-radius-sm);
+}
+
+// My courses page header counts.
+.path-my-courses .block_myoverview .card-body {
+    padding: 0;
+}

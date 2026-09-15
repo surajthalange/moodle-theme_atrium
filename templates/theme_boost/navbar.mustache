@@ -40,6 +40,7 @@
             "homeurl": "/my/"
         },
         "sitename": "Moodle Site",
+        "quicklinks": false,
         "schemetoggle": {
             "url": "/theme/atrium/scheme.php?scheme=dark",
             "isdark": false,
@@ -82,6 +83,10 @@
                 {{{ output.search_box }}}
                 <div class="divider border-start h-75 align-self-center mx-1"></div>
             {{/output.search_box}}
+            {{#quicklinks}}
+                {{> theme_atrium/quicklinks }}
+                <div class="divider border-start h-75 align-self-center mx-1"></div>
+            {{/quicklinks}}
             {{#schemetoggle}}
                 <a href="{{{ url }}}" class="btn btn-icon icon-no-margin atrium-scheme-toggle align-self-center"
                    data-action="atrium-scheme-toggle" aria-label="{{ label }}" title="{{ label }}"

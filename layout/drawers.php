@@ -27,7 +27,9 @@
  * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+use theme_atrium\local\announcement;
 use theme_atrium\local\focusmode;
+use theme_atrium\local\quicklinks;
 use theme_atrium\local\scheme;
 use theme_atrium\output\course_banner;
 use theme_atrium\output\dashboard_hero;
@@ -171,6 +173,13 @@ if (focusmode::active()) {
     $blockdraweropen = false;
 }
 
+// The announcement bar and the quick links menu.
+$announcement = announcement::wanted() && !$focus ? announcement::export() : false;
+if ($announcement) {
+    $extraclasses[] = 'has-atrium-announcement';
+}
+$quicklinks = quicklinks::export();
+
 // The scheme switch in the navigation bar.
 $showschemetoggle = get_config('theme_atrium', 'showschemetoggle');
 $schemetoggle = false;
@@ -212,6 +221,8 @@ $templatecontext = [
     'frontpage' => $frontpage,
     'coursebanner' => $coursebanner,
     'focus' => $focus,
+    'announcement' => $announcement,
+    'quicklinks' => $quicklinks,
     'schemetoggle' => $schemetoggle,
 ];
 

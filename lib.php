@@ -189,6 +189,12 @@ function theme_atrium_user_preferences(): array {
             'default' => 0,
             'permissioncallback' => [core_user::class, 'is_current_user'],
         ],
+        \theme_atrium\local\announcement::PREFERENCE => [
+            'type' => PARAM_ALPHANUM,
+            'null' => NULL_NOT_ALLOWED,
+            'default' => '',
+            'permissioncallback' => [core_user::class, 'is_current_user'],
+        ],
         \theme_atrium\local\catalogue::VIEW_PREFERENCE => [
             'type' => PARAM_ALPHA,
             'null' => NULL_NOT_ALLOWED,

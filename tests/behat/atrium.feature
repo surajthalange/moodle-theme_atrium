@@ -181,3 +181,54 @@ Feature: Atrium theme
     When I click on "Exit focus mode" "link" in the ".atrium-focus-bar" "css_element"
     Then "body.atrium-focus" "css_element" should not exist
     And "#atrium-sidebar" "css_element" should be visible
+
+  Scenario: The announcement bar shows on every page, is dismissed once, and returns when the text changes
+    Given the following config values are set as admin:
+      | announcement_enable | 1                                   | theme_atrium |
+      | announcement_text   | <p>Maintenance on Sunday at 6pm.</p> | theme_atrium |
+      | announcement_type   | warning                             | theme_atrium |
+    And I log in as "student1"
+    Then I should see "Maintenance on Sunday at 6pm." in the "[data-region='atrium-announcement']" "css_element"
+    And ".atrium-announcement-warning" "css_element" should exist
+    When I am on the "C1" "Course" page
+    Then I should see "Maintenance on Sunday at 6pm." in the "[data-region='atrium-announcement']" "css_element"
+    When I click on "Dismiss this announcement" "button" in the "[data-region='atrium-announcement']" "css_element"
+    Then "[data-region='atrium-announcement']" "css_element" should not exist
+    And I reload the page
+    And "[data-region='atrium-announcement']" "css_element" should not exist
+    When the following config values are set as admin:
+      | announcement_text | <p>Maintenance moved to Monday.</p> | theme_atrium |
+    And I reload the page
+    Then I should see "Maintenance moved to Monday." in the "[data-region='atrium-announcement']" "css_element"
+
+  Scenario: Quick links open from the navigation bar and can be switched off
+    Given I log in as "admin"
+    And I visit "/admin/settings.php?section=themesettingatrium"
+    And I click on "Site" "link" in the "[role='tablist']" "css_element"
+    And I set the field "Links" to multiline:
+      """
+      fa-book|Library|/course/index.php
+      fa-headset|Help desk|https://help.example.com|newtab
+      """
+    And I press "Save changes"
+    And I log out
+    And I log in as "student1"
+    When I click on "Quick links" "button" in the ".atrium-quicklinks" "css_element"
+    Then I should see "Library" in the ".atrium-quicklinks-menu" "css_element"
+    And I should see "Help desk" in the ".atrium-quicklinks-menu" "css_element"
+    And "a.atrium-quicklink[target='_blank']" "css_element" should exist
+    When I click on "Library" "link" in the ".atrium-quicklinks-menu" "css_element"
+    Then I should see "Course 1" in the ".atrium-catalogue" "css_element"
+    When the following config values are set as admin:
+      | quicklinks | | theme_atrium |
+    And I reload the page
+    Then ".atrium-quicklinks" "css_element" should not exist
+
+  Scenario: The profile page groups core's sections into cards under a cover
+    Given I log in as "student1"
+    And I follow "Profile" in the user menu
+    Then ".page-context-header" "css_element" should exist
+    And I should see "Ada Lovelace" in the ".page-context-header" "css_element"
+    And I should see "User details" in the ".atrium-profile-card-contact" "css_element"
+    And I should see "Course 1" in the ".atrium-profile-card-coursedetails" "css_element"
+    And "[data-region='atrium-profile'] .atrium-profile-card" "css_element" should exist

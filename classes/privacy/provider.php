@@ -19,13 +19,14 @@ namespace theme_atrium\privacy;
 use core_privacy\local\metadata\collection;
 use core_privacy\local\request\user_preference_provider;
 use core_privacy\local\request\writer;
+use theme_atrium\local\announcement;
 use theme_atrium\local\catalogue;
 use theme_atrium\local\focusmode;
 use theme_atrium\local\scheme;
 use theme_atrium\output\sidebar;
 
 /**
- * Privacy provider: four user preferences, nothing else.
+ * Privacy provider: five user preferences, nothing else.
  *
  * @package    theme_atrium
  * @copyright  2026 Suraj Thalange
@@ -43,6 +44,7 @@ class provider implements \core_privacy\local\metadata\provider, user_preference
         $collection->add_user_preference(sidebar::PREFERENCE, 'privacy:metadata:preference:theme_atrium_sidebar');
         $collection->add_user_preference(catalogue::VIEW_PREFERENCE, 'privacy:metadata:preference:theme_atrium_catalogueview');
         $collection->add_user_preference(focusmode::PREFERENCE, 'privacy:metadata:preference:theme_atrium_focusmode');
+        $collection->add_user_preference(announcement::PREFERENCE, 'privacy:metadata:preference:theme_atrium_announcement');
         return $collection;
     }
 
@@ -57,6 +59,7 @@ class provider implements \core_privacy\local\metadata\provider, user_preference
             sidebar::PREFERENCE => ['expanded' => 'sidebar:expanded', 'collapsed' => 'sidebar:collapsed'],
             catalogue::VIEW_PREFERENCE => ['grid' => 'catalogue_view_grid', 'list' => 'catalogue_view_list'],
             focusmode::PREFERENCE => ['1' => 'focus_on', '0' => 'focus_off'],
+            announcement::PREFERENCE => [],
         ];
         foreach ($preferences as $name => $labels) {
             $value = get_user_preferences($name, null, $userid);

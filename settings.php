@@ -623,6 +623,58 @@ if ($ADMIN->fulltree) {
     ));
     $settings->add($page);
 
+    // Site.
+    $page = new admin_settingpage('theme_atrium_site', get_string('sitesettings', 'theme_atrium'));
+    $page->add(new admin_setting_heading(
+        'theme_atrium/announcement_heading',
+        get_string('announcementsettings', 'theme_atrium'),
+        get_string('announcementsettings_desc', 'theme_atrium')
+    ));
+    $page->add(new admin_setting_configcheckbox(
+        'theme_atrium/announcement_enable',
+        get_string('announcement_enable', 'theme_atrium'),
+        '',
+        0
+    ));
+    $page->add(new admin_setting_confightmleditor(
+        'theme_atrium/announcement_text',
+        get_string('announcement_text', 'theme_atrium'),
+        get_string('announcement_text_desc', 'theme_atrium'),
+        ''
+    ));
+    $page->add(new admin_setting_configselect(
+        'theme_atrium/announcement_type',
+        get_string('announcement_type', 'theme_atrium'),
+        '',
+        'info',
+        [
+            'info' => get_string('announcement_type_info', 'theme_atrium'),
+            'success' => get_string('announcement_type_success', 'theme_atrium'),
+            'warning' => get_string('announcement_type_warning', 'theme_atrium'),
+            'danger' => get_string('announcement_type_danger', 'theme_atrium'),
+        ]
+    ));
+    $page->add(new admin_setting_configcheckbox(
+        'theme_atrium/announcement_dismissible',
+        get_string('announcement_dismissible', 'theme_atrium'),
+        get_string('announcement_dismissible_desc', 'theme_atrium'),
+        1
+    ));
+    $page->add(new admin_setting_heading(
+        'theme_atrium/quicklinks_heading',
+        get_string('quicklinks', 'theme_atrium'),
+        get_string('quicklinks_desc', 'theme_atrium')
+    ));
+    $page->add(new admin_setting_configtextarea(
+        'theme_atrium/quicklinks',
+        get_string('quicklinks_items', 'theme_atrium'),
+        get_string('quicklinks_items_desc', 'theme_atrium'),
+        '',
+        PARAM_RAW
+    ));
+
+    $settings->add($page);
+
     // Footer.
     $page = new admin_settingpage('theme_atrium_footer', get_string('footersettings', 'theme_atrium'));
 

@@ -38,6 +38,8 @@
     * frontpage - Context for theme_atrium/frontpage, or false
     * coursebanner - Context for theme_atrium/course_banner, or false
     * focus - Context for theme_atrium/focus_bar, or false
+    * announcement - Context for theme_atrium/announcement, or false
+    * quicklinks - Context for theme_atrium/quicklinks, or false
 
     Example context (json):
     {
@@ -61,7 +63,9 @@
         "hero": false,
         "frontpage": false,
         "coursebanner": false,
-        "focus": false
+        "focus": false,
+        "announcement": false,
+        "quicklinks": false
     }
 }}
 {{> theme_boost/head }}
@@ -73,6 +77,10 @@
     {{{ output.standard_top_of_body_html }}}
 
     {{> theme_boost/navbar }}
+    {{! Atrium: the announcement bar. }}
+    {{#announcement}}
+        {{> theme_atrium/announcement }}
+    {{/announcement}}
     {{! Atrium: the focus mode bar. }}
     {{#focus}}
         {{> theme_atrium/focus_bar }}
@@ -223,11 +231,19 @@
 </html>
 {{#js}}
 M.util.js_pending('theme_boost/loader');
-require(['theme_boost/loader', 'theme_boost/drawer', 'theme_atrium/sidebar', 'theme_atrium/scheme', 'theme_atrium/navbar'], function(Loader, Drawer, Sidebar, Scheme, Navbar) {
+require([
+    'theme_boost/loader',
+    'theme_boost/drawer',
+    'theme_atrium/sidebar',
+    'theme_atrium/scheme',
+    'theme_atrium/navbar',
+    'theme_atrium/announcement',
+], function(Loader, Drawer, Sidebar, Scheme, Navbar, Announcement) {
     Drawer.init();
     Sidebar.init();
     Scheme.init();
     Navbar.init();
+    Announcement.init();
     M.util.js_complete('theme_boost/loader');
 });
 {{/js}}

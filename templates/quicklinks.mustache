@@ -1,0 +1,49 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_atrium/quicklinks
+
+    The quick links menu in the navigation bar: a button opening a grid of icon links.
+
+    Context variables required for this template:
+    * links - icon (Font Awesome class), label, url, newtab
+
+    Example context (json):
+    {
+        "links": [
+            {"icon": "fa-book", "label": "Library", "url": "https://library.example.com", "newtab": true},
+            {"icon": "fa-headset", "label": "Help desk", "url": "/local/helpdesk", "newtab": false}
+        ]
+    }
+}}
+<div class="dropdown atrium-quicklinks">
+    <button class="btn btn-icon icon-no-margin atrium-quicklinks-toggle" type="button" data-bs-toggle="dropdown"
+            aria-expanded="false" aria-label="{{#str}} quicklinks, theme_atrium {{/str}}" title="{{#str}} quicklinks, theme_atrium {{/str}}">
+        {{#pix}} grid, theme_atrium {{/pix}}
+    </button>
+    <div class="dropdown-menu dropdown-menu-end atrium-quicklinks-menu">
+        <p class="atrium-quicklinks-heading">{{#str}} quicklinks, theme_atrium {{/str}}</p>
+        <div class="atrium-quicklinks-grid">
+            {{#links}}
+                <a href="{{{ url }}}" class="atrium-quicklink"{{#newtab}} target="_blank" rel="noopener"{{/newtab}}>
+                    <span class="atrium-quicklink-icon" aria-hidden="true"><i class="fa {{ icon }}"></i></span>
+                    <span class="atrium-quicklink-label">{{ label }}</span>
+                </a>
+            {{/links}}
+        </div>
+    </div>
+</div>
