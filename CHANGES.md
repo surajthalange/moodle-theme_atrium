@@ -1,6 +1,6 @@
 # Changes
 
-## 1.1.0 (unreleased)
+## 1.1.0 (2026-09-15)
 
 Every page, not only the shell. Moodle 5.1 and 5.2.
 

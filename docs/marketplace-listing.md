@@ -11,14 +11,14 @@ characters, of which plugin cards show the first 119; description 7,000; screens
 
 ### First 119 characters, as a standalone sentence
 
-> A modern Boost child theme: left sidebar, card dashboard, card course page, dark mode,
-> five presets, bundled fonts.
+> A modern Boost child theme: sidebar, designed front page, course catalogue, dark
+> mode, three login layouts, every page.
 
 ### Full short description
 
-> A modern Boost child theme: left sidebar, card dashboard, card course page, dark mode,
-> five presets, bundled fonts. Four template overrides, everything else SCSS, so it keeps
-> working across Moodle releases. Nothing is fetched from outside your site.
+> A modern Boost child theme: sidebar, designed front page, course catalogue, dark
+> mode, three login layouts, every page. Four template overrides, everything else SCSS, so
+> it keeps working across Moodle releases. Nothing is fetched from outside your site.
 
 ---
 
@@ -27,9 +27,26 @@ characters, of which plugin cards show the first 119; description 7,000; screens
 ### What it is
 
 Atrium gives Moodle 5.1 and 5.2 the layout people pay for elsewhere: a left navigation
-sidebar that collapses to icons, a dashboard with a greeting and progress tiles, a course
-page made of cards, dark mode with a switch for every user, five colour presets and a
-configurable footer. It is a Boost child, so everything Boost does keeps working.
+sidebar that collapses to icons, a designed front page, a course catalogue of cards, a
+course landing page for enrolment, a dashboard with a greeting and progress tiles, a
+course page made of cards with a focus mode, dark mode with a switch for every user, five
+colour presets, three login layouts and a configurable footer. It is a Boost child, so
+everything Boost does keeps working.
+
+### Front page
+
+Seven sections, each with its own settings and switch: a hero with image and two
+buttons, feature blocks, a course showcase (the latest courses, a category, or courses
+you choose), a numbers strip, testimonials, an about band and a call to action. The
+navigation bar can go transparent over the hero.
+
+### Catalogue and enrolment
+
+Category and search pages become course cards or a list, with image, category,
+teachers, enrolled count, progress for enrolled users and the price from fee or PayPal
+enrolment; category chips, sorting, paging and search, the view remembered per user.
+The enrolment page is a course landing page: banner, summary, facts, outline, teachers,
+related courses, and the enrolment card kept in view.
 
 ### Navigation
 
@@ -47,9 +64,27 @@ is not slowed.
 
 ### Course page
 
-Sections as cards, activities as rows with the activity icon in its purpose colour.
-No template is overridden here, which means editing mode, drag and drop, bulk editing
-and the activity chooser are exactly Boost's.
+Sections as cards, activities as rows with the activity icon in its purpose colour, and
+a banner with the learner's progress and a resume link. Focus mode strips the course and
+its activities down to the content with one switch, remembered per user. No template is
+overridden here, which means editing mode, drag and drop, bulk editing and the activity
+chooser are exactly Boost's.
+
+### Site-wide
+
+An announcement bar with four tones, dismissible per user until the text changes. A
+quick links menu of icon links in the navigation bar. The profile page as a grid of
+cards under a cover band. Gradebook, quiz, calendar, messaging, forum, admin pages and
+the rest on the same tokens in both schemes.
+
+### Login, header, footer
+
+Three login layouts: the card centred over the image, or beside an image panel on the
+left or the right, with panel copy, text above and below the form, a language menu
+switch and "Create new account" as a button. The brand as logo, site name or both; a
+standard or compact navigation bar, sticky or scrolling. Up to four footer columns, each
+custom HTML, a menu, the social links or the contact details, with a footer logo and
+privacy and terms links.
 
 ### Dark mode
 
@@ -60,9 +95,8 @@ A site default of light, dark, or follow the device. Dark mode can be disabled s
 ### Presets and settings
 
 Atrium, Indigo dark, Emerald, Rose and Slate. A brand colour overrides the preset's
-accent; a sidebar tone overrides its tone. Text size, corner radius, login image and
-wash, dashboard greeting and image, footer columns, social links and legal line, raw
-SCSS before and after.
+accent; a sidebar tone overrides its tone. Inter (bundled) or the system font, heading
+weight, text size, corner radius, raw SCSS before and after, custom CSS.
 
 ### Accessibility
 
@@ -72,15 +106,18 @@ conveyed by colour alone. Reduced-motion preferences are respected.
 
 ### Privacy
 
-Two user preferences (scheme and sidebar state), declared to the privacy API and
-included in exports. No tables. No cookies of its own. Fonts are bundled; nothing is
-fetched from outside your site.
+Five user preferences (scheme, sidebar state, catalogue view, focus mode, dismissed
+announcement), declared to the privacy API and included in exports. No tables. No
+cookies of its own. Fonts are bundled; nothing is fetched from outside your site unless
+you enter a Google Analytics 4 id, which is off by default.
 
 ### Built to last
 
-Four Boost templates are overridden (drawers, navbar, footer, login layout). Everything
-else, the course page included, is SCSS against the class names core already emits. That
-is the whole point: fewer overrides, fewer things to break on a Moodle release.
+Four Boost templates are overridden (drawers, navbar, footer, login layout) and two
+renderers in the narrowest way (the catalogue and enrolment page, the profile cards).
+Everything else, the course page included, is SCSS against the class names core already
+emits. That is the whole point: fewer overrides, fewer things to break on a Moodle
+release.
 
 ### Supported versions
 

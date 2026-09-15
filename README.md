@@ -23,9 +23,17 @@ requests to outside services.
 | Course page | Sections as cards, activities as rows, with the activity icon in its purpose colour. No template is overridden: editing mode, drag and drop, bulk editing and the activity chooser are Boost's. |
 | Dark mode | A per-user switch in the navigation bar and in the user menu, saved as a preference. The scheme is applied on the server before the page is sent, so there is no flash on load. A site default of light, dark, or *follow the device*. Dark mode can be disabled site-wide. |
 | Presets | Five colour presets, each an accent and a sidebar tone. A brand colour setting overrides the accent; a sidebar tone setting overrides the tone. |
-| Login | One card centred over a full-bleed image with a colour wash whose colour and strength are settings. |
-| Footer | Up to three content columns, social links, a legal line with `{year}` and `{sitename}`, and the Moodle credit as a setting. |
-| Type | Inter, bundled in four weights, with a system fallback stack. Text size and corner radius are settings. |
+| Front page | A designed site home for visitors: hero with image and two buttons, feature blocks, a course showcase (latest, a category, or chosen courses), a numbers strip, testimonials, an about band and a call to action. Every section is a setting and has a switch. |
+| Catalogue | Category and search pages as course cards or a list: image, category, teachers, enrolled count, progress for enrolled users, and the price from fee or PayPal enrolment. Category chips, sort, paging, a search box; the view is remembered per user. |
+| Enrolment page | A course landing page around the enrolment forms: banner, summary, facts, outline, teachers, related courses, and the enrolment card kept in view. |
+| Course banner and focus mode | A banner with the learner's progress and a resume link. Focus mode strips the course and its activities down to the content, with one switch, remembered per user. |
+| Announcement and quick links | A site-wide bar with four tones, dismissible per user until the text changes; a quick links menu of icon links in the navigation bar. |
+| Profile | Core's profile sections as a grid of cards under a cover band. |
+| Login | Three layouts: the card centred over the image, or beside an image panel on the left or the right, with panel copy, text above and below the form, the language menu switch, and "Create new account" as a button. Sign up, forgotten password and MFA share the card. |
+| Header | Brand as logo, site name or both; standard or compact bar; sticky or scrolling; transparent over the front page hero. |
+| Footer | Up to four columns, each custom HTML, a menu, the social links or the contact details; a footer logo, a legal line with `{year}` and `{sitename}`, privacy and terms links, the Moodle credit as a setting. |
+| Type | Inter, bundled in four weights, or the system font. Heading weight, text size and corner radius are settings. |
+| The long tail | Gradebook, quiz, question bank, calendar, messaging, forum, assignment, workshop, backup, participants, admin pages and the rest, on the same tokens in both schemes. |
 
 ## Where it sits beside Boost and the paid themes
 
@@ -35,7 +43,8 @@ requests to outside services.
 | Dashboard | Blocks | Hero, tiles, styled cards | Hero, four tiles, styled cards |
 | Dark mode | No | Some | Yes, per user, no flash |
 | Presets | One | Many, plus a page builder | Five, no builder |
-| Front page builder | No | Yes | No (planned for 1.1) |
+| Front page | Course list | Page builder | Seven designed sections, each a setting |
+| Catalogue and enrolment page | Lists and forms | Cards and a landing page | Cards and a landing page |
 | Fonts | System | Google Fonts, fetched | Bundled, nothing fetched |
 | Price | Free | Paid | Free, GPL |
 
@@ -45,18 +54,27 @@ formats, form builders and page builders are separate plugin types and are not h
 ## How it is built, and why it should survive upgrades
 
 Every template override is a maintenance liability, because core may change what the
-parent template expects. Atrium overrides **four**:
+parent template expects. Atrium overrides **four** Boost templates:
 
 | Template | Why |
 |---|---|
 | `theme_boost/drawers` | Renders the sidebar and the dashboard hero. Copied from Moodle 5.2; Boost's drawers are left as Boost renders them. |
 | `theme_boost/navbar` | Drops the primary navigation (the sidebar carries it), shows the brand only on small screens, adds the scheme switch. |
 | `theme_boost/footer` | A real footer instead of Boost's popover. Every link and fragment the popover contained is still rendered. |
-| `theme_boost/login` | The centred card, on both 5.1 (form rendered into the page) and 5.2 (split `core/login_layout`). |
+| `theme_boost/login` | The three login layouts, on both 5.1 (form rendered into the page) and 5.2 (split `core/login_layout`). |
 
-Everything else, the course page included, is SCSS written against the class names core
-already emits. One renderer method is added (`core_renderer::atrium_footer()`), no
-renderer method is overridden.
+Two core renderers are overridden, in the narrowest way that works:
+
+| Renderer | What changes |
+|---|---|
+| `core_course_renderer` | `course_category()`, `search_courses()` and `enrolment_options()` render the catalogue and the enrolment page from Atrium templates. Every other method is core's. |
+| `core_user\output\myprofile\renderer` | `render_tree()` and `render_category()` wrap core's nodes in cards; the node markup is core's. |
+
+Everything else, the course page and the whole long tail included, is SCSS written
+against the class names core already emits. One renderer method is added
+(`core_renderer::atrium_footer()`). Three hook callbacks (html attributes, head HTML,
+user menu) and three small endpoints (scheme, focus mode, announcement dismissal) carry
+the per-user state, each working without JavaScript.
 
 Colours are CSS custom properties defined in `scss/atrium/_tokens.scss` for the light
 scheme and redefined under `[data-bs-theme="dark"]`. Bootstrap 5.3's own colour-mode
@@ -85,17 +103,26 @@ maintenance decision to take once 1.0 has users, and the tracker is the place to
 
 ## Privacy
 
-Two user preferences, both declared to the privacy API and included in exports:
-`theme_atrium_scheme` (light, dark or system) and `theme_atrium_sidebar` (expanded or
-collapsed). No tables, no external requests, no cookies of its own.
+Five user preferences, all declared to the privacy API and included in exports:
+`theme_atrium_scheme` (light, dark or system), `theme_atrium_sidebar` (expanded or
+collapsed), `theme_atrium_catalogueview` (grid or list), `theme_atrium_focusmode` (on or
+off) and `theme_atrium_announcement` (a fingerprint of the dismissed announcement). No
+tables, no cookies of its own. Fonts are bundled. The theme makes no request to any
+outside service unless an administrator enters a Google Analytics 4 measurement id, in
+which case the Google tag loads with IP anonymisation, not for site administrators, and
+the setting says so.
 
 ## Settings
 
 *Site administration → Appearance → Themes → Atrium.* Tabs: General (preset, brand
-colour, text size, corner radius, dark mode), Sidebar (first-visit state, tone), Login
-page (image, wash colour, wash strength), Dashboard (hero, image, greeting, the four
-tiles), Footer (columns, social links, legal line, Moodle credit), Advanced (raw SCSS
-before and after).
+colour, text size, corner radius, dark mode, font, heading weight), Header (brand,
+height, sticky), Sidebar (first-visit state, tone), Login page (image, wash, layout,
+panel copy, text around the form, language menu, sign-up button), Course (banner, focus
+mode), Dashboard (hero, image, greeting, the four tiles), Front page (every section),
+Catalogue (per page, sort, what the cards show, the enrolment page), Site (announcement,
+quick links), Footer (columns and their types, contact details, logo, legal line,
+privacy and terms links, Moodle credit), Advanced (raw SCSS before and after, custom
+CSS, analytics).
 
 ## Development
 
