@@ -31,8 +31,11 @@
 
     Example context (json):
     {
-        "hero": {"heading": "Welcome to Atrium", "subheading": "Learn at your pace.", "align": "left", "height": "standard",
-                 "button1": {"text": "Browse courses", "url": "/course/index.php"}, "button2": false, "hasimage": false},
+        "hero": {"align": "left", "height": "standard", "overlay": "0.5", "hasslides": false, "slidecount": 1,
+                 "autoplay": true, "interval": 6000, "transparentnavbar": false, "slides": [
+                     {"heading": "Welcome to Atrium", "subheading": "Learn at your pace.", "active": true, "index": 0, "number": 1,
+                      "button1": {"text": "Browse courses", "url": "/course/index.php"}, "button2": false, "hasimage": false, "imageurl": ""}
+                 ]},
         "features": {"heading": "Why learn here", "columns": 3, "items": [
             {"icon": "fa-graduation-cap", "title": "Expert teachers", "text": "Learn from people who do it.", "haslink": false}
         ]},

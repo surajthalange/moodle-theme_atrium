@@ -68,7 +68,7 @@
     }
 }}
 <section class="atrium-fp-hero atrium-fp-hero-{{ height }} atrium-fp-hero-{{ align }}{{#hasslides}} atrium-fp-hero-slider carousel slide{{/hasslides}}"
-         style="--atrium-fp-hero-overlay: {{ overlay }};" data-region="atrium-fp-hero"
+         {{#overlay}}style="--atrium-fp-hero-overlay: {{ overlay }};"{{/overlay}} data-region="atrium-fp-hero"
          {{#hasslides}}id="atrium-fp-hero-carousel"{{#autoplay}} data-bs-ride="carousel" data-bs-interval="{{ interval }}"{{/autoplay}}{{^autoplay}} data-bs-interval="false"{{/autoplay}} data-bs-pause="hover"{{/hasslides}}>
     <div class="{{#hasslides}}carousel-inner{{/hasslides}}{{^hasslides}}atrium-fp-hero-single{{/hasslides}}">
         {{#slides}}
