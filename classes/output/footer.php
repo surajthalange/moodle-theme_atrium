@@ -16,22 +16,29 @@
 
 namespace theme_atrium\output;
 
-use core\output\renderable;
-use core\output\renderer_base;
-use core\output\templatable;
+use moodle_url;
+use renderable;
+use renderer_base;
+use templatable;
 
 /**
- * The configurable part of the page footer: content columns, social links, legal line.
+ * The configurable part of the page footer: up to four typed columns and the bottom bar.
  *
- * Everything core requires in a footer (login info, documentation link, the standard
- * footer HTML that plugins inject) is rendered by the template from $OUTPUT as Boost
- * does; this class only supplies what the administrator configured.
+ * A column is custom HTML, a menu ("Label|URL" per line), the social links, or the
+ * contact details. The bottom bar carries the legal line, the privacy and terms links
+ * and the Moodle credit.
  *
  * @package    theme_atrium
  * @copyright  2026 Suraj Thalange
  * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class footer implements renderable, templatable {
+    /** @var int Columns at most. */
+    public const MAX_COLUMNS = 4;
+
+    /** @var string[] Column types. */
+    public const TYPES = ['html', 'menu', 'social', 'contact'];
+
     /** @var array<string, string> Platform => Font Awesome brand icon class. */
     public const PLATFORMS = [
         'facebook' => 'fa-brands fa-facebook',
@@ -72,46 +79,144 @@ class footer implements renderable, templatable {
     }
 
     /**
+     * Parse a menu column: one "Label|URL" per line, in the custom menu's notation.
+     *
+     * Leading hyphens (custom menu nesting) are dropped, so a copy of the site's custom
+     * menu text works as is. Lines without a usable URL are skipped.
+     *
+     * @param string $setting
+     * @return array<int, array{label: string, url: string}>
+     */
+    public static function parse_menu(string $setting): array {
+        $items = [];
+        foreach (preg_split('/\R/', $setting) as $line) {
+            $parts = array_map('trim', explode('|', ltrim($line, " \t-")));
+            if (count($parts) < 2 || $parts[0] === '' || !preg_match('#^(https?://|/|\#)#i', $parts[1])) {
+                continue;
+            }
+            $items[] = ['label' => $parts[0], 'url' => $parts[1]];
+        }
+        return $items;
+    }
+
+    /**
+     * Build one column from its settings, or null when it has nothing to show.
+     *
+     * @param int $i Column number
+     * @param array $social The parsed social links
+     * @param \context $context
+     * @return array|null
+     */
+    private function column(int $i, array $social, \context $context): ?array {
+        $config = fn(string $name): string => (string) get_config('theme_atrium', $name);
+        $type = $config('footercol' . $i . 'type');
+        $type = in_array($type, self::TYPES, true) ? $type : 'html';
+        $column = [
+            'type' => $type,
+            'title' => format_string($config('footercol' . $i . 'title'), true, ['context' => $context]),
+            'ishtml' => false,
+            'ismenu' => false,
+            'issocial' => false,
+            'iscontact' => false,
+        ];
+        switch ($type) {
+            case 'menu':
+                $items = self::parse_menu($config('footercol' . $i . 'menu'));
+                if (!$items) {
+                    return null;
+                }
+                foreach ($items as &$item) {
+                    $item['label'] = format_string($item['label'], true, ['context' => $context]);
+                    $item['url'] = (new moodle_url($item['url']))->out(false);
+                }
+                $column['ismenu'] = true;
+                $column['items'] = $items;
+                break;
+            case 'social':
+                if (!$social) {
+                    return null;
+                }
+                $column['issocial'] = true;
+                $column['social'] = $social;
+                break;
+            case 'contact':
+                $address = trim($config('footercontactaddress'));
+                $phone = trim($config('footercontactphone'));
+                $email = trim($config('footercontactemail'));
+                $email = validate_email($email) ? $email : '';
+                if ($address === '' && $phone === '' && $email === '') {
+                    return null;
+                }
+                $column['iscontact'] = true;
+                $column['address'] = $address === '' ? '' : nl2br(s($address));
+                $column['phone'] = $phone;
+                $column['phoneurl'] = 'tel:' . preg_replace('/[^0-9+]/', '', $phone);
+                $column['email'] = $email;
+                break;
+            default:
+                $html = $config('footercol' . $i . 'html');
+                if (trim($column['title']) === '' && trim(strip_tags($html)) === '') {
+                    return null;
+                }
+                $column['ishtml'] = true;
+                $column['html'] = format_text($html, FORMAT_HTML, ['context' => $context, 'noclean' => true]);
+        }
+        return $column;
+    }
+
+    /**
      * Export for template.
      *
      * @param renderer_base $output
      * @return array
      */
     public function export_for_template(renderer_base $output): array {
-        global $SITE;
+        global $PAGE, $SITE;
         $context = \context_system::instance();
+        $config = fn(string $name): string => (string) get_config('theme_atrium', $name);
+        $social = self::parse_social_links($config('sociallinks'));
 
         $columns = [];
-        $wanted = (int) get_config('theme_atrium', 'footercolumns');
-        for ($i = 1; $i <= min(3, $wanted); $i++) {
-            $title = (string) get_config('theme_atrium', 'footercol' . $i . 'title');
-            $html = (string) get_config('theme_atrium', 'footercol' . $i . 'html');
-            if (trim($title) === '' && trim(strip_tags($html)) === '') {
-                continue;
+        $socialincolumn = false;
+        $wanted = min(self::MAX_COLUMNS, (int) $config('footercolumns'));
+        for ($i = 1; $i <= $wanted; $i++) {
+            $column = $this->column($i, $social, $context);
+            if ($column !== null) {
+                $columns[] = $column;
+                $socialincolumn = $socialincolumn || $column['issocial'];
             }
-            $columns[] = [
-                'title' => format_string($title, true, ['context' => $context]),
-                'html' => format_text($html, FORMAT_HTML, ['context' => $context, 'noclean' => true]),
-            ];
         }
 
-        $legal = (string) get_config('theme_atrium', 'footerlegal');
+        $legal = $config('footerlegal');
         if (trim($legal) === '') {
             $legal = get_string('footerlegal_default', 'theme_atrium');
         }
         $sitename = format_string($SITE->fullname, true, ['context' => $context]);
         $legal = str_replace(['{year}', '{sitename}'], [userdate(time(), '%Y'), $sitename], $legal);
 
-        $poweredby = get_config('theme_atrium', 'showpoweredby');
-        $social = self::parse_social_links((string) get_config('theme_atrium', 'sociallinks'));
+        $links = [];
+        foreach (['privacy' => 'footerprivacyurl', 'terms' => 'footertermsurl'] as $key => $name) {
+            $url = trim($config($name));
+            if ($url !== '' && preg_match('#^(https?://|/)#i', $url)) {
+                $links[] = [
+                    'label' => get_string('footer_' . $key, 'theme_atrium'),
+                    'url' => (new moodle_url($url))->out(false),
+                ];
+            }
+        }
 
+        $poweredby = get_config('theme_atrium', 'showpoweredby');
         return [
             'columns' => $columns,
             'hascolumns' => !empty($columns),
             'columnclass' => 'atrium-footer-columns-' . max(1, count($columns)),
             'social' => $social,
-            'hassocial' => !empty($social),
+            'hassocial' => !empty($social) && !$socialincolumn,
             'legal' => format_string($legal, true, ['context' => $context]),
+            'links' => $links,
+            'haslinks' => !empty($links),
+            'logourl' => (string) $PAGE->theme->setting_file_url('footerlogo', 'footerlogo'),
+            'sitename' => $sitename,
             'showpoweredby' => $poweredby === false || $poweredby === '' ? true : (bool) $poweredby,
         ];
     }

@@ -40,6 +40,12 @@
             "homeurl": "/my/"
         },
         "sitename": "Moodle Site",
+        "brand": {
+            "sitename": "Moodle Site",
+            "haslogo": false,
+            "logourl": "",
+            "showname": true
+        },
         "quicklinks": false,
         "schemetoggle": {
             "url": "/theme/atrium/scheme.php?scheme=dark",
@@ -63,12 +69,12 @@
         </button>
 
         <a href="{{{ config.homeurl }}}" class="navbar-brand d-flex align-items-center m-0 me-4 p-0 aabtn atrium-navbar-brand">
-            {{# output.should_display_navbar_logo }}
-                <img src="{{output.get_compact_logo_url}}" class="logo me-1" alt="{{sitename}}">
-            {{/ output.should_display_navbar_logo }}
-            {{^ output.should_display_navbar_logo }}
+            {{#brand.haslogo}}
+                <img src="{{{ brand.logourl }}}" class="logo me-1" alt="{{ brand.sitename }}">
+            {{/brand.haslogo}}
+            {{#brand.showname}}
                 {{{ sitename }}}
-            {{/ output.should_display_navbar_logo }}
+            {{/brand.showname}}
         </a>
 
         {{# output.page_heading_menu}}

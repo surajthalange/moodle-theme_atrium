@@ -141,3 +141,24 @@ body.no-atrium-sidebar {
 .atrium-navbar .login {
     font-weight: 500;
 }
+
+// A navigation bar that scrolls with the page.
+body.atrium-navbar-static {
+    .atrium-navbar.navbar.fixed-top {
+        position: static;
+    }
+    #page.drawers {
+        margin-top: 0;
+    }
+    .drawer.drawer-left,
+    .drawer.drawer-right {
+        top: 0;
+        height: 100vh;
+    }
+    .atrium-announcement {
+        position: static;
+    }
+    &.has-atrium-announcement #page.drawers {
+        margin-top: 0;
+    }
+}

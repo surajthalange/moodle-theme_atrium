@@ -99,6 +99,32 @@ final class hook_callbacks_test extends \advanced_testcase {
     }
 
     /**
+     * The analytics tag loads only with a well-formed measurement id, and never for admins.
+     */
+    public function test_analytics(): void {
+        $this->resetAfterTest();
+        $renderer = $this->use_atrium();
+        $this->setUser($this->getDataGenerator()->create_user());
+
+        $this->assertSame('', hook_callbacks::ga4_id());
+        set_config('ga4id', 'UA-12345-1', 'theme_atrium');
+        $this->assertSame('', hook_callbacks::ga4_id(), 'Universal Analytics ids are not GA4 ids');
+        set_config('ga4id', ' g-abc123xy ', 'theme_atrium');
+        $this->assertSame('G-ABC123XY', hook_callbacks::ga4_id());
+
+        $hook = new before_standard_head_html_generation($renderer);
+        hook_callbacks::before_standard_head_html_generation($hook);
+        $this->assertStringContainsString('googletagmanager.com/gtag/js?id=G-ABC123XY', $hook->get_output());
+        $this->assertStringContainsString('anonymize_ip', $hook->get_output());
+
+        $this->setAdminUser();
+        $this->assertSame('', hook_callbacks::ga4_id());
+        $hook = new before_standard_head_html_generation($renderer);
+        hook_callbacks::before_standard_head_html_generation($hook);
+        $this->assertStringNotContainsString('googletagmanager', $hook->get_output());
+    }
+
+    /**
      * The user menu gets a switch for real users while dark mode is enabled.
      */
     public function test_user_menu(): void {

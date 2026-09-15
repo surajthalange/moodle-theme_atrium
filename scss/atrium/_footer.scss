@@ -33,6 +33,9 @@
     &.atrium-footer-columns-3 {
         grid-template-columns: repeat(3, minmax(0, 1fr));
     }
+    &.atrium-footer-columns-4 {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
 }
 
 .atrium-footer-title {
@@ -53,6 +56,44 @@
     p:last-child {
         margin-bottom: 0;
     }
+}
+
+// Menu and contact columns.
+.atrium-footer-menu li,
+.atrium-footer-contact li {
+    margin-bottom: 0.5rem;
+}
+
+.atrium-footer-contact li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.625rem;
+    .fa {
+        flex: 0 0 auto;
+        width: 1rem;
+        margin-top: 0.2rem;
+        text-align: center;
+        color: var(--atrium-accent);
+    }
+}
+
+// The bottom bar: logo, legal line and links on the left, social icons on the right.
+.atrium-footer-legal-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 1.25rem;
+}
+
+.atrium-footer-logo {
+    height: 28px;
+    width: auto;
+}
+
+.atrium-footer-bottom .atrium-footer-links {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
 }
 
 .atrium-footer-bottom {
@@ -115,10 +156,17 @@
     margin-left: auto;
 }
 
+@include media-breakpoint-between(md, xl) {
+    .atrium-footer-columns.atrium-footer-columns-4 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
 @include media-breakpoint-down(md) {
     .atrium-footer-columns {
         &.atrium-footer-columns-2,
-        &.atrium-footer-columns-3 {
+        &.atrium-footer-columns-3,
+        &.atrium-footer-columns-4 {
             grid-template-columns: 1fr;
         }
     }

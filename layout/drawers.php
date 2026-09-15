@@ -29,6 +29,7 @@
 
 use theme_atrium\local\announcement;
 use theme_atrium\local\focusmode;
+use theme_atrium\local\header;
 use theme_atrium\local\quicklinks;
 use theme_atrium\local\scheme;
 use theme_atrium\output\course_banner;
@@ -180,6 +181,10 @@ if ($announcement) {
 }
 $quicklinks = quicklinks::export();
 
+// Header options: a static navigation bar, and what the brand shows.
+$extraclasses = array_merge($extraclasses, header::body_classes());
+$brand = header::brand($OUTPUT);
+
 // The scheme switch in the navigation bar.
 $showschemetoggle = get_config('theme_atrium', 'showschemetoggle');
 $schemetoggle = false;
@@ -223,6 +228,7 @@ $templatecontext = [
     'focus' => $focus,
     'announcement' => $announcement,
     'quicklinks' => $quicklinks,
+    'brand' => $brand,
     'schemetoggle' => $schemetoggle,
 ];
 

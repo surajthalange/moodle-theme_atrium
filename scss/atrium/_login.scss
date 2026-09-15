@@ -1,4 +1,5 @@
-// The login page: one card centred over a full-bleed image with a colour wash.
+// The login page: one card centred over a full-bleed image with a colour wash, or the
+// card beside an image panel on the left or the right.
 //
 // The image, wash colour and wash opacity are settings, published as custom
 // properties on body.pagelayout-login by theme_atrium_get_extra_scss(). The card uses
@@ -19,14 +20,8 @@
     }
 }
 
-.atrium-login-page {
+%atrium-login-image {
     position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    padding: 2rem 1rem;
 
     // The wash colour doubles as the base fill, so a slow image leaves a deliberate
     // flat colour rather than a white flash.
@@ -51,6 +46,121 @@
         position: absolute;
         inset: 0;
         background: radial-gradient(ellipse at 50% 42%, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.42) 100%);
+    }
+}
+
+.atrium-login-page {
+    display: flex;
+    min-height: 100vh;
+}
+
+.atrium-login-main {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem;
+}
+
+// Centred: the whole page is the image.
+.atrium-login-page-centred {
+    @extend %atrium-login-image;
+}
+
+// Panel layouts: the image fills one half, the card sits on a plain surface in the other.
+.atrium-login-panel {
+    @extend %atrium-login-image;
+    display: flex;
+    flex: 0 0 50%;
+    align-items: flex-end;
+    padding: 3rem;
+    color: #fff;
+}
+
+.atrium-login-panel-content {
+    position: relative;
+    z-index: 1;
+    max-width: 520px;
+}
+
+.atrium-login-panel-heading {
+    font-size: 2.25rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: #fff;
+    margin-bottom: 0.75rem;
+}
+
+.atrium-login-panel-text {
+    font-size: 1.0625rem;
+    color: rgba(255, 255, 255, 0.88);
+    :last-child {
+        margin-bottom: 0;
+    }
+    a {
+        color: inherit;
+        text-decoration: underline;
+    }
+}
+
+.atrium-login-page-panelright .atrium-login-panel {
+    order: 2;
+}
+
+.atrium-login-page-panelleft,
+.atrium-login-page-panelright {
+    background-color: var(--atrium-surface-2);
+    .atrium-login-card {
+        box-shadow: var(--atrium-shadow-md);
+    }
+    .atrium-login-panel .atrium-login-instructions {
+        margin-top: 1.25rem;
+        max-width: none;
+    }
+}
+
+// Text around the form.
+.atrium-login-text {
+    font-size: 0.9375rem;
+    color: var(--atrium-text-muted);
+    :last-child {
+        margin-bottom: 0;
+    }
+}
+
+.atrium-login-text-above {
+    margin-bottom: 1.25rem;
+}
+
+.atrium-login-text-below {
+    margin-top: 1.25rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--atrium-border);
+}
+
+// Switches.
+body.atrium-login-nolangmenu .login-languagemenu {
+    display: none;
+}
+
+body.atrium-login-signupbutton .login-signup a {
+    display: block;
+    width: 100%;
+    margin-top: 0.5rem;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--atrium-accent);
+    border-radius: var(--atrium-radius-sm);
+    color: var(--atrium-accent);
+    font-weight: 500;
+    text-align: center;
+    text-decoration: none;
+    &:hover,
+    &:focus-visible {
+        background-color: var(--atrium-accent);
+        color: #fff;
     }
 }
 
@@ -175,9 +285,38 @@
     }
 }
 
+@include media-breakpoint-down(lg) {
+    .atrium-login-panel {
+        flex-basis: 42%;
+        padding: 2rem;
+    }
+    .atrium-login-panel-heading {
+        font-size: 1.75rem;
+    }
+}
+
 @include media-breakpoint-down(md) {
     .atrium-login-page {
+        flex-direction: column;
+    }
+    .atrium-login-main {
         padding: 1.5rem 1rem;
+    }
+    // The panel becomes a short band above the card.
+    .atrium-login-panel {
+        flex-basis: auto;
+        order: 0;
+        min-height: 160px;
+        padding: 1.5rem 1rem;
+    }
+    .atrium-login-page-panelright .atrium-login-panel {
+        order: 0;
+    }
+    .atrium-login-panel-heading {
+        font-size: 1.5rem;
+    }
+    .atrium-login-panel .atrium-login-instructions {
+        display: none;
     }
     .atrium-login-card {
         max-width: none;

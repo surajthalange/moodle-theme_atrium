@@ -232,3 +232,67 @@ Feature: Atrium theme
     And I should see "User details" in the ".atrium-profile-card-contact" "css_element"
     And I should see "Course 1" in the ".atrium-profile-card-coursedetails" "css_element"
     And "[data-region='atrium-profile'] .atrium-profile-card" "css_element" should exist
+
+  Scenario: The login page offers three layouts with the panel copy and the text under the form
+    Given the following config values are set as admin:
+      | loginlayout       | panelleft                        | theme_atrium |
+      | loginpanelheading | Learn at your own pace           | theme_atrium |
+      | loginpaneltext    | <p>Courses, deadlines, done.</p> | theme_atrium |
+      | logintextbelow    | <p>Call the service desk.</p>    | theme_atrium |
+      | loginshowlangmenu | 0                                | theme_atrium |
+    And I visit "/login/index.php"
+    Then ".atrium-login-page-panelleft .atrium-login-panel" "css_element" should exist
+    And I should see "Learn at your own pace" in the ".atrium-login-panel" "css_element"
+    And I should see "Courses, deadlines, done." in the ".atrium-login-panel" "css_element"
+    And I should see "Call the service desk." in the ".atrium-login-card" "css_element"
+    And "body.atrium-login-nolangmenu" "css_element" should exist
+    When the following config values are set as admin:
+      | loginlayout | panelright | theme_atrium |
+    And I reload the page
+    Then ".atrium-login-page-panelright .atrium-login-panel" "css_element" should exist
+    When the following config values are set as admin:
+      | loginlayout | centred | theme_atrium |
+    And I reload the page
+    Then ".atrium-login-page-centred" "css_element" should exist
+    And ".atrium-login-panel" "css_element" should not exist
+    And I should see "Call the service desk." in the ".atrium-login-card" "css_element"
+    When I set the field "Username" to "student1"
+    And I set the field "Password" to "student1"
+    And I press "Log in"
+    Then I should see "Ada Lovelace"
+
+  Scenario: The footer shows typed columns, the contact details and the legal links
+    Given the following config values are set as admin:
+      | footercolumns        | 4                              | theme_atrium |
+      | footercol1type       | html                           | theme_atrium |
+      | footercol1title      | About us                       | theme_atrium |
+      | footercol1html       | <p>A place to learn.</p>       | theme_atrium |
+      | footercol2type       | menu                           | theme_atrium |
+      | footercol2title      | Explore                        | theme_atrium |
+      | footercol2menu       | All courses\|/course/index.php | theme_atrium |
+      | footercol3type       | contact                        | theme_atrium |
+      | footercol3title      | Contact                        | theme_atrium |
+      | footercontactemail   | hello@example.com              | theme_atrium |
+      | footercol4type       | social                         | theme_atrium |
+      | sociallinks          | github\|https://github.com     | theme_atrium |
+      | footerprivacyurl     | /admin/tool/policy/index.php   | theme_atrium |
+    And I log in as "student1"
+    Then I should see "A place to learn." in the ".atrium-footer-column-html" "css_element"
+    And I should see "hello@example.com" in the ".atrium-footer-column-contact" "css_element"
+    And "a[aria-label='github']" "css_element" should exist in the ".atrium-footer-column-social" "css_element"
+    And I should see "Privacy" in the ".atrium-footer-bottom" "css_element"
+    When I click on "All courses" "link" in the ".atrium-footer-column-menu" "css_element"
+    Then ".atrium-catalogue" "css_element" should exist
+
+  Scenario: The header can be compact, static, and show the site name alone
+    Given the following config values are set as admin:
+      | navbarsticky | 0    | theme_atrium |
+      | brandstyle   | name | theme_atrium |
+    And I log in as "student1"
+    Then "body.atrium-navbar-static" "css_element" should exist
+    And ".atrium-brand-name" "css_element" should exist
+    And ".atrium-brand-logo" "css_element" should not exist
+    When the following config values are set as admin:
+      | navbarsticky | 1 | theme_atrium |
+    And I reload the page
+    Then "body.atrium-navbar-static" "css_element" should not exist

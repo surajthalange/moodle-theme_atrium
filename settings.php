@@ -100,6 +100,59 @@ if ($ADMIN->fulltree) {
         1
     ));
 
+
+    // Typography.
+    $addcss($page, new admin_setting_configselect(
+        'theme_atrium/fontfamily',
+        get_string('fontfamily', 'theme_atrium'),
+        get_string('fontfamily_desc', 'theme_atrium'),
+        'inter',
+        ['inter' => get_string('fontfamily:inter', 'theme_atrium'), 'system' => get_string('fontfamily:system', 'theme_atrium')]
+    ));
+
+    $addcss($page, new admin_setting_configselect(
+        'theme_atrium/headingweight',
+        get_string('headingweight', 'theme_atrium'),
+        get_string('headingweight_desc', 'theme_atrium'),
+        '600',
+        ['600' => get_string('headingweight:600', 'theme_atrium'), '700' => get_string('headingweight:700', 'theme_atrium')]
+    ));
+
+    $settings->add($page);
+
+    // Header.
+    $page = new admin_settingpage('theme_atrium_header', get_string('headersettings', 'theme_atrium'));
+
+    $page->add(new admin_setting_configselect(
+        'theme_atrium/brandstyle',
+        get_string('brandstyle', 'theme_atrium'),
+        get_string('brandstyle_desc', 'theme_atrium'),
+        'both',
+        [
+            'both' => get_string('brandstyle:both', 'theme_atrium'),
+            'logo' => get_string('brandstyle:logo', 'theme_atrium'),
+            'name' => get_string('brandstyle:name', 'theme_atrium'),
+        ]
+    ));
+
+    $addcss($page, new admin_setting_configselect(
+        'theme_atrium/navbarheight',
+        get_string('navbarheight', 'theme_atrium'),
+        get_string('navbarheight_desc', 'theme_atrium'),
+        'standard',
+        [
+            'standard' => get_string('navbarheight:standard', 'theme_atrium'),
+            'compact' => get_string('navbarheight:compact', 'theme_atrium'),
+        ]
+    ));
+
+    $page->add(new admin_setting_configcheckbox(
+        'theme_atrium/navbarsticky',
+        get_string('navbarsticky', 'theme_atrium'),
+        get_string('navbarsticky_desc', 'theme_atrium'),
+        1
+    ));
+
     $settings->add($page);
 
     // Sidebar.
@@ -151,6 +204,62 @@ if ($ADMIN->fulltree) {
         get_string('loginoverlayopacity_desc', 'theme_atrium'),
         '0.55',
         ['0.25' => '25%', '0.35' => '35%', '0.45' => '45%', '0.55' => '55%', '0.65' => '65%', '0.75' => '75%', '0.85' => '85%']
+    ));
+
+
+    $page->add(new admin_setting_configselect(
+        'theme_atrium/loginlayout',
+        get_string('loginlayout', 'theme_atrium'),
+        get_string('loginlayout_desc', 'theme_atrium'),
+        'centred',
+        [
+            'centred' => get_string('loginlayout:centred', 'theme_atrium'),
+            'panelleft' => get_string('loginlayout:panelleft', 'theme_atrium'),
+            'panelright' => get_string('loginlayout:panelright', 'theme_atrium'),
+        ]
+    ));
+
+    $page->add(new admin_setting_configtext(
+        'theme_atrium/loginpanelheading',
+        get_string('loginpanelheading', 'theme_atrium'),
+        get_string('loginpanelheading_desc', 'theme_atrium'),
+        '',
+        PARAM_TEXT
+    ));
+
+    $page->add(new admin_setting_confightmleditor(
+        'theme_atrium/loginpaneltext',
+        get_string('loginpaneltext', 'theme_atrium'),
+        '',
+        ''
+    ));
+
+    $page->add(new admin_setting_confightmleditor(
+        'theme_atrium/logintextabove',
+        get_string('logintextabove', 'theme_atrium'),
+        get_string('logintextabove_desc', 'theme_atrium'),
+        ''
+    ));
+
+    $page->add(new admin_setting_confightmleditor(
+        'theme_atrium/logintextbelow',
+        get_string('logintextbelow', 'theme_atrium'),
+        get_string('logintextbelow_desc', 'theme_atrium'),
+        ''
+    ));
+
+    $page->add(new admin_setting_configcheckbox(
+        'theme_atrium/loginshowlangmenu',
+        get_string('loginshowlangmenu', 'theme_atrium'),
+        get_string('loginshowlangmenu_desc', 'theme_atrium'),
+        1
+    ));
+
+    $page->add(new admin_setting_configcheckbox(
+        'theme_atrium/loginsignupbutton',
+        get_string('loginsignupbutton', 'theme_atrium'),
+        get_string('loginsignupbutton_desc', 'theme_atrium'),
+        0
     ));
 
     $settings->add($page);
@@ -683,24 +792,55 @@ if ($ADMIN->fulltree) {
         get_string('footercolumns', 'theme_atrium'),
         get_string('footercolumns_desc', 'theme_atrium'),
         '0',
-        ['0' => '0', '1' => '1', '2' => '2', '3' => '3']
+        ['0' => '0', '1' => '1', '2' => '2', '3' => '3', '4' => '4']
     ));
 
-    for ($i = 1; $i <= 3; $i++) {
+    $columntypes = [
+        'html' => get_string('footercoltype:html', 'theme_atrium'),
+        'menu' => get_string('footercoltype:menu', 'theme_atrium'),
+        'social' => get_string('footercoltype:social', 'theme_atrium'),
+        'contact' => get_string('footercoltype:contact', 'theme_atrium'),
+    ];
+    for ($i = 1; $i <= \theme_atrium\output\footer::MAX_COLUMNS; $i++) {
+        $page->add(new admin_setting_heading(
+            'theme_atrium/footercol' . $i . 'heading',
+            get_string('footercolheading', 'theme_atrium', $i),
+            ''
+        ));
+        $page->add(new admin_setting_configselect(
+            'theme_atrium/footercol' . $i . 'type',
+            get_string('footercoltype', 'theme_atrium'),
+            '',
+            'html',
+            $columntypes
+        ));
         $page->add(new admin_setting_configtext(
             'theme_atrium/footercol' . $i . 'title',
-            get_string('footercoltitle', 'theme_atrium', $i),
+            get_string('footercoltitle', 'theme_atrium'),
             '',
             '',
             PARAM_TEXT
         ));
         $page->add(new admin_setting_confightmleditor(
             'theme_atrium/footercol' . $i . 'html',
-            get_string('footercolhtml', 'theme_atrium', $i),
-            '',
+            get_string('footercolhtml', 'theme_atrium'),
+            get_string('footercolhtml_desc', 'theme_atrium'),
             ''
         ));
+        $page->add(new admin_setting_configtextarea(
+            'theme_atrium/footercol' . $i . 'menu',
+            get_string('footercolmenu', 'theme_atrium'),
+            get_string('footercolmenu_desc', 'theme_atrium'),
+            '',
+            PARAM_RAW
+        ));
     }
+
+    $page->add(new admin_setting_heading(
+        'theme_atrium/footershared_heading',
+        get_string('footershared', 'theme_atrium'),
+        get_string('footershared_desc', 'theme_atrium')
+    ));
 
     $page->add(new admin_setting_configtextarea(
         'theme_atrium/sociallinks',
@@ -710,12 +850,69 @@ if ($ADMIN->fulltree) {
         PARAM_RAW
     ));
 
+    $page->add(new admin_setting_configtextarea(
+        'theme_atrium/footercontactaddress',
+        get_string('footercontactaddress', 'theme_atrium'),
+        '',
+        '',
+        PARAM_TEXT,
+        '40',
+        '3'
+    ));
+
+    $page->add(new admin_setting_configtext(
+        'theme_atrium/footercontactphone',
+        get_string('footercontactphone', 'theme_atrium'),
+        '',
+        '',
+        PARAM_TEXT
+    ));
+
+    $page->add(new admin_setting_configtext(
+        'theme_atrium/footercontactemail',
+        get_string('footercontactemail', 'theme_atrium'),
+        '',
+        '',
+        PARAM_EMAIL
+    ));
+
+    $page->add(new admin_setting_heading(
+        'theme_atrium/footerbottom_heading',
+        get_string('footerbottom', 'theme_atrium'),
+        get_string('footerbottom_desc', 'theme_atrium')
+    ));
+
+    $page->add(new admin_setting_configstoredfile(
+        'theme_atrium/footerlogo',
+        get_string('footerlogo', 'theme_atrium'),
+        get_string('footerlogo_desc', 'theme_atrium'),
+        'footerlogo',
+        0,
+        ['maxfiles' => 1, 'accepted_types' => ['web_image']]
+    ));
+
     $page->add(new admin_setting_configtext(
         'theme_atrium/footerlegal',
         get_string('footerlegal', 'theme_atrium'),
         get_string('footerlegal_desc', 'theme_atrium'),
         get_string('footerlegal_default', 'theme_atrium'),
         PARAM_TEXT
+    ));
+
+    $page->add(new admin_setting_configtext(
+        'theme_atrium/footerprivacyurl',
+        get_string('footerprivacyurl', 'theme_atrium'),
+        get_string('footerprivacyurl_desc', 'theme_atrium'),
+        '',
+        PARAM_URL
+    ));
+
+    $page->add(new admin_setting_configtext(
+        'theme_atrium/footertermsurl',
+        get_string('footertermsurl', 'theme_atrium'),
+        get_string('footertermsurl_desc', 'theme_atrium'),
+        '',
+        PARAM_URL
     ));
 
     $page->add(new admin_setting_configcheckbox(
@@ -744,6 +941,23 @@ if ($ADMIN->fulltree) {
         get_string('rawscss_desc', 'theme_atrium'),
         '',
         PARAM_RAW
+    ));
+
+
+    $addcss($page, new admin_setting_configtextarea(
+        'theme_atrium/customcss',
+        get_string('customcss', 'theme_atrium'),
+        get_string('customcss_desc', 'theme_atrium'),
+        '',
+        PARAM_RAW
+    ));
+
+    $page->add(new admin_setting_configtext(
+        'theme_atrium/ga4id',
+        get_string('ga4id', 'theme_atrium'),
+        get_string('ga4id_desc', 'theme_atrium'),
+        '',
+        '/^(G-[A-Za-z0-9]{4,20})?$/'
     ));
 
     $settings->add($page);

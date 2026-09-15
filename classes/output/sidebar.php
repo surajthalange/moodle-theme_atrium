@@ -98,18 +98,15 @@ class sidebar implements renderable, templatable {
      * @return array
      */
     public function export_for_template(renderer_base $output): array {
-        global $CFG, $SITE;
+        global $CFG;
 
         $items = [];
         foreach ($this->nodes as $node) {
             $items[] = $this->export_node($node);
         }
 
-        return [
+        return \theme_atrium\local\header::brand($output) + [
             'homeurl' => (new \moodle_url('/'))->out(false),
-            'sitename' => format_string($SITE->shortname, true, ['context' => \context_course::instance(SITEID)]),
-            'haslogo' => $output->should_display_navbar_logo(),
-            'logourl' => $output->get_compact_logo_url(300, 44),
             'collapsed' => $this->collapsed,
             'items' => $items,
             'hasitems' => !empty($items),

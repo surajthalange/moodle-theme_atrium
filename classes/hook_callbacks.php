@@ -56,21 +56,50 @@ final class hook_callbacks {
     }
 
     /**
-     * When the scheme is "system", swap to dark before first paint if the browser prefers it.
+     * Head additions: the scheme script, and the analytics tag when one is configured.
      *
-     * This is the one inline script in the theme. It has to run before the stylesheet
-     * paints, which no AMD module can do, and it reads nothing but a media query.
+     * When the scheme is "system", the script swaps to dark before first paint if the
+     * browser prefers it. It has to run before the stylesheet paints, which no AMD module
+     * can do, and it reads nothing but a media query.
+     *
+     * Google Analytics 4 loads only when the administrator has entered a measurement id;
+     * the theme makes no outside request otherwise.
      *
      * @param before_standard_head_html_generation $hook
      */
     public static function before_standard_head_html_generation(before_standard_head_html_generation $hook): void {
-        if (!self::active() || scheme::resolve() !== scheme::SYSTEM) {
+        if (!self::active()) {
             return;
         }
-        $hook->add_html(
-            '<script>if (window.matchMedia("(prefers-color-scheme: dark)").matches) {'
-            . 'document.documentElement.setAttribute("data-bs-theme", "dark");}</script>'
-        );
+        if (scheme::resolve() === scheme::SYSTEM) {
+            $hook->add_html(
+                '<script>if (window.matchMedia("(prefers-color-scheme: dark)").matches) {'
+                . 'document.documentElement.setAttribute("data-bs-theme", "dark");}</script>'
+            );
+        }
+        $ga4 = self::ga4_id();
+        if ($ga4 !== '') {
+            $hook->add_html(
+                '<script async src="https://www.googletagmanager.com/gtag/js?id=' . $ga4 . '"></script>'
+                . '<script>window.dataLayer = window.dataLayer || [];function gtag(){dataLayer.push(arguments);}'
+                . 'gtag("js", new Date());gtag("config", "' . $ga4 . '", {"anonymize_ip": true});</script>'
+            );
+        }
+    }
+
+    /**
+     * The Google Analytics 4 measurement id, or an empty string when unset or malformed.
+     *
+     * Administrators browsing the site are not measured.
+     *
+     * @return string
+     */
+    public static function ga4_id(): string {
+        $id = strtoupper(trim((string) get_config('theme_atrium', 'ga4id')));
+        if (!preg_match('/^G-[A-Z0-9]{4,20}$/', $id) || is_siteadmin()) {
+            return '';
+        }
+        return $id;
     }
 
     /**

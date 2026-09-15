@@ -28,7 +28,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$bodyattributes = $OUTPUT->body_attributes();
+$bodyattributes = $OUTPUT->body_attributes(\theme_atrium\local\loginpage::body_classes());
 
 $leftinstructions = null;
 if ($CFG->branch >= 502 && !empty($CFG->auth_instructions)) {
@@ -40,6 +40,7 @@ $templatecontext = [
     'output' => $OUTPUT,
     'bodyattributes' => $bodyattributes,
     'leftinstructions' => $leftinstructions,
+    'login' => \theme_atrium\local\loginpage::export(),
 ];
 
 echo $OUTPUT->render_from_template('theme_boost/login', $templatecontext);

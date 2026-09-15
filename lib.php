@@ -72,6 +72,19 @@ function theme_atrium_get_pre_scss($theme) {
         $scss .= "\$atrium-font-scale: {$fontscale};\n";
     }
 
+    $scss .= '$navbar-height: ' . \theme_atrium\local\header::height() . "px;\n";
+
+    if (get_config('theme_atrium', 'fontfamily') === 'system') {
+        $scss .= '$font-family-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;';
+        $scss .= "\n";
+        $scss .= "\$atrium-bundled-font: false;\n";
+    }
+
+    $headingweight = (string) get_config('theme_atrium', 'headingweight');
+    if (in_array($headingweight, ['600', '700'], true)) {
+        $scss .= "\$headings-font-weight: {$headingweight};\n";
+    }
+
     if (defined('BEHAT_SITE_RUNNING')) {
         $scss .= "\$behatsite: true;\n";
     }
@@ -134,6 +147,12 @@ function theme_atrium_get_extra_scss($theme) {
         $scss .= "\n" . $rawscss;
     }
 
+    // Plain CSS is valid SCSS, so it is appended as is, last so it wins.
+    $customcss = get_config('theme_atrium', 'customcss');
+    if (!empty($customcss)) {
+        $scss .= "\n" . $customcss;
+    }
+
     return $scss;
 }
 
@@ -150,7 +169,7 @@ function theme_atrium_get_extra_scss($theme) {
  * @return bool
  */
 function theme_atrium_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, array $options = []) {
-    $areas = ['loginbackgroundimage', 'heroimage', 'fp_heroimage', 'fp_aboutimage', 'fp_ctaimage'];
+    $areas = ['loginbackgroundimage', 'heroimage', 'fp_heroimage', 'fp_aboutimage', 'fp_ctaimage', 'footerlogo'];
     for ($i = 1; $i <= \theme_atrium\local\frontpage_settings::MAX_TESTIMONIALS; $i++) {
         $areas[] = 'fp_testimonial' . $i . '_photo';
     }

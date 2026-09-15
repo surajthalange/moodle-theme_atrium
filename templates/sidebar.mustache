@@ -28,6 +28,7 @@
     * sitename - Site short name
     * haslogo - Whether a compact logo is configured
     * logourl - URL of the compact logo
+    * showname - Whether the site name shows beside the logo
     * collapsed - Whether the sidebar starts collapsed
     * items - Navigation items: text, url, isactive, iconkey, iconcomponent, haschildren, children, id
 
@@ -37,6 +38,7 @@
         "sitename": "Atrium",
         "haslogo": false,
         "logourl": "",
+        "showname": true,
         "collapsed": false,
         "hasitems": true,
         "items": [
@@ -56,7 +58,9 @@
             {{^haslogo}}
                 <span class="atrium-brand-mark" aria-hidden="true">{{#pix}} i/course, core {{/pix}}</span>
             {{/haslogo}}
-            <span class="atrium-brand-name">{{ sitename }}</span>
+            {{#showname}}
+                <span class="atrium-brand-name">{{ sitename }}</span>
+            {{/showname}}
         </a>
     </div>
     {{#hasitems}}

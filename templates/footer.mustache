@@ -17,28 +17,37 @@
 {{!
     @template theme_atrium/footer
 
-    The configurable footer content: columns, social links and the legal line.
+    The configurable footer content: typed columns and the bottom bar.
     Rendered by core_renderer::atrium_footer() inside the theme_boost/footer override.
 
     Context variables required for this template:
     * hascolumns - Whether any column has content
-    * columns - Columns: title, html
+    * columns - Columns: title, and one of ishtml/html, ismenu/items, issocial/social, iscontact/address,phone,phoneurl,email
     * columnclass - Class naming the column count
-    * social - Social links: platform, icon, url
+    * hassocial, social - Social links: platform, icon, url (shown in the bottom bar when no column carries them)
     * legal - The legal line, formatted
+    * haslinks, links - Privacy and terms links: label, url
+    * logourl - URL of the footer logo, or empty
+    * sitename - The site name, for the logo's alt text
     * showpoweredby - Whether to credit Moodle
 
     Example context (json):
     {
         "hascolumns": true,
-        "columnclass": "atrium-footer-columns-2",
+        "columnclass": "atrium-footer-columns-4",
         "columns": [
-            {"title": "About", "html": "<p>A place to learn.</p>"},
-            {"title": "Help", "html": "<ul><li><a href=\"#\">Contact us</a></li></ul>"}
+            {"title": "About", "ishtml": true, "html": "<p>A place to learn.</p>"},
+            {"title": "Explore", "ismenu": true, "items": [{"label": "Courses", "url": "#"}, {"label": "Help", "url": "#"}]},
+            {"title": "Follow us", "issocial": true, "social": [{"platform": "youtube", "icon": "fa-brands fa-youtube", "url": "https://youtube.com"}]},
+            {"title": "Contact", "iscontact": true, "address": "1 Campus Way", "phone": "+1 555 0100", "phoneurl": "tel:+15550100", "email": "hello@example.com"}
         ],
         "hassocial": true,
         "social": [{"platform": "youtube", "icon": "fa-brands fa-youtube", "url": "https://youtube.com"}],
         "legal": "© 2026 Atrium University",
+        "haslinks": true,
+        "links": [{"label": "Privacy", "url": "#"}, {"label": "Terms", "url": "#"}],
+        "logourl": "",
+        "sitename": "Atrium University",
         "showpoweredby": true
     }
 }}
@@ -46,17 +55,62 @@
     {{#hascolumns}}
         <div class="atrium-footer-columns {{ columnclass }}">
             {{#columns}}
-                <div class="atrium-footer-column">
+                <div class="atrium-footer-column atrium-footer-column-{{ type }}">
                     {{#title}}<h2 class="atrium-footer-title h6">{{ title }}</h2>{{/title}}
-                    <div class="atrium-footer-html">{{{ html }}}</div>
+                    {{#ishtml}}
+                        <div class="atrium-footer-html">{{{ html }}}</div>
+                    {{/ishtml}}
+                    {{#ismenu}}
+                        <ul class="atrium-footer-menu list-unstyled m-0">
+                            {{#items}}
+                                <li><a href="{{{ url }}}">{{ label }}</a></li>
+                            {{/items}}
+                        </ul>
+                    {{/ismenu}}
+                    {{#issocial}}
+                        <ul class="atrium-footer-social list-unstyled m-0">
+                            {{#social}}
+                                <li>
+                                    <a href="{{{ url }}}" class="atrium-footer-social-link" rel="noopener" target="_blank" aria-label="{{ platform }}">
+                                        <i class="{{ icon }}" aria-hidden="true"></i>
+                                    </a>
+                                </li>
+                            {{/social}}
+                        </ul>
+                    {{/issocial}}
+                    {{#iscontact}}
+                        <ul class="atrium-footer-contact list-unstyled m-0">
+                            {{#address}}
+                                <li><i class="fa fa-location-dot" aria-hidden="true"></i><span>{{{ address }}}</span></li>
+                            {{/address}}
+                            {{#phone}}
+                                <li><i class="fa fa-phone" aria-hidden="true"></i><a href="{{{ phoneurl }}}">{{ phone }}</a></li>
+                            {{/phone}}
+                            {{#email}}
+                                <li><i class="fa fa-envelope" aria-hidden="true"></i><a href="mailto:{{ email }}">{{ email }}</a></li>
+                            {{/email}}
+                        </ul>
+                    {{/iscontact}}
                 </div>
             {{/columns}}
         </div>
     {{/hascolumns}}
     <div class="atrium-footer-bottom">
-        <p class="atrium-footer-legal m-0">
-            {{ legal }}{{#showpoweredby}} · {{#str}} poweredbymoodle, core {{/str}}{{/showpoweredby}}
-        </p>
+        <div class="atrium-footer-legal-wrap">
+            {{#logourl}}
+                <img src="{{{ logourl }}}" alt="{{ sitename }}" class="atrium-footer-logo">
+            {{/logourl}}
+            <p class="atrium-footer-legal m-0">
+                {{ legal }}{{#showpoweredby}} · {{#str}} poweredbymoodle, core {{/str}}{{/showpoweredby}}
+            </p>
+            {{#haslinks}}
+                <ul class="atrium-footer-links list-unstyled m-0">
+                    {{#links}}
+                        <li><a href="{{{ url }}}">{{ label }}</a></li>
+                    {{/links}}
+                </ul>
+            {{/haslinks}}
+        </div>
         {{#hassocial}}
             <ul class="atrium-footer-social list-unstyled m-0">
                 {{#social}}

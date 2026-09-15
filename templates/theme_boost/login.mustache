@@ -27,11 +27,16 @@
     both address them. The card is its own element rather than a class on #region-main:
     core styles region-main by id, and an id beats a class.
 
+    Three layouts, named by the login.layout setting: the card centred over the image,
+    or the card beside an image panel on the left or the right. The panel carries the
+    panel heading and text and, on 5.2, the auth instructions.
+
     Context variables required for this template:
     * sitename - The name of the site
     * output - The core renderer for the page
     * bodyattributes - attributes for the body tag as a string of html attributes
     * leftinstructions - Formatted auth instructions for the panel beside the card, or null
+    * login - Layout context: layout, panel, panelheading, paneltext, textabove, textbelow
 
     Example context (json):
     {
@@ -43,7 +48,15 @@
             "main_content": "<h1>Headings make html validators happier</h1>"
         },
         "bodyattributes": "",
-        "leftinstructions": "<p>Sign in with your student number.</p>"
+        "leftinstructions": "<p>Sign in with your student number.</p>",
+        "login": {
+            "layout": "panelleft",
+            "panel": true,
+            "panelheading": "Welcome back",
+            "paneltext": "<p>Pick up where you left off.</p>",
+            "textabove": "",
+            "textbelow": "<p>Need help? Call the service desk.</p>"
+        }
     }
 }}
 {{> theme_boost/head }}
@@ -56,21 +69,46 @@
     {{{ output.standard_top_of_body_html }}}
 
     <div id="page" class="mt-0">
-        <div id="page-content" class="atrium-login-page">
-            <div class="atrium-login-card">
-                <main id="region-main">
-                    <div id="region-main-box">
-                        <div class="login-container">
-                            {{{ output.main_content }}}
-                        </div>
+        <div id="page-content" class="atrium-login-page atrium-login-page-{{ login.layout }}">
+            {{#login.panel}}
+                <aside class="atrium-login-panel">
+                    <div class="atrium-login-panel-content">
+                        {{#login.panelheading}}
+                            <h2 class="atrium-login-panel-heading">{{ login.panelheading }}</h2>
+                        {{/login.panelheading}}
+                        {{#login.paneltext}}
+                            <div class="atrium-login-panel-text">{{{ login.paneltext }}}</div>
+                        {{/login.paneltext}}
+                        {{#leftinstructions}}
+                            <div class="atrium-login-instructions">{{{ leftinstructions }}}</div>
+                        {{/leftinstructions}}
                     </div>
-                </main>
-            </div>
-            {{#leftinstructions}}
-                <aside class="atrium-login-instructions d-none d-lg-block">
-                    {{{ leftinstructions }}}
                 </aside>
-            {{/leftinstructions}}
+            {{/login.panel}}
+            <div class="atrium-login-main">
+                <div class="atrium-login-card">
+                    {{#login.textabove}}
+                        <div class="atrium-login-text atrium-login-text-above">{{{ login.textabove }}}</div>
+                    {{/login.textabove}}
+                    <main id="region-main">
+                        <div id="region-main-box">
+                            <div class="login-container">
+                                {{{ output.main_content }}}
+                            </div>
+                        </div>
+                    </main>
+                    {{#login.textbelow}}
+                        <div class="atrium-login-text atrium-login-text-below">{{{ login.textbelow }}}</div>
+                    {{/login.textbelow}}
+                </div>
+                {{^login.panel}}
+                    {{#leftinstructions}}
+                        <aside class="atrium-login-instructions d-none d-lg-block">
+                            {{{ leftinstructions }}}
+                        </aside>
+                    {{/leftinstructions}}
+                {{/login.panel}}
+            </div>
         </div>
     </div>
     {{> theme_boost/footer }}

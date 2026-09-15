@@ -2,36 +2,16 @@
 
 // Inter, bundled. The URLs are published as custom properties by
 // theme_atrium_get_extra_scss() so they carry the theme revision.
-@font-face {
-    font-family: "Inter";
-    font-style: normal;
-    font-weight: 400;
-    font-display: swap;
-    src: var(--atrium-font-400) format("woff2");
-}
-
-@font-face {
-    font-family: "Inter";
-    font-style: normal;
-    font-weight: 500;
-    font-display: swap;
-    src: var(--atrium-font-500) format("woff2");
-}
-
-@font-face {
-    font-family: "Inter";
-    font-style: normal;
-    font-weight: 600;
-    font-display: swap;
-    src: var(--atrium-font-600) format("woff2");
-}
-
-@font-face {
-    font-family: "Inter";
-    font-style: normal;
-    font-weight: 700;
-    font-display: swap;
-    src: var(--atrium-font-700) format("woff2");
+@if $atrium-bundled-font {
+    @each $weight in 400, 500, 600, 700 {
+        @font-face {
+            font-family: "Inter";
+            font-style: normal;
+            font-weight: $weight;
+            font-display: swap;
+            src: var(--atrium-font-#{$weight}) format("woff2");
+        }
+    }
 }
 
 body {
