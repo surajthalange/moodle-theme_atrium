@@ -85,7 +85,11 @@ final class focusmode_test extends \advanced_testcase {
         $course = $generator->create_course(['enablecompletion' => 1, 'fullname' => 'Marine Biology']);
         $student = $generator->create_user();
         $generator->enrol_user($student->id, $course->id, 'student');
-        $page = $generator->create_module('page', ['course' => $course->id, 'name' => 'Reading'], ['completion' => COMPLETION_TRACKING_MANUAL]);
+        $page = $generator->create_module(
+            'page',
+            ['course' => $course->id, 'name' => 'Reading'],
+            ['completion' => COMPLETION_TRACKING_MANUAL]
+        );
 
         $PAGE->set_course($course);
         $PAGE->set_pagelayout('course');
