@@ -1,0 +1,52 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_atrium/quickstart
+
+    The quick start page: what one click will set up, and the buttons to do it or undo it.
+
+    Context variables required for this template:
+    * intro - Formatted introduction
+    * items - What will be set, one string each
+    * note - The undo note
+    * applyurl, reseturl - Action URLs carrying the session key
+    * settingsurl - The theme settings page
+
+    Example context (json):
+    {
+        "intro": "One click sets up the front page, footer, quick links and login page from your site's own details.",
+        "items": ["Front page: hero with three slides, feature blocks, latest courses, numbers, call to action"],
+        "note": "Everything is a normal setting; change any of it afterwards, or reset here.",
+        "applyurl": "#",
+        "reseturl": "#",
+        "settingsurl": "#"
+    }
+}}
+<div class="atrium-quickstart">
+    <p class="lead">{{ intro }}</p>
+    <ul class="atrium-quickstart-list">
+        {{#items}}
+            <li>{{ . }}</li>
+        {{/items}}
+    </ul>
+    <p class="text-muted">{{ note }}</p>
+    <div class="atrium-quickstart-actions">
+        <a href="{{{ applyurl }}}" class="btn btn-primary btn-lg" data-action="atrium-quickstart-apply">{{#str}} quickstart_apply, theme_atrium {{/str}}</a>
+        <a href="{{{ reseturl }}}" class="btn btn-outline-secondary" data-action="atrium-quickstart-reset">{{#str}} quickstart_reset, theme_atrium {{/str}}</a>
+        <a href="{{{ settingsurl }}}" class="btn btn-link">{{#str}} configtitle, theme_atrium {{/str}}</a>
+    </div>
+</div>

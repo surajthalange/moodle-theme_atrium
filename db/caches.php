@@ -44,6 +44,16 @@ $definitions = [
         'staticacceleration' => true,
         'staticaccelerationsize' => 50,
     ],
+    // The flat list of admin pages (name, title, URL) the command palette searches for
+    // site administrators, so the admin tree is built once an hour, not per keystroke.
+    'adminpages' => [
+        'mode' => cache_store::MODE_APPLICATION,
+        'simplekeys' => true,
+        'simpledata' => true,
+        'ttl' => 3600,
+        'staticacceleration' => true,
+        'staticaccelerationsize' => 1,
+    ],
     // Site-wide counters for the front page. Ten minutes.
     'sitecounts' => [
         'mode' => cache_store::MODE_APPLICATION,

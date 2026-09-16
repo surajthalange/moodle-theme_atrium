@@ -4,25 +4,28 @@
 
 A modern Boost child theme for Moodle 5.1 and 5.2: a left navigation sidebar that
 collapses to icons, a card dashboard with a greeting and progress tiles, a card course
-page, dark mode with a per-user switch, five colour presets, a centred login card over a
-full-bleed image, and a configurable footer. Fonts are bundled; the theme makes no
+page, dark mode with a per-user switch, seven colour presets led by Atrium teal, three login
+layouts, and a configurable footer. Fonts are bundled; the theme makes no
 requests to outside services.
 
 - **Component:** `theme_atrium`
 - **Moodle support:** 5.1 and 5.2 (see *Why not 4.5* below)
 - **Parent:** Boost
-- **Licence:** GPLv3 or later; the Inter typeface is under the SIL Open Font License (`fonts/OFL.txt`)
+- **Licence:** GPLv3 or later; the Inter and Atkinson Hyperlegible typefaces are under the SIL Open Font License (`fonts/OFL.txt`)
 
 ## What you get
 
 | Area | Atrium |
 |---|---|
+| Quick start | One click on a fresh site sets up the front page, footer, quick links and login page from the site's own name, summary, support contact and courses; one click puts it all back. |
+| Search and go | Ctrl+K (Cmd+K) or a button in the navigation bar opens a box that finds courses, activities in the current course, the pages people go to and, for administrators, admin pages, with the user's own permissions. Keyboard first, screen-reader announced. |
+| Accessibility toolbar | Each user can choose a larger text size, a reading font (Atkinson Hyperlegible, bundled), high contrast and reduced motion. Saved as preferences and applied on the server, so every page, including sign-in, honours them. |
 | Navigation | A left sidebar carrying Moodle's primary navigation (Home, Dashboard, My courses, Site administration, your custom menu). Expanded at 248 px or collapsed to a 64 px icon rail; each user's choice is remembered. Below 768 px the navigation bar's menu button opens Boost's own drawer. |
 | Course index | Boost's course index drawer, docked against the sidebar. Its behaviour, keyboard handling and preferences are core's, untouched. |
 | Dashboard | A greeting band with the date and four tiles: courses in progress, courses completed, items due this week, unread messages and notifications. Each tile links to the page it counts, each can be turned off, and the whole band can be. |
 | Course page | Sections as cards, activities as rows, with the activity icon in its purpose colour. No template is overridden: editing mode, drag and drop, bulk editing and the activity chooser are Boost's. |
 | Dark mode | A per-user switch in the navigation bar and in the user menu, saved as a preference. The scheme is applied on the server before the page is sent, so there is no flash on load. A site default of light, dark, or *follow the device*. Dark mode can be disabled site-wide. |
-| Presets | Five colour presets, each an accent and a sidebar tone. A brand colour setting overrides the accent; a sidebar tone setting overrides the tone. |
+| Presets | Seven colour presets (Atrium teal light and dark, Indigo light and dark, Emerald, Rose, Slate), each an accent and a sidebar tone. A brand colour setting overrides the accent; a sidebar tone setting overrides the tone. |
 | Front page | A designed site home for visitors: hero with image and two buttons (or a carousel of up to five slides), feature blocks, a course showcase (latest, a category, or chosen courses), a numbers strip, testimonials, an about band and a call to action. Every section is a setting and has a switch. |
 | Catalogue | Category and search pages as course cards or a list: image, category, teachers, enrolled count, activity count, progress for enrolled users, and the price from fee or PayPal enrolment. Category chips, sort, paging, a search box; the view is remembered per user. |
 | Enrolment page | A course landing page around the enrolment forms: banner, summary, facts, outline, teachers, related courses, and the enrolment card kept in view. |
@@ -42,7 +45,7 @@ requests to outside services.
 | Navigation | Top bar + course index | Left sidebar | Left sidebar, collapsible, course index docked |
 | Dashboard | Blocks | Hero, tiles, styled cards | Hero, four tiles, styled cards |
 | Dark mode | No | Some | Yes, per user, no flash |
-| Presets | One | Many, plus a page builder | Five, no builder |
+| Presets | One | Many, plus a page builder | Seven, no builder |
 | Front page | Course list | Page builder | Seven designed sections, each a setting |
 | Catalogue and enrolment page | Lists and forms | Cards and a landing page | Cards and a landing page |
 | Fonts | System | Google Fonts, fetched | Bundled, nothing fetched |
@@ -73,8 +76,9 @@ Two core renderers are overridden, in the narrowest way that works:
 Everything else, the course page and the whole long tail included, is SCSS written
 against the class names core already emits. One renderer method is added
 (`core_renderer::atrium_footer()`). Three hook callbacks (html attributes, head HTML,
-user menu) and three small endpoints (scheme, focus mode, announcement dismissal) carry
-the per-user state, each working without JavaScript.
+user menu) and five small endpoints (scheme, focus mode, announcement dismissal, the
+accessibility toolbar, the search box) carry the per-user state, each working without
+JavaScript where there is a form to post; one admin page (quick start).
 
 Colours are CSS custom properties defined in `scss/atrium/_tokens.scss` for the light
 scheme and redefined under `[data-bs-theme="dark"]`. Bootstrap 5.3's own colour-mode
@@ -99,15 +103,21 @@ maintenance decision to take once 1.0 has users, and the tracker is the place to
 - The sidebar, its collapse control, the scheme switch and the tiles are real links and
   buttons with names; collapsed labels are shown on hover and on focus.
 - Nothing is conveyed by colour alone.
-- `prefers-reduced-motion` shortens every transition.
+- `prefers-reduced-motion` shortens every transition, and the accessibility toolbar offers the
+  same choice, plus text size, a reading font and high contrast, to people whose device is
+  not set up for it.
+- The search and go box is a combobox with a listbox: arrows move, Enter opens, Escape
+  closes, and the highlighted result is announced.
 
 ## Privacy
 
-Five user preferences, all declared to the privacy API and included in exports:
+Nine user preferences, all declared to the privacy API and included in exports:
 `theme_atrium_scheme` (light, dark or system), `theme_atrium_sidebar` (expanded or
 collapsed), `theme_atrium_catalogueview` (grid or list), `theme_atrium_focusmode` (on or
-off) and `theme_atrium_announcement` (a fingerprint of the dismissed announcement). No
-tables, no cookies of its own. Fonts are bundled. The theme makes no request to any
+off), `theme_atrium_announcement` (a fingerprint of the dismissed announcement), and the
+four accessibility toolbar choices (`theme_atrium_textsize`, `theme_atrium_readingfont`,
+`theme_atrium_contrast`, `theme_atrium_reducemotion`). No tables, no cookies of its own.
+Fonts are bundled. The theme makes no request to any
 outside service unless an administrator enters a Google Analytics 4 measurement id, in
 which case the Google tag loads with IP anonymisation, not for site administrators, and
 the setting says so.
@@ -116,7 +126,8 @@ the setting says so.
 
 *Site administration → Appearance → Themes → Atrium.* Tabs: General (preset, brand
 colour, text size, corner radius, dark mode, font, heading weight), Header (brand,
-height, sticky, recent courses menu, page width), Sidebar (first-visit state, tone), Login page (image, wash, layout,
+height, sticky, search and go, accessibility toolbar, recent courses menu, page width),
+Sidebar (first-visit state, tone), Login page (image, wash, layout,
 panel copy, text around the form, language menu, sign-up button), Course (banner, focus
 mode, the numbers for teaching staff), Dashboard (hero, image, greeting, the four tiles),
 Front page (every section, hero slides),
@@ -142,4 +153,5 @@ sheet, so nothing is precompiled.
 
 Boost, the parent, is Moodle core. Edwiser RemUI, Moove and Learnr established what a
 modern Moodle theme is expected to contain; nothing from them is used. Inter is by Rasmus
-Andersson and contributors, under the SIL Open Font License 1.1.
+Andersson and contributors, and Atkinson Hyperlegible by the Braille Institute of America,
+both under the SIL Open Font License 1.1.

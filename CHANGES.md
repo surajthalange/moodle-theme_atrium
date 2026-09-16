@@ -4,6 +4,12 @@
 
 Every page, not only the shell. Moodle 5.1 and 5.2.
 
+- Quick start: one click on a fresh site sets up the front page, footer, quick links and
+  login page from the site's own details; one click resets it.
+- Search and go: Ctrl+K or a navigation bar button finds courses, activities in the
+  current course, common pages and (for administrators) admin pages.
+- Accessibility toolbar: text size, a reading font (Atkinson Hyperlegible, bundled under
+  the OFL), high contrast and reduced motion, per user, applied on the server.
 - Front page: seven designed sections (hero, features, course showcase, numbers,
   testimonials, about, call to action), each with its own settings and switch, shown to
   visitors and to logged-in users alike; the navigation bar can go transparent over the
@@ -30,9 +36,12 @@ Every page, not only the shell. Moodle 5.1 and 5.2.
 - Footer: up to four columns, each custom HTML, a menu, the social links or the contact
   details; a footer logo, privacy and terms links.
 - Typography: Inter (bundled) or the system font; heading weight.
+- Brand: the default preset is now Atrium teal (#0f6e73), with a dark-sidebar twin; the
+  1.0 indigo stays as the Indigo and Indigo dark presets. The login image, dark sidebar
+  tone and page background follow the new palette.
 - Advanced: custom CSS; an optional Google Analytics 4 measurement id, off by default.
-- Three more user preferences (catalogue view, focus mode, dismissed announcement), all
-  declared to the privacy API.
+- Seven more user preferences (catalogue view, focus mode, dismissed announcement, and
+  the four accessibility choices), all declared to the privacy API.
 
 ## 1.0.0 (2026-09-14)
 

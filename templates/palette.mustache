@@ -1,0 +1,56 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_atrium/palette
+
+    The command palette: the navigation bar button and the dialog it opens. The dialog is
+    rendered closed; theme_atrium/palette fills the results from palette.php.
+
+    Context variables required for this template:
+    * searchurl - palette.php with the session key
+    * courseid - The current course id, or 0
+    * shortcut - The keyboard shortcut label
+
+    Example context (json):
+    {
+        "searchurl": "/theme/atrium/palette.php?sesskey=abc",
+        "courseid": 0,
+        "shortcut": "Ctrl K"
+    }
+}}
+<button class="btn btn-icon icon-no-margin atrium-palette-toggle" type="button" data-action="atrium-palette-open"
+        aria-label="{{#str}} palette, theme_atrium {{/str}}" title="{{#str}} palette_title, theme_atrium, {{ shortcut }} {{/str}}">
+    {{#pix}} i/search, core {{/pix}}
+</button>
+<div class="atrium-palette" data-region="atrium-palette" data-searchurl="{{{ searchurl }}}" data-courseid="{{ courseid }}" hidden>
+    <div class="atrium-palette-backdrop" data-action="atrium-palette-close"></div>
+    <div class="atrium-palette-dialog" role="dialog" aria-modal="true" aria-label="{{#str}} palette, theme_atrium {{/str}}">
+        <div class="atrium-palette-search">
+            {{#pix}} i/search, core {{/pix}}
+            <input type="text" class="atrium-palette-input" data-region="atrium-palette-input" role="combobox"
+                   aria-expanded="true" aria-controls="atrium-palette-results" aria-autocomplete="list"
+                   autocomplete="off" spellcheck="false" placeholder="{{#str}} palette_placeholder, theme_atrium {{/str}}">
+            <kbd class="atrium-palette-kbd">{{#str}} palette_esc, theme_atrium {{/str}}</kbd>
+        </div>
+        <div id="atrium-palette-results" class="atrium-palette-results" role="listbox" data-region="atrium-palette-results"
+             aria-label="{{#str}} palette_results, theme_atrium {{/str}}"></div>
+        <div class="atrium-palette-footer">
+            <span><kbd>↑</kbd><kbd>↓</kbd> {{#str}} palette_navigate, theme_atrium {{/str}}</span>
+            <span><kbd>↵</kbd> {{#str}} palette_open, theme_atrium {{/str}}</span>
+        </div>
+    </div>
+</div>

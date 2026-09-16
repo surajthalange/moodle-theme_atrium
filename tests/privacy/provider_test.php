@@ -19,6 +19,7 @@ namespace theme_atrium\privacy;
 use core_privacy\local\metadata\collection;
 use core_privacy\local\request\writer;
 use core_privacy\tests\provider_testcase;
+use theme_atrium\local\accessibility;
 use theme_atrium\local\announcement;
 use theme_atrium\local\catalogue;
 use theme_atrium\local\focusmode;
@@ -36,12 +37,12 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(\theme_atrium\privacy\provider::class)]
 final class provider_test extends provider_testcase {
     /**
-     * Five preferences are declared, each with a string that exists.
+     * Nine preferences are declared, each with a string that exists.
      */
     public function test_metadata(): void {
         $collection = provider::get_metadata(new collection('theme_atrium'));
         $items = $collection->get_collection();
-        $this->assertCount(5, $items);
+        $this->assertCount(9, $items);
         $names = array_map(fn($item) => $item->get_name(), $items);
         $this->assertSame([
             scheme::PREFERENCE,
@@ -49,6 +50,10 @@ final class provider_test extends provider_testcase {
             catalogue::VIEW_PREFERENCE,
             focusmode::PREFERENCE,
             announcement::PREFERENCE,
+            accessibility::PREF_TEXTSIZE,
+            accessibility::PREF_FONT,
+            accessibility::PREF_CONTRAST,
+            accessibility::PREF_MOTION,
         ], $names);
         foreach ($items as $item) {
             $this->assertInstanceOf(\core_privacy\local\metadata\types\user_preference::class, $item);

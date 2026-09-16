@@ -1,0 +1,86 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_atrium/a11y
+
+    The accessibility toolbar: a navigation bar button opening a panel with text size, a
+    reading font, high contrast and reduced motion. A plain form, so it works without
+    JavaScript; theme_atrium/a11y applies each change at once.
+
+    Context variables required for this template:
+    * action - a11y.php
+    * returnurl - Where to go back to
+    * sizes - Text sizes: value, label, checked
+    * font, contrast, motion - Current switches
+    * sesskey - The session key
+
+    Example context (json):
+    {
+        "action": "/theme/atrium/a11y.php",
+        "returnurl": "/my/",
+        "sizes": [
+            {"value": "normal", "label": "Normal", "checked": true},
+            {"value": "large", "label": "Large", "checked": false},
+            {"value": "larger", "label": "Larger", "checked": false}
+        ],
+        "font": false,
+        "contrast": false,
+        "motion": false,
+        "sesskey": "abc"
+    }
+}}
+<div class="dropdown atrium-a11y" data-region="atrium-a11y">
+    <button class="btn btn-icon icon-no-margin atrium-a11y-toggle" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside"
+            aria-expanded="false" aria-label="{{#str}} a11y, theme_atrium {{/str}}" title="{{#str}} a11y, theme_atrium {{/str}}">
+        {{#pix}} a11y, theme_atrium {{/pix}}
+    </button>
+    <form class="dropdown-menu dropdown-menu-end atrium-a11y-menu" method="post" action="{{{ action }}}" data-region="atrium-a11y-form">
+        <input type="hidden" name="sesskey" value="{{ sesskey }}">
+        <input type="hidden" name="returnurl" value="{{ returnurl }}">
+        <p class="atrium-a11y-heading">{{#str}} a11y, theme_atrium {{/str}}</p>
+        <fieldset class="atrium-a11y-group">
+            <legend class="atrium-a11y-label">{{#str}} a11y_textsize, theme_atrium {{/str}}</legend>
+            <div class="atrium-a11y-segmented" role="radiogroup">
+                {{#sizes}}
+                    <label class="atrium-a11y-segment">
+                        <input type="radio" name="textsize" value="{{ value }}" {{#checked}}checked{{/checked}}>
+                        <span>{{ label }}</span>
+                    </label>
+                {{/sizes}}
+            </div>
+        </fieldset>
+        <label class="atrium-a11y-switch">
+            <input type="checkbox" name="font" value="1" {{#font}}checked{{/font}}>
+            <span>{{#str}} a11y_readingfont, theme_atrium {{/str}}</span>
+            <small>{{#str}} a11y_readingfont_desc, theme_atrium {{/str}}</small>
+        </label>
+        <label class="atrium-a11y-switch">
+            <input type="checkbox" name="contrast" value="1" {{#contrast}}checked{{/contrast}}>
+            <span>{{#str}} a11y_contrast, theme_atrium {{/str}}</span>
+            <small>{{#str}} a11y_contrast_desc, theme_atrium {{/str}}</small>
+        </label>
+        <label class="atrium-a11y-switch">
+            <input type="checkbox" name="motion" value="1" {{#motion}}checked{{/motion}}>
+            <span>{{#str}} a11y_reducemotion, theme_atrium {{/str}}</span>
+            <small>{{#str}} a11y_reducemotion_desc, theme_atrium {{/str}}</small>
+        </label>
+        <div class="atrium-a11y-actions">
+            <button type="submit" class="btn btn-primary btn-sm" data-region="atrium-a11y-save">{{#str}} savechanges, core {{/str}}</button>
+            <button type="submit" class="btn btn-link btn-sm" name="reset" value="1">{{#str}} a11y_reset, theme_atrium {{/str}}</button>
+        </div>
+    </form>
+</div>

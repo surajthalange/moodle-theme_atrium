@@ -1,4 +1,12 @@
+This directory bundles two typefaces, both under the SIL Open Font License 1.1 below.
+
+Inter
 Copyright (c) 2016 The Inter Project Authors (https://github.com/rsms/inter)
+Files: inter-400.woff2, inter-500.woff2, inter-600.woff2, inter-700.woff2
+
+Atkinson Hyperlegible
+Copyright 2020 Braille Institute of America, Inc. (https://www.brailleinstitute.org/freefont)
+Files: atkinson-400.woff2, atkinson-700.woff2
 
 This Font Software is licensed under the SIL Open Font License, Version 1.1.
 This license is copied below, and is also available with a FAQ at:

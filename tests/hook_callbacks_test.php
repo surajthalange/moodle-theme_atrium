@@ -144,13 +144,13 @@ final class hook_callbacks_test extends \advanced_testcase {
         $this->assertSame('link', $items[0]->itemtype);
         $this->assertSame(get_string('switchtodark', 'theme_atrium'), $items[0]->title);
         $this->assertSame('dark', $items[0]->url->get_param('scheme'));
-        $this->assertSame('moon, theme_atrium', $items[0]->pix);
+        $this->assertSame('atrium_moon', $items[0]->pix);
 
         scheme::set(scheme::DARK);
         $hook = new extend_user_menu();
         hook_callbacks::extend_user_menu($hook);
         $this->assertSame(get_string('switchtolight', 'theme_atrium'), $hook->get_navitems()[0]->title);
-        $this->assertSame('sun, theme_atrium', $hook->get_navitems()[0]->pix);
+        $this->assertSame('atrium_sun', $hook->get_navitems()[0]->pix);
 
         set_config('enabledarkmode', 0, 'theme_atrium');
         $hook = new extend_user_menu();

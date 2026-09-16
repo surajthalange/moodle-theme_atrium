@@ -74,7 +74,7 @@ final class presets_test extends \advanced_testcase {
         $this->resetAfterTest();
 
         $this->assertSame(presets::DEFAULT, presets::current_name());
-        $this->assertSame('#4f46e5', presets::accent());
+        $this->assertSame('#0f6e73', presets::accent());
         $this->assertSame(presets::TONE_LIGHT, presets::sidebar_tone());
 
         set_config('preset', 'slate', 'theme_atrium');

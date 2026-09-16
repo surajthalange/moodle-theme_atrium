@@ -111,7 +111,7 @@ class frontpage implements renderable, templatable {
             'slides' => $slides,
             'hasslides' => count($slides) > 1,
             'slidecount' => count($slides),
-            'autoplay' => $hero['autoplay'],
+            'autoplay' => $hero['autoplay'] && !\theme_atrium\local\accessibility::state()['motion'],
             'interval' => $hero['interval'] * 1000,
             'align' => $hero['align'],
             'height' => $hero['height'],

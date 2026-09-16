@@ -15,19 +15,26 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Version details for the Atrium theme.
+ * Command palette search, as JSON.
  *
  * @package    theme_atrium
  * @copyright  2026 Suraj Thalange
  * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die();
+use theme_atrium\local\palette;
 
-$plugin->component = 'theme_atrium';
-$plugin->version = 2026091503;
-$plugin->release = '1.1.0';
-$plugin->requires = 2025100600; // Moodle 5.1: Boost on Bootstrap 5, the layouts this theme overrides.
-$plugin->supported = [501, 502];
-$plugin->maturity = MATURITY_STABLE;
-$plugin->dependencies = ['theme_boost' => 2025100600];
+define('AJAX_SCRIPT', true);
+require(__DIR__ . '/../../config.php');
+
+$query = optional_param('q', '', PARAM_TEXT);
+$courseid = optional_param('courseid', 0, PARAM_INT);
+
+require_login(null, false);
+require_sesskey();
+if (isguestuser() || !palette::enabled()) {
+    throw new moodle_exception('noguest');
+}
+$PAGE->set_context(context_system::instance());
+
+echo json_encode(['groups' => palette::search(core_text::substr($query, 0, 100), $courseid)]);

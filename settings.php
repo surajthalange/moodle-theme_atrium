@@ -43,6 +43,12 @@ if ($ADMIN->fulltree) {
     // General.
     $page = new admin_settingpage('theme_atrium_general', get_string('generalsettings', 'theme_atrium'));
 
+    $page->add(new admin_setting_heading(
+        'theme_atrium/quickstart_link',
+        get_string('quickstart', 'theme_atrium'),
+        get_string('quickstart_link', 'theme_atrium', (new moodle_url('/theme/atrium/quickstart.php'))->out())
+    ));
+
     $addcss($page, new admin_setting_configselect(
         'theme_atrium/preset',
         get_string('preset', 'theme_atrium'),
@@ -154,6 +160,20 @@ if ($ADMIN->fulltree) {
     ));
 
     $page->add(new admin_setting_configcheckbox(
+        'theme_atrium/navbar_palette',
+        get_string('navbar_palette', 'theme_atrium'),
+        get_string('navbar_palette_desc', 'theme_atrium'),
+        1
+    ));
+
+    $page->add(new admin_setting_configcheckbox(
+        'theme_atrium/navbar_a11y',
+        get_string('navbar_a11y', 'theme_atrium'),
+        get_string('navbar_a11y_desc', 'theme_atrium'),
+        1
+    ));
+
+    $page->add(new admin_setting_configcheckbox(
         'theme_atrium/navbar_recentcourses',
         get_string('navbar_recentcourses', 'theme_atrium'),
         get_string('navbar_recentcourses_desc', 'theme_atrium'),
@@ -214,7 +234,7 @@ if ($ADMIN->fulltree) {
         'theme_atrium/loginoverlaycolor',
         get_string('loginoverlaycolor', 'theme_atrium'),
         get_string('loginoverlaycolor_desc', 'theme_atrium'),
-        '#1b1d4d'
+        '#0b1f2a'
     ));
 
     $addcss($page, new admin_setting_configselect(
@@ -1057,3 +1077,11 @@ if ($ADMIN->fulltree) {
 
     $settings->add($page);
 }
+
+// The quick start page, beside the theme in the admin tree.
+$ADMIN->add('themes', new admin_externalpage(
+    'theme_atrium_quickstart',
+    get_string('quickstart_pagetitle', 'theme_atrium'),
+    new moodle_url('/theme/atrium/quickstart.php'),
+    'moodle/site:config'
+));

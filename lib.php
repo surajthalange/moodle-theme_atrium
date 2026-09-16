@@ -115,6 +115,10 @@ function theme_atrium_get_extra_scss($theme) {
         $url = $theme->font_url("inter-{$weight}.woff2", 'theme');
         $scss .= "--atrium-font-{$weight}: url('{$url}');";
     }
+    foreach (['400', '700'] as $weight) {
+        $url = $theme->font_url("atkinson-{$weight}.woff2", 'theme');
+        $scss .= "--atrium-readingfont-{$weight}: url('{$url}');";
+    }
     $scss .= '}';
 
     // Login page.
@@ -124,7 +128,7 @@ function theme_atrium_get_extra_scss($theme) {
     }
     $overlay = get_config('theme_atrium', 'loginoverlaycolor');
     if (empty($overlay)) {
-        $overlay = '#1b1d4d';
+        $overlay = '#0b1f2a';
     }
     $opacity = get_config('theme_atrium', 'loginoverlayopacity');
     if ($opacity === false || $opacity === '') {
@@ -224,6 +228,31 @@ function theme_atrium_user_preferences(): array {
             'choices' => \theme_atrium\local\catalogue::VIEWS,
             'permissioncallback' => [core_user::class, 'is_current_user'],
         ],
+        \theme_atrium\local\accessibility::PREF_TEXTSIZE => [
+            'type' => PARAM_ALPHA,
+            'null' => NULL_NOT_ALLOWED,
+            'default' => 'normal',
+            'choices' => \theme_atrium\local\accessibility::SIZES,
+            'permissioncallback' => [core_user::class, 'is_current_user'],
+        ],
+        \theme_atrium\local\accessibility::PREF_FONT => [
+            'type' => PARAM_BOOL,
+            'null' => NULL_NOT_ALLOWED,
+            'default' => 0,
+            'permissioncallback' => [core_user::class, 'is_current_user'],
+        ],
+        \theme_atrium\local\accessibility::PREF_CONTRAST => [
+            'type' => PARAM_BOOL,
+            'null' => NULL_NOT_ALLOWED,
+            'default' => 0,
+            'permissioncallback' => [core_user::class, 'is_current_user'],
+        ],
+        \theme_atrium\local\accessibility::PREF_MOTION => [
+            'type' => PARAM_BOOL,
+            'null' => NULL_NOT_ALLOWED,
+            'default' => 0,
+            'permissioncallback' => [core_user::class, 'is_current_user'],
+        ],
     ];
 }
 
@@ -250,5 +279,8 @@ function theme_atrium_get_fontawesome_icon_map(): array {
         'theme_atrium:play' => 'fa-play',
         'theme_atrium:focus' => 'fa-expand',
         'theme_atrium:exitfocus' => 'fa-compress',
+        'theme_atrium:a11y' => 'fa-universal-access',
+        'core:atrium_moon' => 'fa-moon',
+        'core:atrium_sun' => 'fa-sun',
     ];
 }

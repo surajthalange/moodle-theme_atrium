@@ -332,3 +332,55 @@ Feature: Atrium theme
       | navbar_recentcourses | 0 | theme_atrium |
     And I reload the page
     Then ".atrium-recentcourses" "css_element" should not exist
+
+  Scenario: The search and go box opens from the navigation bar, finds things, and can be switched off
+    Given the following "activities" exist:
+      | activity | course | name          | section |
+      | page     | C1     | Plankton page | 1       |
+    And I am on the "C1" "Course" page logged in as "student1"
+    When I click on "Search and go" "button" in the ".atrium-navbar" "css_element"
+    Then I should see "Dashboard" in the "[data-region='atrium-palette-results']" "css_element"
+    And I should see "Plankton page" in the "[data-region='atrium-palette-results']" "css_element"
+    When I set the field "Type a course, activity, page or setting…" to "plank"
+    And I wait "2" seconds
+    Then I should see "Plankton page" in the "[data-region='atrium-palette-results']" "css_element"
+    And I should not see "Dashboard" in the "[data-region='atrium-palette-results']" "css_element"
+    When I click on "Plankton page" "link" in the "[data-region='atrium-palette-results']" "css_element"
+    Then I should see "Plankton page" in the "#page-header" "css_element"
+    When the following config values are set as admin:
+      | navbar_palette | 0 | theme_atrium |
+    And I reload the page
+    Then "[data-region='atrium-palette']" "css_element" should not exist
+
+  Scenario: The accessibility toolbar changes the text size, font and contrast, and remembers them
+    Given I log in as "student1"
+    When I click on "Accessibility" "button" in the ".atrium-navbar" "css_element"
+    And I click on "Large" "text" in the "[data-region='atrium-a11y-form']" "css_element"
+    And I click on "Reading font" "text" in the "[data-region='atrium-a11y-form']" "css_element"
+    And I click on "High contrast" "text" in the "[data-region='atrium-a11y-form']" "css_element"
+    And I wait "1" seconds
+    Then "body.atrium-text-large.atrium-font-reading.atrium-contrast" "css_element" should exist
+    When I reload the page
+    Then "body.atrium-text-large.atrium-font-reading.atrium-contrast" "css_element" should exist
+    When I click on "Accessibility" "button" in the ".atrium-navbar" "css_element"
+    And I click on "Reset" "button" in the "[data-region='atrium-a11y-form']" "css_element"
+    And I wait "1" seconds
+    And I reload the page
+    Then "body.atrium-contrast" "css_element" should not exist
+
+  Scenario: Quick start sets the site up in one click and reset puts it back
+    Given the following config values are set as admin:
+      | enablemyhome | 1 |
+    And I log in as "admin"
+    And I visit "/theme/atrium/quickstart.php"
+    And I click on "Set it up" "link"
+    Then I should see "The front page, footer, quick links and login page are set up"
+    When I am on site homepage
+    Then ".atrium-fp-hero.carousel" "css_element" should exist
+    And I should see "Why learn here" in the ".atrium-fp-features" "css_element"
+    And ".atrium-footer-column-menu" "css_element" should exist
+    When I visit "/theme/atrium/quickstart.php"
+    And I click on "Reset these settings" "link"
+    Then I should see "back to the theme's defaults"
+    When I am on site homepage
+    Then ".atrium-fp-hero.carousel" "css_element" should not exist

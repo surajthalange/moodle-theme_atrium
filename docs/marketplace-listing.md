@@ -11,14 +11,15 @@ characters, of which plugin cards show the first 119; description 7,000; screens
 
 ### First 119 characters, as a standalone sentence
 
-> A modern Boost child theme: sidebar, designed front page, course catalogue, dark
-> mode, three login layouts, every page.
+> A modern Boost child theme: one-click setup, Ctrl+K search, accessibility
+> toolbar, designed front page, dark mode.
 
 ### Full short description
 
-> A modern Boost child theme: sidebar, designed front page, course catalogue, dark
-> mode, three login layouts, every page. Four template overrides, everything else SCSS, so
-> it keeps working across Moodle releases. Nothing is fetched from outside your site.
+> A modern Boost child theme: one-click setup, Ctrl+K search, accessibility
+> toolbar, designed front page, dark mode, catalogue, three login layouts. Four template
+> overrides, everything else SCSS, so it survives Moodle releases. Nothing is fetched
+> from outside your site.
 
 ---
 
@@ -32,6 +33,16 @@ course landing page for enrolment, a dashboard with a greeting and progress tile
 course page made of cards with a focus mode, dark mode with a switch for every user, five
 colour presets, three login layouts and a configurable footer. It is a Boost child, so
 everything Boost does keeps working.
+
+### Three things no other free theme does
+
+**Quick start.** One click on a fresh site sets up the front page, footer, quick links and
+login page from the site's own name, summary, support contact and courses. One click puts
+it back. **Search and go.** Ctrl+K from any page finds courses, activities in the current
+course, the pages people go to and, for administrators, admin pages, with the user's own
+permissions. **Accessibility toolbar.** Each user can choose a larger text size, a reading
+font (Atkinson Hyperlegible, bundled), high contrast and reduced motion, remembered and
+applied on every page.
 
 ### Front page
 
@@ -96,7 +107,8 @@ A site default of light, dark, or follow the device. Dark mode can be disabled s
 
 ### Presets and settings
 
-Atrium, Indigo dark, Emerald, Rose and Slate. A brand colour overrides the preset's
+Atrium teal (light or dark sidebar), Indigo (light or dark), Emerald, Rose and Slate. A
+brand colour overrides the preset's
 accent; a sidebar tone overrides its tone. Inter (bundled) or the system font, heading
 weight, text size, corner radius, raw SCSS before and after, custom CSS.
 
@@ -108,8 +120,8 @@ conveyed by colour alone. Reduced-motion preferences are respected.
 
 ### Privacy
 
-Five user preferences (scheme, sidebar state, catalogue view, focus mode, dismissed
-announcement), declared to the privacy API and included in exports. No tables. No
+Nine user preferences (scheme, sidebar state, catalogue view, focus mode, dismissed
+announcement, and the four accessibility toolbar choices), declared to the privacy API and included in exports. No tables. No
 cookies of its own. Fonts are bundled; nothing is fetched from outside your site unless
 you enter a Google Analytics 4 id, which is off by default.
 
@@ -129,5 +141,5 @@ with Bootstrap 5 between 4.5 and 5.x.
 
 ### Source, licence and support
 
-GPLv3 or later. Inter typeface under the SIL Open Font License. Source, issue tracker
+GPLv3 or later. Inter and Atkinson Hyperlegible typefaces under the SIL Open Font License. Source, issue tracker
 and continuous integration on GitHub.

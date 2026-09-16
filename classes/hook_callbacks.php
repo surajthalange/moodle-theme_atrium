@@ -120,7 +120,8 @@ final class hook_callbacks {
         $item->url = scheme::toggle_url();
         $item->title = get_string($dark ? 'switchtolight' : 'switchtodark', 'theme_atrium');
         $item->titleidentifier = ($dark ? 'switchtolight' : 'switchtodark') . ',theme_atrium';
-        $item->pix = ($dark ? 'sun' : 'moon') . ', theme_atrium';
+        // Core builds the icon with no component, so the names are registered under core.
+        $item->pix = $dark ? 'atrium_sun' : 'atrium_moon';
         $hook->add_navitem($item);
     }
 }

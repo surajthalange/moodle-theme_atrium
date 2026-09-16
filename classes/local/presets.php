@@ -51,7 +51,9 @@ final class presets {
 
     /** @var array<string, array{accent: string, sidebar: string}> Preset definitions, in display order. */
     private const PRESETS = [
-        'atrium' => ['accent' => '#4f46e5', 'sidebar' => self::TONE_LIGHT],
+        'atrium' => ['accent' => '#0f6e73', 'sidebar' => self::TONE_LIGHT],
+        'atriumdark' => ['accent' => '#0f6e73', 'sidebar' => self::TONE_DARK],
+        'indigo' => ['accent' => '#4f46e5', 'sidebar' => self::TONE_LIGHT],
         'indigodark' => ['accent' => '#4f46e5', 'sidebar' => self::TONE_DARK],
         'emerald' => ['accent' => '#047857', 'sidebar' => self::TONE_LIGHT],
         'rose' => ['accent' => '#be123c', 'sidebar' => self::TONE_LIGHT],

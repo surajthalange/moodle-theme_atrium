@@ -27,9 +27,11 @@
  * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+use theme_atrium\local\accessibility;
 use theme_atrium\local\announcement;
 use theme_atrium\local\focusmode;
 use theme_atrium\local\header;
+use theme_atrium\local\palette;
 use theme_atrium\local\quicklinks;
 use theme_atrium\local\recentcourses;
 use theme_atrium\local\scheme;
@@ -184,6 +186,15 @@ if ($announcement) {
 $quicklinks = quicklinks::export();
 $recentcourses = recentcourses::export();
 
+// The command palette and the accessibility toolbar.
+$palettedata = palette::wanted() ? [
+    'searchurl' => (new moodle_url('/theme/atrium/palette.php', ['sesskey' => sesskey()]))->out(false),
+    'courseid' => (int) $COURSE->id,
+    'shortcut' => get_string('palette_shortcut', 'theme_atrium'),
+] : false;
+$a11y = accessibility::wanted() ? accessibility::export() : false;
+$extraclasses = array_merge($extraclasses, accessibility::body_classes());
+
 // Header options: a static navigation bar, the page width, and what the brand shows.
 $extraclasses = array_merge($extraclasses, header::body_classes());
 $brand = header::brand($OUTPUT);
@@ -232,6 +243,8 @@ $templatecontext = [
     'announcement' => $announcement,
     'quicklinks' => $quicklinks,
     'recentcourses' => $recentcourses,
+    'palette' => $palettedata,
+    'a11y' => $a11y,
     'brand' => $brand,
     'schemetoggle' => $schemetoggle,
 ];

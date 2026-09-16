@@ -28,7 +28,10 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$bodyattributes = $OUTPUT->body_attributes(\theme_atrium\local\loginpage::body_classes());
+$bodyattributes = $OUTPUT->body_attributes(array_merge(
+    \theme_atrium\local\loginpage::body_classes(),
+    \theme_atrium\local\accessibility::body_classes()
+));
 
 $leftinstructions = null;
 if ($CFG->branch >= 502 && !empty($CFG->auth_instructions)) {

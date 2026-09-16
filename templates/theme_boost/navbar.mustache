@@ -46,6 +46,8 @@
             "logourl": "",
             "showname": true
         },
+        "palette": false,
+        "a11y": false,
         "recentcourses": false,
         "quicklinks": false,
         "schemetoggle": {
@@ -90,6 +92,9 @@
                 {{{ output.search_box }}}
                 <div class="divider border-start h-75 align-self-center mx-1"></div>
             {{/output.search_box}}
+            {{#palette}}
+                {{> theme_atrium/palette }}
+            {{/palette}}
             {{#recentcourses}}
                 {{> theme_atrium/recentcourses }}
             {{/recentcourses}}
@@ -97,6 +102,9 @@
                 {{> theme_atrium/quicklinks }}
                 <div class="divider border-start h-75 align-self-center mx-1"></div>
             {{/quicklinks}}
+            {{#a11y}}
+                {{> theme_atrium/a11y }}
+            {{/a11y}}
             {{#schemetoggle}}
                 <a href="{{{ url }}}" class="btn btn-icon icon-no-margin atrium-scheme-toggle align-self-center"
                    data-action="atrium-scheme-toggle" aria-label="{{ label }}" title="{{ label }}"

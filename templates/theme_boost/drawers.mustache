@@ -238,12 +238,16 @@ require([
     'theme_atrium/scheme',
     'theme_atrium/navbar',
     'theme_atrium/announcement',
-], function(Loader, Drawer, Sidebar, Scheme, Navbar, Announcement) {
+    'theme_atrium/palette',
+    'theme_atrium/a11y',
+], function(Loader, Drawer, Sidebar, Scheme, Navbar, Announcement, Palette, A11y) {
     Drawer.init();
     Sidebar.init();
     Scheme.init();
     Navbar.init();
     Announcement.init();
+    Palette.init();
+    A11y.init();
     M.util.js_complete('theme_boost/loader');
 });
 {{/js}}

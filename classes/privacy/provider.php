@@ -19,6 +19,7 @@ namespace theme_atrium\privacy;
 use core_privacy\local\metadata\collection;
 use core_privacy\local\request\user_preference_provider;
 use core_privacy\local\request\writer;
+use theme_atrium\local\accessibility;
 use theme_atrium\local\announcement;
 use theme_atrium\local\catalogue;
 use theme_atrium\local\focusmode;
@@ -26,7 +27,7 @@ use theme_atrium\local\scheme;
 use theme_atrium\output\sidebar;
 
 /**
- * Privacy provider: five user preferences, nothing else.
+ * Privacy provider: nine user preferences, nothing else.
  *
  * @package    theme_atrium
  * @copyright  2026 Suraj Thalange
@@ -45,6 +46,10 @@ class provider implements \core_privacy\local\metadata\provider, user_preference
         $collection->add_user_preference(catalogue::VIEW_PREFERENCE, 'privacy:metadata:preference:theme_atrium_catalogueview');
         $collection->add_user_preference(focusmode::PREFERENCE, 'privacy:metadata:preference:theme_atrium_focusmode');
         $collection->add_user_preference(announcement::PREFERENCE, 'privacy:metadata:preference:theme_atrium_announcement');
+        $collection->add_user_preference(accessibility::PREF_TEXTSIZE, 'privacy:metadata:preference:theme_atrium_textsize');
+        $collection->add_user_preference(accessibility::PREF_FONT, 'privacy:metadata:preference:theme_atrium_readingfont');
+        $collection->add_user_preference(accessibility::PREF_CONTRAST, 'privacy:metadata:preference:theme_atrium_contrast');
+        $collection->add_user_preference(accessibility::PREF_MOTION, 'privacy:metadata:preference:theme_atrium_reducemotion');
         return $collection;
     }
 
@@ -60,6 +65,14 @@ class provider implements \core_privacy\local\metadata\provider, user_preference
             catalogue::VIEW_PREFERENCE => ['grid' => 'catalogue_view_grid', 'list' => 'catalogue_view_list'],
             focusmode::PREFERENCE => ['1' => 'focus_on', '0' => 'focus_off'],
             announcement::PREFERENCE => [],
+            accessibility::PREF_TEXTSIZE => [
+                'normal' => 'a11y_textsize_normal',
+                'large' => 'a11y_textsize_large',
+                'larger' => 'a11y_textsize_larger',
+            ],
+            accessibility::PREF_FONT => ['1' => 'a11y_on', '0' => 'a11y_off'],
+            accessibility::PREF_CONTRAST => ['1' => 'a11y_on', '0' => 'a11y_off'],
+            accessibility::PREF_MOTION => ['1' => 'a11y_on', '0' => 'a11y_off'],
         ];
         foreach ($preferences as $name => $labels) {
             $value = get_user_preferences($name, null, $userid);
