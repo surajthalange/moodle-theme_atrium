@@ -131,13 +131,22 @@ body.has-atrium-course-banner {
 }
 
 .atrium-course-banner-resume {
+    // White on the banner in both schemes: the text token goes light in dark mode.
+    --#{$prefix}btn-bg: #fff;
+    --#{$prefix}btn-border-color: #fff;
+    --#{$prefix}btn-color: #0b1f2a;
+    --#{$prefix}btn-hover-bg: #e6f2f3;
+    --#{$prefix}btn-hover-border-color: #e6f2f3;
+    --#{$prefix}btn-hover-color: #0b1f2a;
+    --#{$prefix}btn-active-bg: #d9eeef;
+    --#{$prefix}btn-active-color: #0b1f2a;
     background-color: #fff;
     border-color: #fff;
-    color: var(--atrium-text);
+    color: #0b1f2a;
     &:hover,
     &:focus-visible {
-        background-color: rgba(255, 255, 255, 0.9);
-        color: var(--atrium-text);
+        background-color: #e6f2f3;
+        color: #0b1f2a;
     }
 }
 
