@@ -144,7 +144,7 @@ final class quickstart {
             'footercontactemail' => !empty($CFG->supportemail) ? $CFG->supportemail : '',
             'footercol4type' => 'social',
             'footercol4title' => $str('footer_follow'),
-            'loginlayout' => 'panelleft',
+            'loginlayout' => 'centred',
             'loginpanelheading' => $str('login_heading', $sitename),
             'loginpaneltext' => '<p>' . s($str('login_text')) . '</p>',
             'logintextbelow' => !empty($CFG->supportemail)

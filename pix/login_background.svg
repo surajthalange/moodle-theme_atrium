@@ -1,79 +1,98 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice" role="img" aria-label="">
   <title>Atrium login background</title>
   <!--
-    Deliberately bright and saturated. The theme lays a colour wash over this image at
-    an administrator-set opacity, and a wash can only read as a wash if there is real
-    luminance range underneath it. An already-dark image would make the overlay a no-op.
+    The brand image: an atrium seen from inside, in the theme's own palette. Teal glass,
+    light falling through a roof grid, arches on the far wall. Kept bright and with real
+    luminance range, because the theme lays a teal wash over it at an administrator-set
+    opacity, and a wash can only read as a wash if there is light underneath it.
 
-    No vignette here either: the theme draws one in CSS so that it applies equally to an
-    uploaded photograph, and doing it in both places darkened the edges twice.
+    No vignette here: the theme draws one in CSS so that it applies equally to an uploaded
+    photograph.
   -->
   <defs>
-    <linearGradient id="atriumBase" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#0f6e73"/>
-      <stop offset="0.38" stop-color="#0e7490"/>
-      <stop offset="0.72" stop-color="#1e3a8a"/>
-      <stop offset="1" stop-color="#0b1f2a"/>
+    <linearGradient id="atriumSky" x1="0" y1="0" x2="0.35" y2="1">
+      <stop offset="0" stop-color="#5eead4"/>
+      <stop offset="0.45" stop-color="#14b8a6"/>
+      <stop offset="0.8" stop-color="#0f6e73"/>
+      <stop offset="1" stop-color="#0b3d42"/>
     </linearGradient>
-
-    <radialGradient id="atriumCyan" cx="0.5" cy="0.5" r="0.5">
-      <stop offset="0" stop-color="#67e8f9" stop-opacity="0.95"/>
-      <stop offset="0.45" stop-color="#22d3ee" stop-opacity="0.38"/>
+    <linearGradient id="atriumFloor" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0b3d42" stop-opacity="0"/>
+      <stop offset="1" stop-color="#0b1f2a" stop-opacity="0.85"/>
+    </linearGradient>
+    <radialGradient id="atriumSun" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.95"/>
+      <stop offset="0.3" stop-color="#ccfbf1" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#ccfbf1" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="atriumWarm" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#fde68a" stop-opacity="0.55"/>
+      <stop offset="0.5" stop-color="#fbbf24" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#fbbf24" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="atriumCool" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#a5f3fc" stop-opacity="0.7"/>
+      <stop offset="0.5" stop-color="#22d3ee" stop-opacity="0.25"/>
       <stop offset="1" stop-color="#22d3ee" stop-opacity="0"/>
     </radialGradient>
-
-    <radialGradient id="atriumViolet" cx="0.5" cy="0.5" r="0.5">
-      <stop offset="0" stop-color="#a7f3d0" stop-opacity="0.85"/>
-      <stop offset="0.45" stop-color="#34d399" stop-opacity="0.34"/>
-      <stop offset="1" stop-color="#34d399" stop-opacity="0"/>
-    </radialGradient>
-
-    <radialGradient id="atriumAmber" cx="0.5" cy="0.5" r="0.5">
-      <stop offset="0" stop-color="#fcd34d" stop-opacity="0.72"/>
-      <stop offset="0.45" stop-color="#fbbf24" stop-opacity="0.26"/>
-      <stop offset="1" stop-color="#fbbf24" stop-opacity="0"/>
-    </radialGradient>
-
-    <radialGradient id="atriumRose" cx="0.5" cy="0.5" r="0.5">
-      <stop offset="0" stop-color="#fde68a" stop-opacity="0.6"/>
-      <stop offset="0.5" stop-color="#fbbf24" stop-opacity="0.2"/>
-      <stop offset="1" stop-color="#fbbf24" stop-opacity="0"/>
-    </radialGradient>
+    <linearGradient id="atriumBeam" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.32"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
   </defs>
 
-  <rect width="1600" height="1000" fill="url(#atriumBase)"/>
+  <rect width="1600" height="1000" fill="url(#atriumSky)"/>
 
-  <!-- Light sources sit off-centre, so the brightest areas fall either side of the
-       login card rather than directly behind it. -->
-  <ellipse cx="210" cy="150" rx="720" ry="580" fill="url(#atriumCyan)"/>
-  <ellipse cx="1450" cy="900" rx="780" ry="640" fill="url(#atriumViolet)"/>
-  <ellipse cx="1330" cy="90" rx="560" ry="450" fill="url(#atriumAmber)"/>
-  <ellipse cx="620" cy="1010" rx="620" ry="420" fill="url(#atriumRose)"/>
+  <!-- Light: one sun high on the left, warmth low on the right, cool glow bottom left. -->
+  <ellipse cx="260" cy="120" rx="760" ry="560" fill="url(#atriumSun)"/>
+  <ellipse cx="1420" cy="860" rx="720" ry="520" fill="url(#atriumWarm)"/>
+  <ellipse cx="380" cy="960" rx="600" ry="380" fill="url(#atriumCool)"/>
 
-  <!-- Faint concentric arcs, to give the gradient some structure to read against. -->
-  <g fill="none" stroke="#ffffff" stroke-opacity="0.14" stroke-width="1.5">
-    <circle cx="180" cy="980" r="250"/>
-    <circle cx="180" cy="980" r="400"/>
-    <circle cx="180" cy="980" r="550"/>
-    <circle cx="180" cy="980" r="710"/>
+  <!-- Roof grid: the glass ceiling of an atrium, in perspective. -->
+  <g fill="none" stroke="#ffffff" stroke-opacity="0.22" stroke-width="2">
+    <line x1="800" y1="-40" x2="-200" y2="1040"/>
+    <line x1="800" y1="-40" x2="120" y2="1040"/>
+    <line x1="800" y1="-40" x2="440" y2="1040"/>
+    <line x1="800" y1="-40" x2="800" y2="1040"/>
+    <line x1="800" y1="-40" x2="1160" y2="1040"/>
+    <line x1="800" y1="-40" x2="1480" y2="1040"/>
+    <line x1="800" y1="-40" x2="1800" y2="1040"/>
   </g>
-  <g fill="none" stroke="#ffffff" stroke-opacity="0.10" stroke-width="1.5">
-    <circle cx="1480" cy="60" r="210"/>
-    <circle cx="1480" cy="60" r="350"/>
-    <circle cx="1480" cy="60" r="500"/>
+  <g fill="none" stroke="#ffffff" stroke-opacity="0.16" stroke-width="1.5">
+    <line x1="-100" y1="180" x2="1700" y2="180"/>
+    <line x1="-100" y1="330" x2="1700" y2="330"/>
+    <line x1="-100" y1="500" x2="1700" y2="500"/>
+    <line x1="-100" y1="690" x2="1700" y2="690"/>
   </g>
 
-  <!-- A sparse scatter, suggesting a network without drawing one literally. -->
-  <g fill="#ffffff" fill-opacity="0.5">
+  <!-- Light beams through the grid. -->
+  <polygon points="800,-40 -200,1040 120,1040" fill="url(#atriumBeam)"/>
+  <polygon points="800,-40 1160,1040 1480,1040" fill="url(#atriumBeam)"/>
+
+  <!-- Arches along the far wall, the atrium's signature. -->
+  <g fill="none" stroke="#ffffff" stroke-opacity="0.28" stroke-width="3">
+    <path d="M 60 1000 V 700 A 130 130 0 0 1 320 700 V 1000"/>
+    <path d="M 380 1000 V 700 A 130 130 0 0 1 640 700 V 1000"/>
+    <path d="M 960 1000 V 700 A 130 130 0 0 1 1220 700 V 1000"/>
+    <path d="M 1280 1000 V 700 A 130 130 0 0 1 1540 700 V 1000"/>
+  </g>
+  <g fill="#ffffff" fill-opacity="0.08">
+    <path d="M 60 1000 V 700 A 130 130 0 0 1 320 700 V 1000 Z"/>
+    <path d="M 1280 1000 V 700 A 130 130 0 0 1 1540 700 V 1000 Z"/>
+  </g>
+
+  <!-- The floor, darkening towards the bottom edge so the footer text reads. -->
+  <rect x="0" y="560" width="1600" height="440" fill="url(#atriumFloor)"/>
+
+  <!-- A sparse scatter of light on the glass. -->
+  <g fill="#ffffff" fill-opacity="0.55">
     <circle cx="430" cy="300" r="2.5"/>
-    <circle cx="620" cy="180" r="2"/>
+    <circle cx="620" cy="140" r="2"/>
     <circle cx="880" cy="420" r="2.5"/>
     <circle cx="1120" cy="260" r="2"/>
     <circle cx="330" cy="620" r="2"/>
-    <circle cx="760" cy="740" r="2.5"/>
-    <circle cx="1240" cy="640" r="2"/>
-    <circle cx="1010" cy="880" r="2.5"/>
-    <circle cx="520" cy="880" r="2"/>
+    <circle cx="1240" cy="600" r="2"/>
     <circle cx="1380" cy="440" r="2.5"/>
+    <circle cx="990" cy="120" r="2"/>
   </g>
 </svg>

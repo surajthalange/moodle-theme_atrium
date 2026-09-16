@@ -403,7 +403,7 @@ $string['quickstart_intro'] = 'One click makes a fresh site look finished, using
 $string['quickstart_item_course'] = 'Course and catalogue: banner, focus mode, staff numbers, activity and enrolment counts, recent courses menu, all on.';
 $string['quickstart_item_footer'] = 'Footer: four columns, with the site summary, an explore menu, the support contact and a place for social links.';
 $string['quickstart_item_frontpage'] = 'Front page: a hero with three slides, three feature blocks, the latest courses, the numbers strip, an about band from the site summary, and a call to action.';
-$string['quickstart_item_login'] = 'Login page: the image panel layout with a welcome heading and the support contact under the form.';
+$string['quickstart_item_login'] = 'Login page: a welcome heading and text for the panel layouts, and the support contact under the form.';
 $string['quickstart_item_quicklinks'] = 'Quick links: courses, calendar, messages, grades, profile and help.';
 $string['quickstart_link'] = 'New site? <a href="{$a}">Set up the front page, footer, quick links and login page in one click</a>, using your site\'s own name, summary, support contact and courses. Everything it writes is a normal setting on these tabs.';
 $string['quickstart_note'] = 'Everything is a normal theme setting: change any of it afterwards, or put it all back with Reset. Images are yours to add.';

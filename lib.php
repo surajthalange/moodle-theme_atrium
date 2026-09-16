@@ -128,11 +128,11 @@ function theme_atrium_get_extra_scss($theme) {
     }
     $overlay = get_config('theme_atrium', 'loginoverlaycolor');
     if (empty($overlay)) {
-        $overlay = '#0b1f2a';
+        $overlay = '#0f6e73';
     }
     $opacity = get_config('theme_atrium', 'loginoverlayopacity');
     if ($opacity === false || $opacity === '') {
-        $opacity = '0.55';
+        $opacity = '0.35';
     }
     $scss .= 'body.pagelayout-login {';
     $scss .= "--atrium-login-image: url('{$imageurl}');";

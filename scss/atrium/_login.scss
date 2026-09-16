@@ -25,7 +25,7 @@
 
     // The wash colour doubles as the base fill, so a slow image leaves a deliberate
     // flat colour rather than a white flash.
-    background-color: var(--atrium-login-overlay, #0b1f2a);
+    background-color: var(--atrium-login-overlay, #0f6e73);
     background-image: var(--atrium-login-image);
     background-size: cover;
     background-position: center;
@@ -36,8 +36,8 @@
         content: "";
         position: absolute;
         inset: 0;
-        background-color: var(--atrium-login-overlay, #0b1f2a);
-        opacity: var(--atrium-login-overlay-opacity, 0.55);
+        background-color: var(--atrium-login-overlay, #0f6e73);
+        opacity: var(--atrium-login-overlay-opacity, 0.35);
     }
 
     // A vignette so the card reads against the brightest images.
@@ -45,7 +45,7 @@
         content: "";
         position: absolute;
         inset: 0;
-        background: radial-gradient(ellipse at 50% 42%, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.42) 100%);
+        background: radial-gradient(ellipse at 50% 42%, rgba(0, 0, 0, 0) 45%, rgba(11, 31, 42, 0.5) 100%);
     }
 }
 

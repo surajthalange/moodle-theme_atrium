@@ -234,14 +234,14 @@ if ($ADMIN->fulltree) {
         'theme_atrium/loginoverlaycolor',
         get_string('loginoverlaycolor', 'theme_atrium'),
         get_string('loginoverlaycolor_desc', 'theme_atrium'),
-        '#0b1f2a'
+        '#0f6e73'
     ));
 
     $addcss($page, new admin_setting_configselect(
         'theme_atrium/loginoverlayopacity',
         get_string('loginoverlayopacity', 'theme_atrium'),
         get_string('loginoverlayopacity_desc', 'theme_atrium'),
-        '0.55',
+        '0.35',
         ['0.25' => '25%', '0.35' => '35%', '0.45' => '45%', '0.55' => '55%', '0.65' => '65%', '0.75' => '75%', '0.85' => '85%']
     ));
 

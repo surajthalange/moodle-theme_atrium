@@ -142,7 +142,7 @@ final class tools_test extends \advanced_testcase {
         $this->assertSame('1', get_config('theme_atrium', 'fp_about_enable'));
         $this->assertSame('4', get_config('theme_atrium', 'footercolumns'));
         $this->assertSame('help@example.com', get_config('theme_atrium', 'footercontactemail'));
-        $this->assertSame('panelleft', get_config('theme_atrium', 'loginlayout'));
+        $this->assertSame('centred', get_config('theme_atrium', 'loginlayout'));
         $this->assertStringContainsString('/course/index.php', get_config('theme_atrium', 'quicklinks'));
         $this->assertCount(2, frontpage_settings::hero_slides());
 
