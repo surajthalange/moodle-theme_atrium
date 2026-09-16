@@ -25,6 +25,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 $string['a11y'] = 'Accessibility';
+$string['a11y_apply'] = 'Apply';
 $string['a11y_contrast'] = 'High contrast';
 $string['a11y_contrast_desc'] = 'Black on white, strong borders, underlined links.';
 $string['a11y_off'] = 'Off';

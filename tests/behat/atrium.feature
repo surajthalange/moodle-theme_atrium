@@ -129,11 +129,11 @@ Feature: Atrium theme
     And I am on course index
     And ".atrium-course-list" "css_element" should exist
     When I set the field "Search courses" to "sculpt"
-    And I press "Search"
+    And I click on "Search" "button" in the ".atrium-catalogue-search" "css_element"
     Then I should see "Sculpture" in the ".atrium-catalogue" "css_element"
     And I should not see "Marine Biology" in the ".atrium-catalogue" "css_element"
     When I set the field "Search courses" to "nothinghere"
-    And I press "Search"
+    And I click on "Search" "button" in the ".atrium-catalogue-search" "css_element"
     Then ".atrium-empty" "css_element" should exist
 
   Scenario: The enrolment page is a course landing page around the enrolment forms
