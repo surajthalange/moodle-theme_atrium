@@ -10,12 +10,21 @@
 // and panel in the theme. And Bootstrap's collapse is a class, so sections that were shut
 // on screen can be opened for paper without touching any template.
 
+// stylelint-disable declaration-no-important -- Bootstrap's own display, spacing and
+// colour utilities are declared !important, so a print rule that hides or repaints an
+// element carrying one cannot win on load order or specificity alone. The theme uses the
+// per-line form elsewhere; a whole print sheet of them would be noise, so the rule is
+// turned off for this file and back on at the end of it.
+
 @media print {
     // Zeroing the width collapses the page margin, the drawer offsets, the fixed navbar
     // and the announcement bar in one go, rather than undoing each rule where it is set.
+    // 0px rather than 0, and stylelint is wrong to object: this value is read inside
+    // calc() in _drawers.scss, and calc(0 + 320px) is invalid, which would throw the whole
+    // declaration away instead of zeroing the offset.
     :root,
     body.atrium-sidebar-collapsed {
-        --atrium-sidebar-width: 0;
+        --atrium-sidebar-width: 0px; // stylelint-disable-line length-zero-no-unit
     }
 
     // Ink on white, whichever scheme the reader was using. Restating the tokens repaints
@@ -177,10 +186,6 @@
         text-decoration: underline;
     }
 
-    @page {
-        margin: 15mm;
-    }
-
     @if $atrium-print-linkurls {
         // Off unless an administrator asks for it: useful on a handout, noise on a report.
         // Only links that lead off the page, and only inside the content.
@@ -191,3 +196,5 @@
         }
     }
 }
+
+// stylelint-enable declaration-no-important
