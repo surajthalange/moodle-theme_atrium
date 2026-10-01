@@ -1,0 +1,108 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_atrium/accessibility_statement
+
+    The published accessibility statement. Its shape follows the model statement that
+    public bodies are asked to use: scope, conformance, what the platform offers, what is
+    known not to work, how to report a problem, how to complain, and when it was reviewed.
+
+    Context variables required for this template:
+    * sitename - The site's full name
+    * siteurl - The site's address
+    * organisation - Who is responsible, defaulting to the site name
+    * conformance - The conformance sentence, already built from the chosen claim
+    * ispartial, isnone - Which claim was made, for the follow-on sentence
+    * features - What this site offers: text
+    * hasknown, known - Known problems, as formatted HTML
+    * hascontact, contact, contacturl - How to report a problem
+    * hasenforcement, enforcement - The complaints procedure, as formatted HTML
+    * hasextra, extra - Anything else the administrator added
+    * hasreviewed, reviewed - When the statement was last reviewed
+    * moodleversion - The Moodle release this runs on
+
+    Example context (json):
+    {
+        "sitename": "Atrium University",
+        "siteurl": "https://example.edu",
+        "organisation": "Atrium University",
+        "conformance": "Atrium University is partially compliant with WCAG 2.2 level AA.",
+        "ispartial": true,
+        "isnone": false,
+        "features": [{"text": "A larger text size, a reading font, high contrast and reduced motion."}],
+        "hasknown": true,
+        "known": "<p>Some older PDF files are not tagged.</p>",
+        "hascontact": true,
+        "contact": "access@example.edu",
+        "contacturl": "mailto:access@example.edu",
+        "hasenforcement": false,
+        "enforcement": "",
+        "hasextra": false,
+        "extra": "",
+        "hasreviewed": true,
+        "reviewed": "1 October 2026",
+        "moodleversion": "5.2"
+    }
+}}
+<div class="atrium-a11y-statement">
+    <h2>{{#str}} a11ystatement_scope, theme_atrium {{/str}}</h2>
+    <p>{{#str}} a11ystatement_scope_body, theme_atrium, {{ organisation }} {{/str}} <a href="{{{ siteurl }}}">{{ siteurl }}</a></p>
+
+    <h2>{{#str}} a11ystatement_conformance_heading, theme_atrium {{/str}}</h2>
+    <p>{{ conformance }}</p>
+    {{! The partial wording already points at the list below, so only "none" needs a follow-on. }}
+    {{#isnone}}
+        <p>{{#str}} a11ystatement_conformance_none_note, theme_atrium {{/str}}</p>
+    {{/isnone}}
+
+    <h2>{{#str}} a11ystatement_features_heading, theme_atrium {{/str}}</h2>
+    <p>{{#str}} a11ystatement_features_intro, theme_atrium {{/str}}</p>
+    <ul>
+        {{#features}}
+            <li>{{ text }}</li>
+        {{/features}}
+    </ul>
+
+    {{#hasknown}}
+        <h2>{{#str}} a11ystatement_known_heading, theme_atrium {{/str}}</h2>
+        {{{ known }}}
+    {{/hasknown}}
+
+    {{#hascontact}}
+        <h2>{{#str}} a11ystatement_feedback_heading, theme_atrium {{/str}}</h2>
+        <p>{{#str}} a11ystatement_feedback_body, theme_atrium {{/str}}</p>
+        <p>
+            {{#contacturl}}<a href="{{{ contacturl }}}">{{ contact }}</a>{{/contacturl}}
+            {{^contacturl}}{{ contact }}{{/contacturl}}
+        </p>
+    {{/hascontact}}
+
+    {{#hasenforcement}}
+        <h2>{{#str}} a11ystatement_enforcement_heading, theme_atrium {{/str}}</h2>
+        {{{ enforcement }}}
+    {{/hasenforcement}}
+
+    {{#hasextra}}
+        {{{ extra }}}
+    {{/hasextra}}
+
+    <h2>{{#str}} a11ystatement_preparation_heading, theme_atrium {{/str}}</h2>
+    <p>{{#str}} a11ystatement_preparation_body, theme_atrium, {{ moodleversion }} {{/str}}</p>
+    {{#hasreviewed}}
+        <p>{{#str}} a11ystatement_reviewed_on, theme_atrium, {{ reviewed }} {{/str}}</p>
+    {{/hasreviewed}}
+</div>

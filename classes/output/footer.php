@@ -19,6 +19,7 @@ namespace theme_atrium\output;
 use moodle_url;
 use renderable;
 use renderer_base;
+use theme_atrium\local\accessibility_statement;
 use templatable;
 
 /**
@@ -203,6 +204,13 @@ class footer implements renderable, templatable {
                     'url' => (new moodle_url($url))->out(false),
                 ];
             }
+        }
+        // The statement needs no URL setting of its own: publishing it is what links it.
+        if (accessibility_statement::enabled()) {
+            $links[] = [
+                'label' => get_string('footer_accessibility', 'theme_atrium'),
+                'url' => accessibility_statement::url()->out(false),
+            ];
         }
 
         $poweredby = get_config('theme_atrium', 'showpoweredby');

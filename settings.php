@@ -25,6 +25,7 @@
  * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+use theme_atrium\local\accessibility_statement;
 use theme_atrium\local\frontpage_settings;
 use theme_atrium\local\presets;
 use theme_atrium\local\scheme;
@@ -1035,6 +1036,83 @@ if ($ADMIN->fulltree) {
         get_string('showpoweredby', 'theme_atrium'),
         get_string('showpoweredby_desc', 'theme_atrium'),
         1
+    ));
+
+    $settings->add($page);
+
+    // Accessibility statement.
+    $page = new admin_settingpage('theme_atrium_a11ystatement', get_string('a11ystatementsettings', 'theme_atrium'));
+    $page->add(new admin_setting_heading(
+        'theme_atrium/a11ystatement_intro',
+        '',
+        get_string('a11ystatement_intro', 'theme_atrium')
+    ));
+
+    $page->add(new admin_setting_configcheckbox(
+        'theme_atrium/a11ystatement_enable',
+        get_string('a11ystatement_enable', 'theme_atrium'),
+        get_string('a11ystatement_enable_desc', 'theme_atrium'),
+        0
+    ));
+
+    $page->add(new admin_setting_configtext(
+        'theme_atrium/a11ystatement_org',
+        get_string('a11ystatement_org', 'theme_atrium'),
+        get_string('a11ystatement_org_desc', 'theme_atrium'),
+        '',
+        PARAM_TEXT
+    ));
+
+    $page->add(new admin_setting_configselect(
+        'theme_atrium/a11ystatement_conformance',
+        get_string('a11ystatement_conformance', 'theme_atrium'),
+        get_string('a11ystatement_conformance_desc', 'theme_atrium'),
+        accessibility_statement::PARTIAL,
+        [
+            accessibility_statement::FULL =>
+                get_string('a11ystatement_claim_full', 'theme_atrium'),
+            accessibility_statement::PARTIAL =>
+                get_string('a11ystatement_claim_partial', 'theme_atrium'),
+            accessibility_statement::NONE =>
+                get_string('a11ystatement_claim_none', 'theme_atrium'),
+        ]
+    ));
+
+    $page->add(new admin_setting_confightmleditor(
+        'theme_atrium/a11ystatement_known',
+        get_string('a11ystatement_known', 'theme_atrium'),
+        get_string('a11ystatement_known_desc', 'theme_atrium'),
+        ''
+    ));
+
+    $page->add(new admin_setting_configtext(
+        'theme_atrium/a11ystatement_contact',
+        get_string('a11ystatement_contact', 'theme_atrium'),
+        get_string('a11ystatement_contact_desc', 'theme_atrium'),
+        '',
+        PARAM_TEXT
+    ));
+
+    $page->add(new admin_setting_confightmleditor(
+        'theme_atrium/a11ystatement_enforcement',
+        get_string('a11ystatement_enforcement', 'theme_atrium'),
+        get_string('a11ystatement_enforcement_desc', 'theme_atrium'),
+        ''
+    ));
+
+    $page->add(new admin_setting_configtext(
+        'theme_atrium/a11ystatement_reviewed',
+        get_string('a11ystatement_reviewed', 'theme_atrium'),
+        get_string('a11ystatement_reviewed_desc', 'theme_atrium'),
+        '',
+        PARAM_TEXT
+    ));
+
+    $page->add(new admin_setting_confightmleditor(
+        'theme_atrium/a11ystatement_extra',
+        get_string('a11ystatement_extra', 'theme_atrium'),
+        get_string('a11ystatement_extra_desc', 'theme_atrium'),
+        ''
     ));
 
     $settings->add($page);
