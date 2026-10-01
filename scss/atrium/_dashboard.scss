@@ -196,3 +196,29 @@ body.has-atrium-hero #page-header .me-auto.flex-column > div:last-child > .mb-2 
         border-color: var(--atrium-border);
     }
 }
+
+// Shown in place of the tiles when there is nothing to count. It sits where the tiles
+// would, so the band keeps its shape rather than collapsing to a bare greeting.
+.atrium-hero-empty {
+    flex: 0 1 auto;
+    max-width: 30rem;
+    padding: 1rem 1.25rem;
+    border: 1px solid var(--atrium-border);
+    border-radius: var(--atrium-radius);
+    background-color: var(--atrium-surface);
+}
+
+.atrium-hero-empty-title {
+    margin: 0 0 0.25rem;
+    font-weight: 600;
+    color: var(--atrium-text);
+}
+
+.atrium-hero-empty-text {
+    margin: 0;
+    color: var(--atrium-text-muted);
+}
+
+.atrium-hero-empty-action {
+    margin-top: 0.75rem;
+}

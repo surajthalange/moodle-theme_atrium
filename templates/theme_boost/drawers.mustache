@@ -240,7 +240,8 @@ require([
     'theme_atrium/announcement',
     'theme_atrium/palette',
     'theme_atrium/a11y',
-], function(Loader, Drawer, Sidebar, Scheme, Navbar, Announcement, Palette, A11y) {
+    'theme_atrium/prefetch',
+], function(Loader, Drawer, Sidebar, Scheme, Navbar, Announcement, Palette, A11y, Prefetch) {
     Drawer.init();
     Sidebar.init();
     Scheme.init();
@@ -248,6 +249,7 @@ require([
     Announcement.init();
     Palette.init();
     A11y.init();
+    Prefetch.init();
     M.util.js_complete('theme_boost/loader');
 });
 {{/js}}

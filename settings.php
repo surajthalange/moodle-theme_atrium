@@ -1145,6 +1145,13 @@ if ($ADMIN->fulltree) {
         PARAM_RAW
     ));
 
+    $page->add(new admin_setting_configcheckbox(
+        'theme_atrium/prefetch',
+        get_string('prefetch', 'theme_atrium'),
+        get_string('prefetch_desc', 'theme_atrium'),
+        1
+    ));
+
     $addcss($page, new admin_setting_configcheckbox(
         'theme_atrium/print_linkurls',
         get_string('print_linkurls', 'theme_atrium'),

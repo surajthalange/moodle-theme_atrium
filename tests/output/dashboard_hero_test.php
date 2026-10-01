@@ -60,12 +60,17 @@ final class dashboard_hero_test extends \advanced_testcase {
     public function test_export(): void {
         global $PAGE;
         $this->resetAfterTest();
-        $user = $this->getDataGenerator()->create_user(['firstname' => 'Ada', 'lastname' => 'Lovelace']);
+        $generator = $this->getDataGenerator();
+        $user = $generator->create_user(['firstname' => 'Ada', 'lastname' => 'Lovelace']);
+        // Enrolled in something, so the tiles have something to count: a user enrolled in
+        // nothing gets the empty state instead, which test_empty_state covers.
+        $generator->enrol_user($user->id, $generator->create_course()->id, 'student');
         $this->setUser($user);
         $output = $PAGE->get_renderer('core');
 
         $data = (new dashboard_hero($user))->export_for_template($output);
         $this->assertSame('Welcome back, Ada', $data['greeting']);
+        $this->assertFalse($data['hasempty'], 'Enrolled, so the tiles stand');
         $this->assertTrue($data['hastiles']);
         $this->assertSame(['inprogress', 'completed', 'due', 'unread'], array_column($data['tiles'], 'key'));
         $this->assertSame([0, 0, 0, 0], array_column($data['tiles'], 'count'));
@@ -84,5 +89,41 @@ final class dashboard_hero_test extends \advanced_testcase {
         set_config('showstat_completed', 0, 'theme_atrium');
         $data = (new dashboard_hero($user))->export_for_template($output);
         $this->assertFalse($data['hastiles']);
+    }
+
+    /**
+     * Enrolled in nothing, the tiles give way to a panel that says what to do next, and
+     * what it says depends on what the person is actually allowed to do.
+     */
+    public function test_empty_state(): void {
+        global $PAGE, $USER;
+        $this->resetAfterTest();
+        $generator = $this->getDataGenerator();
+        $output = $PAGE->get_renderer('core');
+
+        // A learner with nothing, on a site that has courses to look at.
+        $generator->create_course();
+        $learner = $generator->create_user();
+        $this->setUser($learner);
+        $data = (new dashboard_hero($learner))->export_for_template($output);
+        $this->assertTrue($data['hasempty']);
+        $this->assertFalse($data['hastiles'], 'Four zeros are replaced, not accompanied');
+        $this->assertSame([], $data['tiles']);
+        $this->assertSame(get_string('empty_nocourses', 'theme_atrium'), $data['empty']['title']);
+        $this->assertStringContainsString('/course/index.php', $data['empty']['url']);
+
+        // Somebody who may create a course is told to create one instead of to go browsing.
+        $this->setAdminUser();
+        $data = (new dashboard_hero($USER))->export_for_template($output);
+        $this->assertTrue($data['hasempty']);
+        $this->assertSame(get_string('empty_nocourses_staff', 'theme_atrium'), $data['empty']['title']);
+        $this->assertStringContainsString('/course/edit.php', $data['empty']['url']);
+
+        // Enrolling in something puts the tiles back.
+        $this->setUser($learner);
+        $generator->enrol_user($learner->id, $generator->create_course()->id, 'student');
+        $data = (new dashboard_hero($learner))->export_for_template($output);
+        $this->assertFalse($data['hasempty']);
+        $this->assertTrue($data['hastiles']);
     }
 }

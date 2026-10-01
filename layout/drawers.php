@@ -211,6 +211,13 @@ if (scheme::can_toggle() && ($showschemetoggle === false || $showschemetoggle ==
     ];
 }
 
+// Prefetching is carried as a body class rather than a template flag, so the module can
+// stay a no-op on a page that does not want it without a second branch in the template.
+$prefetch = get_config('theme_atrium', 'prefetch');
+if ($prefetch === false || $prefetch === '' || $prefetch) {
+    $extraclasses[] = 'atrium-prefetch';
+}
+
 $bodyattributes = $OUTPUT->body_attributes($extraclasses);
 
 $templatecontext = [

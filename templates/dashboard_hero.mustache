@@ -24,6 +24,8 @@
     * date - Today's date, localised
     * hastiles - Whether any tiles are enabled
     * tiles - Tiles: key, icon, url, count, label, help
+    * hasempty, empty - Shown instead of the tiles when the user is enrolled in nothing:
+      title, text, and an optional label and url for the one thing to do next
     * hasimage - Whether a background image is configured
 
     Example context (json):
@@ -31,6 +33,9 @@
         "greeting": "Welcome back, Ada",
         "date": "Monday, 14 September 2026",
         "hasimage": false,
+        "hasempty": false,
+        "empty": {"title": "Nothing here yet", "text": "You are not enrolled in any courses.",
+                  "label": "Browse courses", "url": "/course/index.php"},
         "hastiles": true,
         "tiles": [
             {"key": "inprogress", "icon": "inprogress", "url": "/my/courses.php", "count": 3, "label": "In progress", "help": ""},
@@ -61,5 +66,14 @@
                 {{/tiles}}
             </ul>
         {{/hastiles}}
+        {{#hasempty}}
+            <div class="atrium-hero-empty">
+                <p class="atrium-hero-empty-title">{{ empty.title }}</p>
+                <p class="atrium-hero-empty-text">{{ empty.text }}</p>
+                {{#empty.url}}
+                    <a href="{{{ empty.url }}}" class="btn btn-primary atrium-hero-empty-action">{{ empty.label }}</a>
+                {{/empty.url}}
+            </div>
+        {{/hasempty}}
     </div>
 </section>
