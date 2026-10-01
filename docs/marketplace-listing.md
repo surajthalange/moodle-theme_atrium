@@ -23,11 +23,10 @@ characters, of which plugin cards show the first 119; description 7,000; screens
 
 ### What it is
 
-Atrium gives Moodle 5.1 and 5.2 the layout people pay for elsewhere: a left navigation
-sidebar that collapses to icons, a designed front page, a course catalogue of cards, a
-course landing page for enrolment, a dashboard with a greeting and progress tiles, a
-course page made of cards with a focus mode, dark mode with a switch for every user, five
-colour presets, three login layouts and a configurable footer. It is a Boost child, so
+Atrium gives Moodle 5.1 and 5.2 the layout people pay for elsewhere: a collapsible left
+sidebar, a designed front page, a catalogue of course cards, a landing page for enrolment, a
+dashboard with progress tiles, a course page of cards with a focus mode, dark mode per user,
+seven colour presets, three login layouts and a configurable footer. It is a Boost child, so
 everything Boost does keeps working.
 
 ### Four things no other free theme does
@@ -53,11 +52,10 @@ navigation bar can go transparent over the hero.
 
 ### Catalogue and enrolment
 
-Category and search pages become course cards or a list, with image, category,
-teachers, enrolled and activity counts, progress for enrolled users and the price from
-fee or PayPal enrolment; category chips, sorting, paging and search, the view remembered per user.
-The enrolment page is a course landing page: banner, summary, facts, outline, teachers,
-related courses, and the enrolment card kept in view.
+Category and search pages become course cards or a list: image, category, teachers, enrolled
+and activity counts, progress, and the price from fee or PayPal enrolment, with category
+chips, sorting, paging and search remembered per user. The enrolment page becomes a landing
+page: banner, summary, facts, outline, teachers and the enrolment card kept in view.
 
 ### Navigation
 
@@ -75,12 +73,10 @@ is not slowed.
 
 ### Course page
 
-Sections as cards, activities as rows with the activity icon in its purpose colour, and
-a banner with the learner's progress and a resume link, or the course's numbers for the
-people who run it. Focus mode strips the course and
-its activities down to the content with one switch, remembered per user. No template is
-overridden here, which means editing mode, drag and drop, bulk editing and the activity
-chooser are exactly Boost's.
+Sections as cards, activities as rows with the activity icon in its purpose colour, and a
+banner carrying the learner's progress and a resume link, or the course's numbers for staff.
+Focus mode strips a course to its content with one switch, remembered per user. No template
+is overridden here, so editing, drag and drop and the activity chooser stay Boost's.
 
 ### Site-wide
 
@@ -91,42 +87,37 @@ the rest on the same tokens in both schemes.
 
 ### Commands
 
-The same Ctrl+K box runs things as well as finding them: turn editing on, switch colour
-scheme, enter focus mode, change any accessibility setting, purge caches, sign out. A
-command posts with a session key and is checked against your own permissions at the moment
-it runs, not when it was listed. With an empty box the first result is always a place to
-go, never something that changes the site.
+The same Ctrl+K box runs things as well as finding them: turn editing on, switch scheme,
+enter focus mode, change an accessibility setting, purge caches, sign out. A command posts
+with a session key and is re-checked against your permissions when it runs. With an empty
+box the first result is always a place to go, never something that changes the site.
 
 ### Print
 
-Pages print as content on paper. Navigation, drawers, controls and the footer are dropped,
-the dark scheme flattens to ink on white instead of solid black panels, sections collapsed
-on screen are opened, and tables keep their borders. Link addresses can be printed after
-links, off by default.
+Pages print as content on paper: navigation, drawers, controls and footer dropped, the dark
+scheme flattened to ink on white rather than solid black, collapsed sections opened, tables
+keeping their borders. Link addresses after links, off by default.
 
 ### Empty states
 
-A dashboard with nothing on it says what to do next rather than showing four zeros, and
-says something different depending on whether you may create a course, may browse for one,
-or have enrolment arranged for you.
+A dashboard with nothing on it says what to do next rather than showing four zeros, and says
+something different depending on whether you may create a course, browse for one, or have
+enrolment arranged for you.
 
 ### Speed
 
 Fonts are served by your site, so no page waits on an outside host. Hovering a link fetches
-that page early, within a per-page budget, never for a link carrying a session key, and not
-at all for anyone on a metered connection. The compiled stylesheet is 199 KB gzipped
-against core Boost's 175 KB. Measurements and method are published in the repository; no
-claim is made about render speed, because that was not measured.
+that page early, within a budget, never for a link carrying a session key, and not at all on
+a metered connection. The stylesheet is 199 KB gzipped against Boost's 175 KB. Method and
+figures are in the repository; nothing is claimed about render speed, which was not measured.
 
 ### Login, header, footer
 
-Three login layouts: the card centred over the image, or beside an image panel on the
-left or the right, with panel copy, text above and below the form, a language menu
-switch and "Create new account" as a button. The brand as logo, site name or both; a
-standard or compact navigation bar, sticky or scrolling, with a recent courses menu; page
-width standard, narrow or wide. Up to four footer columns, each
-custom HTML, a menu, the social links or the contact details, with a footer logo and
-privacy and terms links.
+Three login layouts: the card centred over the image, or beside an image panel left or
+right, with panel copy, text around the form and a language switch. The brand as logo, name
+or both; a standard or compact navigation bar, sticky or scrolling; page width standard,
+narrow or wide. Up to four footer columns, each custom HTML, a menu, social links or
+contact details.
 
 ### Dark mode
 
@@ -149,18 +140,16 @@ conveyed by colour alone. Reduced-motion preferences are respected. A published 
 
 ### Privacy
 
-Nine user preferences (scheme, sidebar state, catalogue view, focus mode, dismissed
-announcement, and the four accessibility toolbar choices), declared to the privacy API and included in exports. No tables. No
-cookies of its own. Fonts are bundled; nothing is fetched from outside your site unless
-you enter a Google Analytics 4 id, which is off by default.
+Nine user preferences (scheme, sidebar, catalogue view, focus mode, dismissed announcement
+and the four accessibility choices), declared to the privacy API and included in exports. No
+tables, no cookies of its own. Fonts are bundled; nothing is fetched from outside your site
+unless you enter a Google Analytics 4 id, which is off by default.
 
 ### Built to last
 
-Four Boost templates are overridden (drawers, navbar, footer, login layout) and two
-renderers in the narrowest way (the catalogue and enrolment page, the profile cards).
-Everything else, the course page included, is SCSS against the class names core already
-emits. That is the whole point: fewer overrides, fewer things to break on a Moodle
-release.
+Four Boost templates are overridden (drawers, navbar, footer, login) and two renderers in
+the narrowest way. Everything else, the course page included, is SCSS against class names
+core already emits. Fewer overrides, fewer things to break on a Moodle release.
 
 ### Supported versions
 
