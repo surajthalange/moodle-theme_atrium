@@ -11,15 +11,11 @@ characters, of which plugin cards show the first 119; description 7,000; screens
 
 ### First 119 characters, as a standalone sentence
 
-> A modern Boost child theme: one-click setup, Ctrl+K search, accessibility
-> toolbar, designed front page, dark mode.
+> A modern Boost child theme: Ctrl+K commands, an accessibility statement, one-click setup, dark mode, print that works.
 
 ### Full short description
 
-> A modern Boost child theme: one-click setup, Ctrl+K search, accessibility
-> toolbar, designed front page, dark mode, catalogue, three login layouts. Four template
-> overrides, everything else SCSS, so it survives Moodle releases. Nothing is fetched
-> from outside your site.
+> A modern Boost child theme: Ctrl+K search that also runs commands, a generated accessibility statement, one-click setup, designed front page, catalogue, dark mode, print that works. Four template overrides. Nothing fetched from outside your site.
 
 ---
 
@@ -34,7 +30,7 @@ course page made of cards with a focus mode, dark mode with a switch for every u
 colour presets, three login layouts and a configurable footer. It is a Boost child, so
 everything Boost does keeps working.
 
-### Three things no other free theme does
+### Four things no other free theme does
 
 **Quick start.** One click on a fresh site sets up the front page, footer, quick links and
 login page from the site's own name, summary, support contact and courses. One click puts
@@ -42,7 +38,11 @@ it back. **Search and go.** Ctrl+K from any page finds courses, activities in th
 course, the pages people go to and, for administrators, admin pages, with the user's own
 permissions. **Accessibility toolbar.** Each user can choose a larger text size, a reading
 font (Atkinson Hyperlegible, bundled), high contrast and reduced motion, remembered and
-applied on every page.
+applied on every page. **Accessibility statement.** Public bodies in the UK and EU
+have to publish one and currently write it by hand. Atrium builds it, and the list of what
+the site offers is generated from your live settings rather than asserted, so turning a
+feature off also removes the claim that it exists. Readable without signing in. Off by
+default.
 
 ### Front page
 
@@ -89,6 +89,35 @@ quick links menu of icon links in the navigation bar. The profile page as a grid
 cards under a cover band. Gradebook, quiz, calendar, messaging, forum, admin pages and
 the rest on the same tokens in both schemes.
 
+### Commands
+
+The same Ctrl+K box runs things as well as finding them: turn editing on, switch colour
+scheme, enter focus mode, change any accessibility setting, purge caches, sign out. A
+command posts with a session key and is checked against your own permissions at the moment
+it runs, not when it was listed. With an empty box the first result is always a place to
+go, never something that changes the site.
+
+### Print
+
+Pages print as content on paper. Navigation, drawers, controls and the footer are dropped,
+the dark scheme flattens to ink on white instead of solid black panels, sections collapsed
+on screen are opened, and tables keep their borders. Link addresses can be printed after
+links, off by default.
+
+### Empty states
+
+A dashboard with nothing on it says what to do next rather than showing four zeros, and
+says something different depending on whether you may create a course, may browse for one,
+or have enrolment arranged for you.
+
+### Speed
+
+Fonts are served by your site, so no page waits on an outside host. Hovering a link fetches
+that page early, within a per-page budget, never for a link carrying a session key, and not
+at all for anyone on a metered connection. The compiled stylesheet is 199 KB gzipped
+against core Boost's 175 KB. Measurements and method are published in the repository; no
+claim is made about render speed, because that was not measured.
+
 ### Login, header, footer
 
 Three login layouts: the card centred over the image, or beside an image panel on the
@@ -116,7 +145,7 @@ weight, text size, corner radius, raw SCSS before and after, custom CSS.
 
 Every accent in every preset passes WCAG 2.2 AA in both schemes, and a test computes
 that from the preset data so it cannot drift. Focus rings are never removed. Nothing is
-conveyed by colour alone. Reduced-motion preferences are respected.
+conveyed by colour alone. Reduced-motion preferences are respected. A published accessibility statement can be generated from the site's own settings.
 
 ### Privacy
 
