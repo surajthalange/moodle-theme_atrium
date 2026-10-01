@@ -80,10 +80,10 @@ is overridden here, so editing, drag and drop and the activity chooser stay Boos
 
 ### Site-wide
 
-An announcement bar with four tones, dismissible per user until the text changes. A
-quick links menu of icon links in the navigation bar. The profile page as a grid of
-cards under a cover band. Gradebook, quiz, calendar, messaging, forum, admin pages and
-the rest on the same tokens in both schemes.
+An announcement bar with four tones, dismissible per user until the text changes. A quick
+links menu in the navigation bar. The profile page as a grid of cards under a cover band.
+Gradebook, quiz, calendar, messaging, forum and admin pages on the same tokens in both
+schemes.
 
 ### Commands
 
@@ -128,9 +128,8 @@ A site default of light, dark, or follow the device. Dark mode can be disabled s
 ### Presets and settings
 
 Atrium teal (light or dark sidebar), Indigo (light or dark), Emerald, Rose and Slate. A
-brand colour overrides the preset's
-accent; a sidebar tone overrides its tone. Inter (bundled) or the system font, heading
-weight, text size, corner radius, raw SCSS before and after, custom CSS.
+brand colour overrides the accent, a sidebar tone the tone. Inter (bundled) or the system
+font, heading weight, text size, corner radius, raw SCSS before and after, custom CSS.
 
 ### Accessibility
 
@@ -159,5 +158,5 @@ with Bootstrap 5 between 4.5 and 5.x.
 
 ### Source, licence and support
 
-GPLv3 or later. Inter and Atkinson Hyperlegible typefaces under the SIL Open Font License. Source, issue tracker
-and continuous integration on GitHub.
+GPLv3 or later. Inter and Atkinson Hyperlegible under the SIL Open Font License. Source,
+issue tracker and CI on GitHub.
