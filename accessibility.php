@@ -17,10 +17,14 @@
 /**
  * The site's accessibility statement.
  *
- * Deliberately readable without signing in. A statement exists so that someone who cannot
- * use the site can find out what to expect and how to complain, and putting it behind the
- * login page would defeat that. It shows nothing that is not already public: the site
- * name, the administrator's own words, and which accessibility features are switched on.
+ * Readable without signing in, unless the site has turned on forced login. A statement
+ * exists so that someone who cannot use the site can find out what to expect and how to
+ * complain, and putting it behind the login page defeats that. It shows nothing that is
+ * not already public: the site name, the administrator's own words, and which
+ * accessibility features are switched on.
+ *
+ * Forced login is honoured rather than overridden. An administrator who sets it has said
+ * that nothing on this site is public, and that is not a decision for a theme to reverse.
  *
  * @package    theme_atrium
  * @copyright  2026 Suraj Thalange
@@ -29,7 +33,15 @@
 
 use theme_atrium\local\accessibility_statement;
 
+// The checker expects an unconditional login call after the config include and cannot see
+// the conditional one below. This page is public on purpose, so the expectation is wrong
+// here rather than the code: see the note above about what it does and does not show.
+// phpcs:ignore moodle.Files.RequireLogin.Missing
 require(__DIR__ . '/../../config.php');
+
+if (!empty($CFG->forcelogin)) {
+    require_login(null, false);
+}
 
 $PAGE->set_context(context_system::instance());
 $PAGE->set_url(accessibility_statement::url());

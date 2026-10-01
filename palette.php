@@ -40,7 +40,8 @@ if (isguestuser() || !palette::enabled()) {
 }
 $PAGE->set_context(context_system::instance());
 if ($pageurl !== '') {
-    // user_allowed_editing() asks the page itself, so the page has to be the one in question.
+    // Whether editing is allowed is a question for the page itself, so $PAGE has to be
+    // set to the page the palette was opened from rather than to this endpoint.
     $PAGE->set_url($pageurl);
 }
 
