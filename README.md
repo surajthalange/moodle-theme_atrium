@@ -26,7 +26,9 @@ requests to outside services.
 | Course index | Boost's course index drawer, docked against the sidebar. Its behaviour, keyboard handling and preferences are core's, untouched. |
 | Dashboard | A greeting band with the date and four tiles: courses in progress, courses completed, items due this week, unread messages and notifications. Each tile links to the page it counts, each can be turned off, and the whole band can be. |
 | Course page | Sections as cards, activities as rows, with the activity icon in its purpose colour. No template is overridden: editing mode, drag and drop, bulk editing and the activity chooser are Boost's. |
+| Print | Pages print as content on paper: navigation, drawers, controls and the footer are dropped, the dark scheme flattens to ink on white instead of solid black panels, sections collapsed on screen are opened, and tables keep their borders. Link addresses can be printed after links, off by default. |
 | Dark mode | A per-user switch in the navigation bar and in the user menu, saved as a preference. The scheme is applied on the server before the page is sent, so there is no flash on load. A site default of light, dark, or *follow the device*. Dark mode can be disabled site-wide. |
+| Empty states | A dashboard with nothing on it says what to do next rather than showing four zeros, and says something different depending on whether you may create a course, may browse for one, or have enrolment arranged for you. |
 | Presets | Seven colour presets (Atrium teal light and dark, Indigo light and dark, Emerald, Rose, Slate), each an accent and a sidebar tone. A brand colour setting overrides the accent; a sidebar tone setting overrides the tone. |
 | Front page | A designed site home for visitors: hero with image and two buttons (or a carousel of up to five slides), feature blocks, a course showcase (latest, a category, or chosen courses), a numbers strip, testimonials, an about band and a call to action. Every section is a setting and has a switch. |
 | Catalogue | Category and search pages as course cards or a list: image, category, teachers, enrolled count, activity count, progress for enrolled users, and the price from fee or PayPal enrolment. Category chips, sort, paging, a search box; the view is remembered per user. |
@@ -38,6 +40,7 @@ requests to outside services.
 | Header | Brand as logo, site name or both; standard or compact bar; sticky or scrolling; transparent over the front page hero; a recent courses menu; page width standard, narrow or wide. |
 | Footer | Up to four columns, each custom HTML, a menu, the social links or the contact details; a footer logo, a legal line with `{year}` and `{sitename}`, privacy and terms links, the Moodle credit as a setting. |
 | Type | Inter, bundled in four weights, or the system font. Heading weight, text size and corner radius are settings. |
+| Speed | Fonts are served by the site, so no page waits on an outside host. Hovering a link fetches that page early, within a per-page budget, skipping anything carrying a session key and anyone on a metered connection. Measurements and method in [docs/BENCHMARKS.md](https://github.com/surajthalange/moodle-theme_atrium/blob/main/docs/BENCHMARKS.md). |
 | The long tail | Gradebook, quiz, question bank, calendar, messaging, forum, assignment, workshop, backup, participants, admin pages and the rest, on the same tokens in both schemes. |
 
 ## Where it sits beside Boost and the paid themes
