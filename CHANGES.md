@@ -1,5 +1,41 @@
 # Changes
 
+## 1.3.0 (2026-10-01)
+
+Paper, empty pages, and the next page before you ask for it.
+
+- Print: pages print as content. Navigation, drawers, controls and the footer are dropped,
+  the dark scheme flattens to ink on white instead of solid black panels, sections
+  collapsed on screen are opened for paper, and tables keep their borders. A setting
+  prints the address after each link that leads off the site, off by default.
+- Empty states: a dashboard with no enrolments says what to do next instead of showing
+  four zeros, and says something different depending on whether the person may create a
+  course, may browse for one, or has enrolment arranged for them.
+- Prefetching: resting the pointer on a link asks the browser for that page early, within
+  a per-page budget. Links carrying a session key are never fetched this way, because
+  those do something rather than go somewhere, and nothing is fetched for anyone whose
+  browser reports a metered or slow connection. On by default, with a setting.
+- Measurements of stylesheet weight against Boost, Classic and Moove, with the method,
+  published in docs/BENCHMARKS.md. No claim is made about render speed, which was not
+  measured.
+
+## 1.2.0 (2026-10-01)
+
+The palette does things, and the site can publish an accessibility statement.
+
+- Commands: the Ctrl+K box now runs things as well as finding them, including turning
+  editing on, switching colour scheme, entering focus mode, changing any accessibility
+  setting, purging caches and signing out. A command posts with a session key and is
+  checked against the user's own permissions at the moment it runs, not when it was
+  listed. With an empty box the first result is always a place to go, never something
+  that changes the site.
+- Accessibility statement: a published statement at its own address, readable without
+  signing in, of the kind public bodies in the UK and EU are required to have. The list of
+  what the site offers is generated from the live settings rather than asserted, so
+  turning a feature off also removes the claim that it exists; the parts only a human can
+  answer are left to the administrator. Off by default, linked from the footer when on,
+  and forced login is honoured.
+
 ## 1.1.0 (2026-09-15)
 
 Every page, not only the shell. Moodle 5.1 and 5.2.
