@@ -15,11 +15,16 @@
 
 /**
  * The command palette: Ctrl+K (Cmd+K on a Mac) or the navigation bar button opens a box
- * that finds courses, activities in the current course, common pages and admin pages.
+ * that finds courses, activities in the current course, common pages and admin pages, and
+ * runs commands such as turning editing on, switching colour scheme or purging caches.
  *
  * Results come from palette.php. Keyboard: arrows move, Enter opens, Escape closes; the
  * results are a listbox and the input a combobox, so screen readers announce the
  * highlighted result.
+ *
+ * A place to go is a link and is followed. A command is a button, and activating it posts
+ * to paletteaction.php with the session key, because a command changes something and so
+ * must never be reachable by following a URL.
  *
  * @module     theme_atrium/palette
  * @copyright  2026 Suraj Thalange
@@ -45,6 +50,8 @@ let lastFocus = null;
 let timer = null;
 let requestId = 0;
 let active = -1;
+let actionurl = '';
+let sesskey = '';
 
 /**
  * Escape text for HTML.
@@ -78,8 +85,13 @@ const render = async(groups) => {
                 : '<span class="atrium-palette-dot" aria-hidden="true"></span>';
             const meta = item.meta ? `<span class="atrium-palette-meta">${escape(item.meta)}</span>` : '';
             const id = `atrium-palette-option-${index++}`;
-            return `<a href="${escape(item.url)}" class="atrium-palette-item" role="option" id="${id}" aria-selected="false">
-                ${icon}<span class="atrium-palette-label">${escape(item.label)}</span>${meta}</a>`;
+            const body = `${icon}<span class="atrium-palette-label">${escape(item.label)}</span>${meta}`;
+            if (item.action) {
+                return `<button type="button" class="atrium-palette-item atrium-palette-command" role="option"
+                    id="${id}" aria-selected="false" data-palette-action="${escape(item.action)}">${body}</button>`;
+            }
+            return `<a href="${escape(item.url)}" class="atrium-palette-item" role="option" id="${id}"
+                aria-selected="false">${body}</a>`;
         }).join('');
         return `<div class="atrium-palette-group" role="group" aria-label="${escape(group.title)}">
             <p class="atrium-palette-group-title">${escape(group.title)}</p>${items}</div>`;
@@ -109,6 +121,52 @@ const setActive = (next) => {
 };
 
 /**
+ * The page the palette was opened from, as a site-local path.
+ *
+ * @returns {string}
+ */
+const here = () => window.location.pathname + window.location.search;
+
+/**
+ * Run a command by posting it, so that it carries the session key and cannot be triggered
+ * by following a link. The server does the work and sends the user back here.
+ *
+ * @param {string} action
+ */
+const run = (action) => {
+    if (!actionurl || !sesskey) {
+        return;
+    }
+    const form = document.createElement('form');
+    form.method = 'post';
+    form.action = actionurl;
+    form.hidden = true;
+    [['action', action], ['sesskey', sesskey], ['returnurl', here()]].forEach(([name, value]) => {
+        const field = document.createElement('input');
+        field.type = 'hidden';
+        field.name = name;
+        field.value = value;
+        form.appendChild(field);
+    });
+    document.body.appendChild(form);
+    form.submit();
+};
+
+/**
+ * Activate one result: follow a place, run a command.
+ *
+ * @param {Element} option
+ */
+const choose = (option) => {
+    const action = option.dataset.paletteAction;
+    if (action) {
+        run(action);
+    } else if (option.href) {
+        window.location.href = option.href;
+    }
+};
+
+/**
  * Fetch results for the current query.
  */
 const search = () => {
@@ -116,10 +174,13 @@ const search = () => {
     const url = new URL(root.dataset.searchurl, window.location.href);
     url.searchParams.set('q', input.value);
     url.searchParams.set('courseid', root.dataset.courseid || '0');
+    url.searchParams.set('page', here());
     fetch(url, {credentials: 'same-origin'})
         .then((response) => response.json())
         .then((data) => {
             if (id === requestId) {
+                actionurl = data.actionurl || '';
+                sesskey = data.sesskey || '';
                 render(data.groups || []);
             }
             return null;
@@ -207,8 +268,17 @@ export const init = () => {
             const option = results.querySelectorAll(SELECTORS.OPTION)[active];
             if (option) {
                 event.preventDefault();
-                window.location.href = option.href;
+                choose(option);
             }
+        }
+    });
+
+    results.addEventListener('click', (event) => {
+        // Links navigate by themselves; commands are buttons and need running.
+        const option = event.target.closest('[data-palette-action]');
+        if (option) {
+            event.preventDefault();
+            choose(option);
         }
     });
 

@@ -15,7 +15,10 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Command palette search, as JSON.
+ * Run one command from the palette, then return to the page it was run from.
+ *
+ * Posted, with a session key, and the command is checked against the user's own
+ * permissions again here rather than trusted from the palette that offered it.
  *
  * @package    theme_atrium
  * @copyright  2026 Suraj Thalange
@@ -23,15 +26,12 @@
  */
 
 use theme_atrium\local\palette;
+use theme_atrium\local\palette_actions;
 
-define('AJAX_SCRIPT', true);
 require(__DIR__ . '/../../config.php');
 
-$query = optional_param('q', '', PARAM_TEXT);
-$courseid = optional_param('courseid', 0, PARAM_INT);
-// The page the palette was opened from. PARAM_LOCALURL keeps it on this site; it is used
-// to return here after a command and to let core decide whether editing applies there.
-$pageurl = optional_param('page', '', PARAM_LOCALURL);
+$action = required_param('action', PARAM_ALPHANUMEXT);
+$returnurl = optional_param('returnurl', '/', PARAM_LOCALURL);
 
 require_login(null, false);
 require_sesskey();
@@ -39,13 +39,9 @@ if (isguestuser() || !palette::enabled()) {
     throw new moodle_exception('noguest');
 }
 $PAGE->set_context(context_system::instance());
-if ($pageurl !== '') {
-    // user_allowed_editing() asks the page itself, so the page has to be the one in question.
-    $PAGE->set_url($pageurl);
-}
+$PAGE->set_url('/theme/atrium/paletteaction.php');
 
-echo json_encode([
-    'groups' => palette::search(core_text::substr($query, 0, 100), $courseid, $pageurl),
-    'actionurl' => (new moodle_url('/theme/atrium/paletteaction.php'))->out(false),
-    'sesskey' => sesskey(),
-]);
+palette_actions::execute($action);
+
+// PARAM_LOCALURL keeps this on this site; an empty or rejected value falls back to the home page.
+redirect(new moodle_url($returnurl === '' ? '/' : $returnurl));

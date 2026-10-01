@@ -90,14 +90,23 @@ final class tools_test extends \advanced_testcase {
         $titles = array_column($groups, 'title');
         $this->assertSame([
             get_string('palette_pages', 'theme_atrium'),
+            get_string('palette_actions', 'theme_atrium'),
             get_string('palette_activities', 'theme_atrium'),
             get_string('palette_courses', 'theme_atrium'),
-        ], $titles);
-        $activities = array_column($groups[1]['items'], 'label');
+        ], $titles, 'Pages lead, so that Enter on an unqueried palette never runs a command');
+
+        // Looked up by title rather than by position, so that adding a group later is not
+        // a test failure in itself.
+        $items = array_combine($titles, array_column($groups, 'items'));
+        $activities = array_column($items[get_string('palette_activities', 'theme_atrium')], 'label');
         $this->assertContains('Plankton quiz', $activities);
         $this->assertNotContains('Hidden reading', $activities, 'Hidden activities are not shown to students');
         $this->assertNotContains('A label', $activities);
-        $this->assertSame(['Marine Biology'], array_column($groups[2]['items'], 'label'), 'Own courses when the query is empty');
+        $this->assertSame(
+            ['Marine Biology'],
+            array_column($items[get_string('palette_courses', 'theme_atrium')], 'label'),
+            'Own courses when the query is empty'
+        );
 
         $groups = palette::search('biology');
         $courses = array_column(end($groups)['items'], 'label');

@@ -60,15 +60,23 @@ final class palette {
      *
      * @param string $query The typed text; empty shows the starting set.
      * @param int $courseid The course the user is looking at, or 0.
+     * @param string $pageurl The page the user is on, already validated as local, or ''.
      * @return array<int, array{title: string, items: array<int, array{label: string, url: string, icon: string, meta: string}>}>
      */
-    public static function search(string $query, int $courseid = 0): array {
+    public static function search(string $query, int $courseid = 0, string $pageurl = ''): array {
         $query = trim($query);
         $groups = [];
 
         $pages = self::pages($query);
         if ($pages) {
             $groups[] = ['title' => get_string('palette_pages', 'theme_atrium'), 'items' => $pages];
+        }
+        // Commands sit below the pages deliberately. With an empty box the first result is
+        // highlighted and Enter runs it, and that first result should be somewhere to go,
+        // never something that changes the site.
+        $actions = palette_actions::search($query, $pageurl, self::LIMIT);
+        if ($actions) {
+            $groups[] = ['title' => get_string('palette_actions', 'theme_atrium'), 'items' => $actions];
         }
         $activities = $courseid > 1 ? self::activities($query, $courseid) : [];
         if ($activities) {
