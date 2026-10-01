@@ -10,6 +10,9 @@
 $atrium-radius: 12px !default;
 $atrium-font-scale: 1 !default;
 $atrium-sidebar-tone: light !default;
+// Print: whether a link in the content prints its address after it. Set from the
+// setting by theme_atrium_get_pre_scss().
+$atrium-print-linkurls: false !default;
 $atrium-sidebar-width: 248px;
 $atrium-sidebar-collapsed-width: 64px;
 

@@ -1145,6 +1145,13 @@ if ($ADMIN->fulltree) {
         PARAM_RAW
     ));
 
+    $addcss($page, new admin_setting_configcheckbox(
+        'theme_atrium/print_linkurls',
+        get_string('print_linkurls', 'theme_atrium'),
+        get_string('print_linkurls_desc', 'theme_atrium'),
+        0
+    ));
+
     $page->add(new admin_setting_configtext(
         'theme_atrium/ga4id',
         get_string('ga4id', 'theme_atrium'),

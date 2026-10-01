@@ -28,3 +28,5 @@
 @import "atrium/footer";
 @import "atrium/login";
 @import "atrium/dark";
+// Last: print restates colours set by every partial above, including the dark scheme.
+@import "atrium/print";

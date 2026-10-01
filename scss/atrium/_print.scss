@@ -1,0 +1,193 @@
+// Print.
+//
+// Paper has no navigation, so everything whose only job is to move you somewhere else is
+// removed and the content takes the full width. Colour is flattened to ink on white: the
+// dark scheme would otherwise print as solid black panels and empty most of a cartridge.
+//
+// Three things make this short rather than a list of undo rules. The sidebar's width is a
+// custom property, so zeroing it collapses every margin that depends on it at once. The
+// surface colours are tokens, so restating a handful of them repaints every card, table
+// and panel in the theme. And Bootstrap's collapse is a class, so sections that were shut
+// on screen can be opened for paper without touching any template.
+
+@media print {
+    // Zeroing the width collapses the page margin, the drawer offsets, the fixed navbar
+    // and the announcement bar in one go, rather than undoing each rule where it is set.
+    :root,
+    body.atrium-sidebar-collapsed {
+        --atrium-sidebar-width: 0;
+    }
+
+    // Ink on white, whichever scheme the reader was using. Restating the tokens repaints
+    // everything that is built on them; the accent is kept black so that headings and
+    // links do not print as grey mush on a monochrome printer.
+    :root,
+    [data-bs-theme="dark"],
+    [data-bs-theme="light"] {
+        --atrium-bg: #fff;
+        --atrium-surface: #fff;
+        --atrium-text: #000;
+        --atrium-text-muted: #333;
+        --atrium-text-faint: #555;
+        --atrium-border: #bbb;
+        --atrium-border-strong: #888;
+        --atrium-accent: #000;
+        --atrium-accent-contrast: #fff;
+        --atrium-accent-soft: #fff;
+        --atrium-accent-softer: #fff;
+        --atrium-hero-bg: #fff;
+        --atrium-hero-fg: #000;
+        --atrium-navbar-bg: #fff;
+        --atrium-progress-track: #ddd;
+        --atrium-shadow-sm: none;
+        --atrium-shadow-md: none;
+        --atrium-shadow-lg: none;
+    }
+
+    html,
+    body {
+        background: #fff !important;
+        color: #000 !important;
+    }
+
+    // Navigation, controls and anything that acts rather than informs.
+    .atrium-sidebar,
+    .atrium-announcement,
+    .atrium-focus-bar,
+    .atrium-palette,
+    .atrium-palette-toggle,
+    .atrium-quicklinks,
+    .atrium-a11y,
+    .atrium-footer,
+    .atrium-course-banner-actions,
+    .atrium-fp-hero-actions,
+    .navbar,
+    .drawer,
+    .drawer-toggles,
+    .drawercontrols,
+    .skiplinks,
+    .activity-add,
+    .block-add,
+    .moodle-actionmenu,
+    .action-menu,
+    .editing_move,
+    .btn-edit,
+    #goto-top-link,
+    #region-main-settings-menu,
+    #page-footer,
+    [data-region="blocks-column"],
+    [data-region="courseindex"] {
+        display: none !important;
+    }
+
+    // The content gets the paper.
+    #page,
+    #page.drawers,
+    #page-content,
+    #region-main-box,
+    #region-main,
+    .main-inner,
+    #page.drawers .main-inner {
+        margin: 0 !important;
+        padding: 0 !important;
+        max-width: none !important;
+        width: auto !important;
+    }
+
+    // Nothing is fixed or sticky on paper: a fixed element repeats on every sheet.
+    .fixed-top,
+    .sticky-top,
+    .atrium-navbar,
+    .atrium-course-banner {
+        position: static !important;
+    }
+
+    // Sections shut on screen still belong in a printout.
+    .collapse:not(.show) {
+        display: block !important;
+        height: auto !important;
+        visibility: visible !important;
+    }
+
+    details:not([open]) > *:not(summary) {
+        display: block !important;
+    }
+
+    // Flatten the card layering; borders stay so tables and panels keep their edges.
+    .card,
+    .atrium-card,
+    .atrium-course-card,
+    .atrium-fp-section,
+    .atrium-enrol-section,
+    .atrium-profile-card {
+        box-shadow: none !important;
+        border: 1px solid #bbb !important;
+        background: #fff !important;
+        break-inside: avoid;
+    }
+
+    // Keep a heading with what it introduces, and do not split a row or an image.
+    h1,
+    h2,
+    h3,
+    h4 {
+        break-after: avoid;
+        break-inside: avoid;
+    }
+
+    tr,
+    li,
+    .activity-item,
+    img,
+    figure,
+    pre,
+    blockquote {
+        break-inside: avoid;
+    }
+
+    p {
+        orphans: 3;
+        widows: 3;
+    }
+
+    // Gradebook and report tables are the most printed pages in Moodle and the ones that
+    // suffer most from a white-on-white border.
+    table {
+        border-collapse: collapse !important;
+        width: 100% !important;
+    }
+
+    th,
+    td {
+        border: 1px solid #bbb !important;
+        background: #fff !important;
+        color: #000 !important;
+    }
+
+    thead {
+        display: table-header-group;
+    }
+
+    img {
+        max-width: 100% !important;
+    }
+
+    a {
+        color: #000 !important;
+        text-decoration: underline;
+    }
+
+    @page {
+        margin: 15mm;
+    }
+
+    @if $atrium-print-linkurls {
+        // Off unless an administrator asks for it: useful on a handout, noise on a report.
+        // Only links that lead off the page, and only inside the content.
+        #region-main a[href^="http"]::after {
+            content: " (" attr(href) ")";
+            font-size: 0.75em;
+            word-break: break-all;
+        }
+    }
+}

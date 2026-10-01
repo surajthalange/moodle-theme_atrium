@@ -74,6 +74,10 @@ function theme_atrium_get_pre_scss($theme) {
 
     $scss .= '$navbar-height: ' . \theme_atrium\local\header::height() . "px;\n";
 
+    if (get_config('theme_atrium', 'print_linkurls')) {
+        $scss .= "\$atrium-print-linkurls: true;\n";
+    }
+
     if (get_config('theme_atrium', 'fontfamily') === 'system') {
         $scss .= '$font-family-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;';
         $scss .= "\n";
