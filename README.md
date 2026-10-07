@@ -12,6 +12,7 @@ requests to outside services.
 - **Moodle support:** 5.1 and 5.2 (see *Why not 4.5* below)
 - **Parent:** Boost
 - **Licence:** GPLv3 or later; the Inter and Atkinson Hyperlegible typefaces are under the SIL Open Font License (`fonts/OFL.txt`)
+- **Case study:** [How and why it was built](https://surajthalange.github.io/work/theme-atrium/)
 
 ## What you get
 
