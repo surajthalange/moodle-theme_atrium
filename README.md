@@ -2,6 +2,10 @@
 
 [![Moodle Plugin CI](https://github.com/surajthalange/moodle-theme_atrium/actions/workflows/ci.yml/badge.svg)](https://github.com/surajthalange/moodle-theme_atrium/actions/workflows/ci.yml)
 
+![The Atrium dashboard in light mode: greeting, progress tiles and course cards, with the navigation sidebar expanded](https://surajthalange.github.io/assets/img/atrium/dashboard-light.png)
+
+![A course page in dark mode with the sidebar collapsed to an icon rail](https://surajthalange.github.io/assets/img/atrium/course-dark-collapsed.png)
+
 A modern Boost child theme for Moodle 5.1 and 5.2: a left navigation sidebar that
 collapses to icons, a card dashboard with a greeting and progress tiles, a card course
 page, dark mode with a per-user switch, seven colour presets led by Atrium teal, three login
