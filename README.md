@@ -6,14 +6,14 @@
 
 ![A course page in dark mode with the sidebar collapsed to an icon rail](https://surajthalange.github.io/assets/img/atrium/course-dark-collapsed.png)
 
-A modern Boost child theme for Moodle 5.1 and 5.2: a left navigation sidebar that
+A modern Boost child theme for Moodle 5.1, 5.2 and 5.3: a left navigation sidebar that
 collapses to icons, a card dashboard with a greeting and progress tiles, a card course
 page, dark mode with a per-user switch, seven colour presets led by Atrium teal, three login
 layouts, and a configurable footer. Fonts are bundled; the theme makes no
 requests to outside services.
 
 - **Component:** `theme_atrium`
-- **Moodle support:** 5.1 and 5.2 (see *Why not 4.5* below)
+- **Moodle support:** 5.1, 5.2 and 5.3 (see *Why not 4.5* below)
 - **Parent:** Boost
 - **Licence:** GPLv3 or later; the Inter and Atkinson Hyperlegible typefaces are under the SIL Open Font License (`fonts/OFL.txt`)
 - **Case study:** [How and why it was built](https://surajthalange.github.io/work/theme-atrium/)

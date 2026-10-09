@@ -54,6 +54,7 @@ jobs:
       #
       #   MOODLE_501_STABLE  PHP 8.2 - 8.4
       #   MOODLE_502_STABLE  PHP 8.3 - 8.4
+      #   MOODLE_503_STABLE  PHP 8.3 - 8.4
       #
       # 5.1 is the floor: Boost moved to Bootstrap 5 and reshaped the layout templates
       # this theme overrides between 4.5 and 5.x, so 4.5 is not a target (see README).
@@ -68,6 +69,10 @@ jobs:
           - {moodle-branch: MOODLE_502_STABLE, php: '8.3', database: mariadb}
           - {moodle-branch: MOODLE_502_STABLE, php: '8.4', database: pgsql}
           - {moodle-branch: MOODLE_502_STABLE, php: '8.4', database: mariadb}
+          - {moodle-branch: MOODLE_503_STABLE, php: '8.3', database: pgsql}
+          - {moodle-branch: MOODLE_503_STABLE, php: '8.3', database: mariadb}
+          - {moodle-branch: MOODLE_503_STABLE, php: '8.4', database: pgsql}
+          - {moodle-branch: MOODLE_503_STABLE, php: '8.4', database: mariadb}
 
     steps:
       - name: Check out repository code

@@ -1,5 +1,23 @@
 # Changes
 
+## 1.4.0 (2026-10-10)
+
+Moodle 5.3, which became the current long term support release on 5 October 2026.
+
+- The course index drawer keeps its controls on 5.3. theme_boost/drawer.mustache
+  renamed the block they are placed in from drawerheadercontent to drawercontrols,
+  and Mustache discards an override for a block the parent does not declare without
+  raising anything, so on 5.3 the controls simply stopped rendering. This theme now
+  declares both names; the running Moodle uses the one it knows and ignores the other,
+  which keeps 5.1 and 5.2 working from the same template.
+- The secondary navigation deliberately still uses core/moremenu rather than 5.3's new
+  core/secondarymoremenu, which mounts a React component. core/moremenu is unchanged
+  in 5.3 and carries no deprecation, and secondarymoremenu does not exist before 5.3,
+  so switching would break 5.1 and 5.2 for a cosmetic difference. Worth revisiting when
+  the supported floor next rises.
+- 5.3 added to the CI matrix on PHP 8.3 and 8.4 against both databases, those versions
+  read from 5.3's own workflow files.
+
 ## 1.3.0 (2026-10-01)
 
 Paper, empty pages, and the next page before you ask for it.
