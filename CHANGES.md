@@ -10,6 +10,12 @@ Moodle 5.3, which became the current long term support release on 5 October 2026
   raising anything, so on 5.3 the controls simply stopped rendering. This theme now
   declares both names; the running Moodle uses the one it knows and ignores the other,
   which keeps 5.1 and 5.2 working from the same template.
+- The light/dark switch keeps its icon in the user menu on 5.3. 5.3 replaced
+  add_navitem() with add_menu_item() and typed value objects and deprecated the old
+  call; its compatibility shim reads titleattribute and pixicon, where the stdClass this
+  theme passed carries titleidentifier and pix, so the item survived but arrived without
+  its icon and raised a deprecation notice. The callback now uses the new API where it
+  exists and the old one otherwise, from the same source.
 - The secondary navigation deliberately still uses core/moremenu rather than 5.3's new
   core/secondarymoremenu, which mounts a React component. core/moremenu is unchanged
   in 5.3 and carries no deprecation, and secondarymoremenu does not exist before 5.3,

@@ -134,27 +134,59 @@ final class hook_callbacks_test extends \advanced_testcase {
 
         $hook = new extend_user_menu();
         hook_callbacks::extend_user_menu($hook);
-        $this->assertSame([], $hook->get_navitems(), 'Nobody logged in');
+        $this->assertSame([], self::menu_items($hook), 'Nobody logged in');
 
         $this->setUser($user);
         $hook = new extend_user_menu();
         hook_callbacks::extend_user_menu($hook);
-        $items = $hook->get_navitems();
+        $items = self::menu_items($hook);
         $this->assertCount(1, $items);
-        $this->assertSame('link', $items[0]->itemtype);
-        $this->assertSame(get_string('switchtodark', 'theme_atrium'), $items[0]->title);
-        $this->assertSame('dark', $items[0]->url->get_param('scheme'));
-        $this->assertSame('atrium_moon', $items[0]->pix);
+        $this->assertSame(get_string('switchtodark', 'theme_atrium'), $items[0]['title']);
+        $this->assertStringContainsString('scheme=dark', $items[0]['url']);
+        $this->assertSame('atrium_moon', $items[0]['pix']);
 
         scheme::set(scheme::DARK);
         $hook = new extend_user_menu();
         hook_callbacks::extend_user_menu($hook);
-        $this->assertSame(get_string('switchtolight', 'theme_atrium'), $hook->get_navitems()[0]->title);
-        $this->assertSame('atrium_sun', $hook->get_navitems()[0]->pix);
+        $items = self::menu_items($hook);
+        $this->assertSame(get_string('switchtolight', 'theme_atrium'), $items[0]['title']);
+        $this->assertSame('atrium_sun', $items[0]['pix']);
 
         set_config('enabledarkmode', 0, 'theme_atrium');
         $hook = new extend_user_menu();
         hook_callbacks::extend_user_menu($hook);
-        $this->assertSame([], $hook->get_navitems());
+        $this->assertSame([], self::menu_items($hook));
+    }
+
+    /**
+     * The menu items a hook collected, as title, url and icon name, whichever API is in use.
+     *
+     * 5.3 replaced add_navitem()/get_navitems() with typed objects and deprecated the old
+     * pair, so reading ->pix off an item works on 5.1 and 5.2 and returns nothing on 5.3.
+     * Both shapes are reduced to the same three facts here so the assertions can be shared.
+     *
+     * @param extend_user_menu $hook
+     * @return array[]
+     */
+    protected static function menu_items(extend_user_menu $hook): array {
+        global $PAGE;
+
+        if (method_exists($hook, 'get_menu_items')) {
+            $output = $PAGE->get_renderer('core');
+            return array_map(static function ($item) use ($output): array {
+                $data = $item->export_for_template($output);
+                return [
+                    'title' => $data['title'],
+                    'url' => $data['url'],
+                    'pix' => $data['pixicon']['key'] ?? null,
+                ];
+            }, $hook->get_menu_items());
+        }
+
+        return array_map(static fn($item): array => [
+            'title' => $item->title,
+            'url' => (string) $item->url,
+            'pix' => $item->pix ?? null,
+        ], $hook->get_navitems());
     }
 }
