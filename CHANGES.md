@@ -16,11 +16,16 @@ Moodle 5.3, which became the current long term support release on 5 October 2026
   theme passed carries titleidentifier and pix, so the item survived but arrived without
   its icon and raised a deprecation notice. The callback now uses the new API where it
   exists and the old one otherwise, from the same source.
-- The secondary navigation deliberately still uses core/moremenu rather than 5.3's new
-  core/secondarymoremenu, which mounts a React component. core/moremenu is unchanged
-  in 5.3 and carries no deprecation, and secondarymoremenu does not exist before 5.3,
-  so switching would break 5.1 and 5.2 for a cosmetic difference. Worth revisiting when
-  the supported floor next rises.
+- The secondary navigation uses 5.3's React nav where 5.3 is what is running. The new
+  core/secondarymoremenu partial does not exist before 5.3, so rather than check the
+  release the template checks the data: core only exports reactprops on 5.3, and the
+  partial that needs it is only reached when it is there. Older releases keep
+  core/moremenu and never try to load a partial they do not have. The nav pills 5.3
+  draws are styled to match the underline the Bootstrap nav links already had, so the
+  course tabs look the same on every supported release.
+
+  The approach is Michael Milette's, from theme_trema. I had concluded this could not be
+  done without a version check and said so; he showed otherwise.
 - 5.3 added to the CI matrix on PHP 8.3 and 8.4 against both databases, those versions
   read from 5.3's own workflow files.
 

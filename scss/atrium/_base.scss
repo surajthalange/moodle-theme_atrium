@@ -144,6 +144,32 @@ body.atrium-width-wide #page.drawers .main-inner {
             }
         }
     }
+
+    // Moodle 5.3 renders this navigation with the design system's nav pills instead of
+    // Bootstrap nav links, so the rules above stop matching there. Same underline, same
+    // colours, different class names. Both sets are kept because one theme serves 5.1
+    // through 5.3 and only one of them applies on any given site.
+    .mds-nav-pill {
+        color: var(--atrium-text-muted);
+        font-weight: 500;
+        border: 0;
+        border-bottom: 2px solid transparent;
+        border-radius: 0;
+        padding: 0.75rem 1rem;
+        background: transparent;
+
+        &:hover {
+            color: var(--atrium-text);
+            border-bottom-color: var(--atrium-border-strong);
+        }
+
+        &--selected,
+        &[aria-current="page"] {
+            color: var(--atrium-accent);
+            background: transparent;
+            border-bottom-color: var(--atrium-accent);
+        }
+    }
 }
 
 // Dropdowns and popovers on the surface colour with the soft shadow.

@@ -197,7 +197,17 @@
             {{{ output.full_header }}}
             {{#secondarymoremenu}}
                 <div class="secondary-navigation d-print-none">
-                    {{> core/moremenu}}
+                    {{! 5.3 renders this navigation as a React component through
+                        core/secondarymoremenu, which does not exist before 5.3. Rather than
+                        check the release, ask the data: more_menu only exports reactprops on
+                        5.3, so the partial that needs it is only ever reached there. Thanks to
+                        Michael Milette, who used this in theme_trema. }}
+                    {{#reactprops}}
+                        {{> core/secondarymoremenu}}
+                    {{/reactprops}}
+                    {{^reactprops}}
+                        {{> core/moremenu}}
+                    {{/reactprops}}
                 </div>
             {{/secondarymoremenu}}
             <div id="page-content" class="pb-3 d-print-block">
