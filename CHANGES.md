@@ -1,8 +1,37 @@
 # Changes
 
-## 1.4.0 (2026-10-10)
+## 1.4.0 (2026-10-15)
 
-Moodle 5.3, which became the current long term support release on 5 October 2026.
+Moodle 5.3, and the findings from the Marketplace review of 1.3.0 (MMR-347).
+
+### Marketplace review
+
+- **The command palette now checks that the caller may enter a course before listing its
+  activities.** The course id reaches the palette from the browser, and the only test
+  applied to it was modinfo's uservisible, which asks about an activity's visibility,
+  availability and `mod/<name>:view` capability but not about the course: enrolment, guest
+  access and course visibility are no part of it, and many module types define no view
+  capability at all or grant it to every authenticated user. A signed-in user could
+  therefore put another course id on the request and read back the names, types and links
+  of its activities, including those of a hidden course. `can_access_course()` is now asked
+  first, and a course id that is not a course is an empty answer rather than an exception.
+  Reported in review as an approval blocker on security grounds; five tests cover it.
+- **The palette search is a web service.** `palette.php` has gone; the search is
+  `theme_atrium_search_palette` in `classes/external/`, called through `core/ajax`, with
+  its arguments and its answer described by the external API rather than by hand. The
+  endpoints that are forms, and work without JavaScript, stay forms.
+- **The palette results are a template.** `theme_atrium/palette_results` and
+  `theme_atrium/palette_result_body` replace the markup the module used to assemble in
+  strings, which also retires the module's own HTML escaping.
+- **Google Analytics is declared in the privacy provider.** With a measurement id set,
+  every page served to anyone who is not a site administrator loads Google's tag; the
+  provider now records that as an external location with the fields that are sent, so the
+  site's privacy registry describes it.
+- **The bundled typefaces are declared in `thirdpartylibs.xml`:** Inter 4.001 in four
+  weights and Atkinson Hyperlegible 1.006 in two, both OFL 1.1.
+- **The four `cachedef_` strings `db/caches.php` declares are now defined.**
+
+### Moodle 5.3
 
 - The course index drawer keeps its controls on 5.3. theme_boost/drawer.mustache
   renamed the block they are placed in from drawerheadercontent to drawercontrols,
