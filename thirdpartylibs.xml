@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<libraries>
+  <library>
+    <location>fonts/inter-400.woff2</location>
+    <name>Inter</name>
+    <description>The interface typeface the theme loads for its body and headings, regular weight.</description>
+    <version>4.001</version>
+    <license>OFL</license>
+    <licenseversion>1.1</licenseversion>
+    <repository>https://github.com/rsms/inter</repository>
+    <copyrights>
+      <copyright>2016 The Inter Project Authors</copyright>
+    </copyrights>
+  </library>
+  <library>
+    <location>fonts/inter-500.woff2</location>
+    <name>Inter</name>
+    <description>The interface typeface the theme loads for its body and headings, medium weight.</description>
+    <version>4.001</version>
+    <license>OFL</license>
+    <licenseversion>1.1</licenseversion>
+    <repository>https://github.com/rsms/inter</repository>
+    <copyrights>
+      <copyright>2016 The Inter Project Authors</copyright>
+    </copyrights>
+  </library>
+  <library>
+    <location>fonts/inter-600.woff2</location>
+    <name>Inter</name>
+    <description>The interface typeface the theme loads for its body and headings, semibold weight.</description>
+    <version>4.001</version>
+    <license>OFL</license>
+    <licenseversion>1.1</licenseversion>
+    <repository>https://github.com/rsms/inter</repository>
+    <copyrights>
+      <copyright>2016 The Inter Project Authors</copyright>
+    </copyrights>
+  </library>
+  <library>
+    <location>fonts/inter-700.woff2</location>
+    <name>Inter</name>
+    <description>The interface typeface the theme loads for its body and headings, bold weight.</description>
+    <version>4.001</version>
+    <license>OFL</license>
+    <licenseversion>1.1</licenseversion>
+    <repository>https://github.com/rsms/inter</repository>
+    <copyrights>
+      <copyright>2016 The Inter Project Authors</copyright>
+    </copyrights>
+  </library>
+  <library>
+    <location>fonts/atkinson-400.woff2</location>
+    <name>Atkinson Hyperlegible</name>
+    <description>The reading typeface offered by the accessibility toolbar, regular weight.</description>
+    <version>1.006</version>
+    <license>OFL</license>
+    <licenseversion>1.1</licenseversion>
+    <repository>https://github.com/googlefonts/atkinson-hyperlegible</repository>
+    <copyrights>
+      <copyright>2020 Braille Institute of America, Inc.</copyright>
+    </copyrights>
+  </library>
+  <library>
+    <location>fonts/atkinson-700.woff2</location>
+    <name>Atkinson Hyperlegible</name>
+    <description>The reading typeface offered by the accessibility toolbar, bold weight.</description>
+    <version>1.006</version>
+    <license>OFL</license>
+    <licenseversion>1.1</licenseversion>
+    <repository>https://github.com/googlefonts/atkinson-hyperlegible</repository>
+    <copyrights>
+      <copyright>2020 Braille Institute of America, Inc.</copyright>
+    </copyrights>
+  </library>
+</libraries>
