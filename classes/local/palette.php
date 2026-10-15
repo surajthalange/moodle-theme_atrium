@@ -92,7 +92,15 @@ final class palette {
             $groups[] = ['title' => get_string('palette_admin', 'theme_atrium'), 'items' => $admin];
         }
 
-        return $groups;
+        // Every item carries the same keys, whether or not its source set them. The web
+        // service describes one shape, and the template renders one shape.
+        return array_map(static function (array $group): array {
+            $group['items'] = array_map(
+                static fn(array $item): array => $item + ['icon' => '', 'meta' => '', 'action' => ''],
+                $group['items']
+            );
+            return $group;
+        }, $groups);
     }
 
     /**

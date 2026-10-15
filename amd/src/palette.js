@@ -18,7 +18,8 @@
  * that finds courses, activities in the current course, common pages and admin pages, and
  * runs commands such as turning editing on, switching colour scheme or purging caches.
  *
- * Results come from palette.php. Keyboard: arrows move, Enter opens, Escape closes; the
+ * Results come from the theme_atrium_search_palette web service and are rendered through
+ * theme_atrium/palette_results. Keyboard: arrows move, Enter opens, Escape closes; the
  * results are a listbox and the input a combobox, so screen readers announce the
  * highlighted result.
  *
@@ -31,8 +32,10 @@
  * @license    https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+import Ajax from 'core/ajax';
+import Config from 'core/config';
 import Log from 'core/log';
-import {getString} from 'core/str';
+import Templates from 'core/templates';
 
 const SELECTORS = {
     ROOT: '[data-region="atrium-palette"]',
@@ -50,53 +53,36 @@ let lastFocus = null;
 let timer = null;
 let requestId = 0;
 let active = -1;
-let actionurl = '';
-let sesskey = '';
-
-/**
- * Escape text for HTML.
- *
- * @param {string} text
- * @returns {string}
- */
-const escape = (text) => {
-    const div = document.createElement('div');
-    div.textContent = text;
-    return div.innerHTML;
-};
 
 /**
  * Render the result groups.
  *
+ * The option ids are numbered here rather than in the template, because the count runs
+ * across groups and aria-activedescendant has to point at one of them.
+ *
  * @param {Array} groups
+ * @returns {Promise}
  */
-const render = async(groups) => {
+const render = (groups) => {
     active = -1;
-    if (!groups.length) {
-        const empty = await getString('palette_empty', 'theme_atrium');
-        results.innerHTML = `<p class="atrium-palette-empty">${escape(empty)}</p>`;
-        return;
-    }
     let index = 0;
-    results.innerHTML = groups.map((group) => {
-        const items = group.items.map((item) => {
-            const icon = item.icon
-                ? `<i class="fa ${escape(item.icon)}" aria-hidden="true"></i>`
-                : '<span class="atrium-palette-dot" aria-hidden="true"></span>';
-            const meta = item.meta ? `<span class="atrium-palette-meta">${escape(item.meta)}</span>` : '';
-            const id = `atrium-palette-option-${index++}`;
-            const body = `${icon}<span class="atrium-palette-label">${escape(item.label)}</span>${meta}`;
-            if (item.action) {
-                return `<button type="button" class="atrium-palette-item atrium-palette-command" role="option"
-                    id="${id}" aria-selected="false" data-palette-action="${escape(item.action)}">${body}</button>`;
-            }
-            return `<a href="${escape(item.url)}" class="atrium-palette-item" role="option" id="${id}"
-                aria-selected="false">${body}</a>`;
-        }).join('');
-        return `<div class="atrium-palette-group" role="group" aria-label="${escape(group.title)}">
-            <p class="atrium-palette-group-title">${escape(group.title)}</p>${items}</div>`;
-    }).join('');
-    setActive(0);
+    const context = {
+        hasresults: groups.length > 0,
+        groups: groups.map((group) => ({
+            title: group.title,
+            items: group.items.map((item) => ({
+                ...item,
+                id: `atrium-palette-option-${index++}`,
+                iscommand: Boolean(item.action),
+            })),
+        })),
+    };
+    return Templates.renderForPromise('theme_atrium/palette_results', context)
+        .then(({html, js}) => {
+            Templates.replaceNodeContents(results, html, js);
+            setActive(0);
+            return null;
+        });
 };
 
 /**
@@ -134,14 +120,15 @@ const here = () => window.location.pathname + window.location.search;
  * @param {string} action
  */
 const run = (action) => {
-    if (!actionurl || !sesskey) {
+    const actionurl = root.dataset.actionurl;
+    if (!actionurl) {
         return;
     }
     const form = document.createElement('form');
     form.method = 'post';
     form.action = actionurl;
     form.hidden = true;
-    [['action', action], ['sesskey', sesskey], ['returnurl', here()]].forEach(([name, value]) => {
+    [['action', action], ['sesskey', Config.sesskey], ['returnurl', here()]].forEach(([name, value]) => {
         const field = document.createElement('input');
         field.type = 'hidden';
         field.name = name;
@@ -171,20 +158,17 @@ const choose = (option) => {
  */
 const search = () => {
     const id = ++requestId;
-    const url = new URL(root.dataset.searchurl, window.location.href);
-    url.searchParams.set('q', input.value);
-    url.searchParams.set('courseid', root.dataset.courseid || '0');
-    url.searchParams.set('page', here());
-    fetch(url, {credentials: 'same-origin'})
-        .then((response) => response.json())
-        .then((data) => {
-            if (id === requestId) {
-                actionurl = data.actionurl || '';
-                sesskey = data.sesskey || '';
-                render(data.groups || []);
-            }
-            return null;
-        })
+    Ajax.call([{
+        methodname: 'theme_atrium_search_palette',
+        args: {
+            query: input.value,
+            courseid: parseInt(root.dataset.courseid || '0', 10),
+            page: here(),
+        },
+    }])[0]
+        // Keystrokes outrun replies, so an answer to a query the user has already typed
+        // past is dropped rather than painted over the newer one.
+        .then((data) => (id === requestId ? render(data.groups || []) : null))
         .catch(Log.error);
 };
 

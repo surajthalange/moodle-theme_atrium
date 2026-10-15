@@ -1,0 +1,86 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template theme_atrium/palette_results
+
+    The results inside the command palette, rendered from JavaScript after each search.
+
+    The ids are given by theme_atrium/palette rather than counted here, because the
+    combobox points aria-activedescendant at one of them and the count runs across groups.
+
+    Context variables required for this template:
+    * hasresults - Whether there is anything to show
+    * groups - Each with a title and its items
+    * groups[].items[].id - The DOM id of this option
+    * groups[].items[].label - What the result is called
+    * groups[].items[].url - Where it goes
+    * groups[].items[].icon - A Font Awesome class, or empty for a plain dot
+    * groups[].items[].meta - A second piece of context, or empty
+    * groups[].items[].action - The command id when this result runs a command
+    * groups[].items[].iscommand - Whether this result runs a command rather than going somewhere
+
+    Example context (json):
+    {
+        "hasresults": true,
+        "groups": [
+            {
+                "title": "Pages",
+                "items": [
+                    {
+                        "id": "atrium-palette-option-0",
+                        "label": "Dashboard",
+                        "url": "/my/",
+                        "icon": "fa-gauge",
+                        "meta": "",
+                        "action": "",
+                        "iscommand": false
+                    },
+                    {
+                        "id": "atrium-palette-option-1",
+                        "label": "Switch to dark",
+                        "url": "/theme/atrium/paletteaction.php",
+                        "icon": "fa-moon",
+                        "meta": "",
+                        "action": "scheme_dark",
+                        "iscommand": true
+                    }
+                ]
+            }
+        ]
+    }
+}}
+{{^hasresults}}
+    <p class="atrium-palette-empty">{{#str}} palette_empty, theme_atrium {{/str}}</p>
+{{/hasresults}}
+{{#groups}}
+    <div class="atrium-palette-group" role="group" aria-label="{{ title }}">
+        <p class="atrium-palette-group-title">{{ title }}</p>
+        {{#items}}
+            {{#iscommand}}
+                <button type="button" class="atrium-palette-item atrium-palette-command" role="option"
+                        id="{{ id }}" aria-selected="false" data-palette-action="{{ action }}">
+                    {{> theme_atrium/palette_result_body }}
+                </button>
+            {{/iscommand}}
+            {{^iscommand}}
+                <a href="{{ url }}" class="atrium-palette-item" role="option" id="{{ id }}" aria-selected="false">
+                    {{> theme_atrium/palette_result_body }}
+                </a>
+            {{/iscommand}}
+        {{/items}}
+    </div>
+{{/groups}}

@@ -40,7 +40,10 @@ if ($hash === announcement::hash()) {
     announcement::dismiss();
 }
 
-if (AJAX_SCRIPT || optional_param('ajax', 0, PARAM_BOOL)) {
+// The dismiss control is a form that works on its own; theme_atrium/announcement posts the
+// same form in the background and asks for the answer rather than the redirect. AJAX_SCRIPT
+// is always false here, this file being a page and not an endpoint.
+if (optional_param('ajax', 0, PARAM_BOOL)) {
     echo json_encode(['dismissed' => true]);
     exit;
 }

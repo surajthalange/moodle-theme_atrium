@@ -188,7 +188,7 @@ $recentcourses = recentcourses::export();
 
 // The command palette and the accessibility toolbar.
 $palettedata = palette::wanted() ? [
-    'searchurl' => (new moodle_url('/theme/atrium/palette.php', ['sesskey' => sesskey()]))->out(false),
+    'actionurl' => (new moodle_url('/theme/atrium/paletteaction.php'))->out(false),
     'courseid' => (int) $COURSE->id,
     'shortcut' => get_string('palette_shortcut', 'theme_atrium'),
 ] : false;
