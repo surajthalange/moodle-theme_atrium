@@ -18,6 +18,7 @@ namespace theme_atrium\local;
 
 use core_course_category;
 use core_course_list_element;
+use dml_missing_record_exception;
 use moodle_url;
 
 /**
@@ -90,6 +91,7 @@ final class palette {
         if ($admin) {
             $groups[] = ['title' => get_string('palette_admin', 'theme_atrium'), 'items' => $admin];
         }
+
         return $groups;
     }
 
@@ -141,7 +143,23 @@ final class palette {
      * @return array
      */
     private static function activities(string $query, int $courseid): array {
-        $course = get_course($courseid);
+        // A course id arrives from the browser, so it has to be treated as a request to
+        // see that course rather than as a fact about where the user is.
+        try {
+            $course = get_course($courseid);
+        } catch (dml_missing_record_exception $e) {
+            return [];
+        }
+        // The uservisible test below asks whether an activity is visible and available,
+        // and whether the user holds its mod/<name>:view capability. It does not ask
+        // whether they may enter the course: enrolment, guest access and course
+        // visibility are no part of it, and many module types define no :view capability
+        // at all or grant it to every authenticated user. Without this check a signed-in
+        // user could put another course id on the request and read back the names, types
+        // and links of its activities, including those of a hidden course.
+        if (!can_access_course($course)) {
+            return [];
+        }
         $items = [];
         foreach (get_fast_modinfo($course)->get_cms() as $cm) {
             if (!$cm->uservisible || !$cm->url || $cm->modname === 'label') {
