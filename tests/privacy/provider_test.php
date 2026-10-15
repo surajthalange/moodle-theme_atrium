@@ -37,12 +37,13 @@ use PHPUnit\Framework\Attributes\CoversClass;
 #[CoversClass(\theme_atrium\privacy\provider::class)]
 final class provider_test extends provider_testcase {
     /**
-     * Nine preferences are declared, each with a string that exists.
+     * Nine preferences and the Google Analytics link are declared, each with a string
+     * that exists.
      */
     public function test_metadata(): void {
         $collection = provider::get_metadata(new collection('theme_atrium'));
         $items = $collection->get_collection();
-        $this->assertCount(9, $items);
+        $this->assertCount(10, $items);
         $names = array_map(fn($item) => $item->get_name(), $items);
         $this->assertSame([
             scheme::PREFERENCE,
@@ -54,10 +55,34 @@ final class provider_test extends provider_testcase {
             accessibility::PREF_FONT,
             accessibility::PREF_CONTRAST,
             accessibility::PREF_MOTION,
+            'googleanalytics',
         ], $names);
         foreach ($items as $item) {
-            $this->assertInstanceOf(\core_privacy\local\metadata\types\user_preference::class, $item);
             $this->assertNotEmpty(get_string($item->get_summary(), 'theme_atrium'));
+        }
+        foreach (array_slice($items, 0, 9) as $item) {
+            $this->assertInstanceOf(\core_privacy\local\metadata\types\user_preference::class, $item);
+        }
+    }
+
+    /**
+     * The theme sends page views to Google when a measurement id is set, so the external
+     * link has to say which fields go, and every one of them has to name a real string.
+     */
+    public function test_metadata_declares_what_google_analytics_receives(): void {
+        $collection = provider::get_metadata(new collection('theme_atrium'));
+        $items = $collection->get_collection();
+        $link = end($items);
+
+        $this->assertInstanceOf(\core_privacy\local\metadata\types\external_location::class, $link);
+        $this->assertSame('googleanalytics', $link->get_name());
+        $fields = $link->get_privacy_fields();
+        $this->assertSame(
+            ['pageurl', 'pagetitle', 'browser', 'ipaddress', 'clientid'],
+            array_keys($fields)
+        );
+        foreach ($fields as $identifier) {
+            $this->assertNotEmpty(get_string($identifier, 'theme_atrium'));
         }
     }
 

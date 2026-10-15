@@ -27,7 +27,8 @@ use theme_atrium\local\scheme;
 use theme_atrium\output\sidebar;
 
 /**
- * Privacy provider: nine user preferences, nothing else.
+ * Privacy provider: nine user preferences, and Google Analytics when a site has
+ * entered a measurement id.
  *
  * @package    theme_atrium
  * @copyright  2026 Suraj Thalange
@@ -50,6 +51,19 @@ class provider implements \core_privacy\local\metadata\provider, user_preference
         $collection->add_user_preference(accessibility::PREF_FONT, 'privacy:metadata:preference:theme_atrium_readingfont');
         $collection->add_user_preference(accessibility::PREF_CONTRAST, 'privacy:metadata:preference:theme_atrium_contrast');
         $collection->add_user_preference(accessibility::PREF_MOTION, 'privacy:metadata:preference:theme_atrium_reducemotion');
+
+        // Only when an administrator has entered a measurement id: with one set, every
+        // page served to anyone who is not a site administrator loads Google's tag and
+        // reports the visit. Declared unconditionally so that the site's privacy registry
+        // describes what the setting does before somebody switches it on.
+        $collection->add_external_location_link('googleanalytics', [
+            'pageurl' => 'privacy:metadata:googleanalytics:pageurl',
+            'pagetitle' => 'privacy:metadata:googleanalytics:pagetitle',
+            'browser' => 'privacy:metadata:googleanalytics:browser',
+            'ipaddress' => 'privacy:metadata:googleanalytics:ipaddress',
+            'clientid' => 'privacy:metadata:googleanalytics:clientid',
+        ], 'privacy:metadata:googleanalytics');
+
         return $collection;
     }
 
