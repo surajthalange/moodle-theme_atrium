@@ -19,6 +19,11 @@
 
     The results inside the command palette, rendered from JavaScript after each search.
 
+    This template carries the listbox itself rather than relying on a wrapper in
+    theme_atrium/palette, so that it is valid on its own: an element with role="option"
+    has to be owned by one with role="listbox", and a template is rendered and validated
+    by itself.
+
     The ids are given by theme_atrium/palette rather than counted here, because the
     combobox points aria-activedescendant at one of them and the count runs across groups.
 
@@ -63,24 +68,26 @@
         ]
     }
 }}
-{{^hasresults}}
-    <p class="atrium-palette-empty">{{#str}} palette_empty, theme_atrium {{/str}}</p>
-{{/hasresults}}
-{{#groups}}
-    <div class="atrium-palette-group" role="group" aria-label="{{ title }}">
-        <p class="atrium-palette-group-title">{{ title }}</p>
-        {{#items}}
-            {{#iscommand}}
-                <button type="button" class="atrium-palette-item atrium-palette-command" role="option"
-                        id="{{ id }}" aria-selected="false" data-palette-action="{{ action }}">
-                    {{> theme_atrium/palette_result_body }}
-                </button>
-            {{/iscommand}}
-            {{^iscommand}}
-                <a href="{{ url }}" class="atrium-palette-item" role="option" id="{{ id }}" aria-selected="false">
-                    {{> theme_atrium/palette_result_body }}
-                </a>
-            {{/iscommand}}
-        {{/items}}
-    </div>
-{{/groups}}
+<div class="atrium-palette-listbox" role="listbox" aria-label="{{#str}} palette_results, theme_atrium {{/str}}">
+    {{^hasresults}}
+        <p class="atrium-palette-empty">{{#str}} palette_empty, theme_atrium {{/str}}</p>
+    {{/hasresults}}
+    {{#groups}}
+        <div class="atrium-palette-group" role="group" aria-label="{{ title }}">
+            <p class="atrium-palette-group-title">{{ title }}</p>
+            {{#items}}
+                {{#iscommand}}
+                    <button type="button" class="atrium-palette-item atrium-palette-command" role="option"
+                            id="{{ id }}" aria-selected="false" data-palette-action="{{ action }}">
+                        {{> theme_atrium/palette_result_body }}
+                    </button>
+                {{/iscommand}}
+                {{^iscommand}}
+                    <a href="{{ url }}" class="atrium-palette-item" role="option" id="{{ id }}" aria-selected="false">
+                        {{> theme_atrium/palette_result_body }}
+                    </a>
+                {{/iscommand}}
+            {{/items}}
+        </div>
+    {{/groups}}
+</div>
