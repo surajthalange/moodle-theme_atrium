@@ -115,13 +115,31 @@ final class hook_callbacks {
             return;
         }
         $dark = scheme::initial() === scheme::DARK;
+        $title = get_string($dark ? 'switchtolight' : 'switchtodark', 'theme_atrium');
+        $titleidentifier = ($dark ? 'switchtolight' : 'switchtodark') . ',theme_atrium';
+        // Core builds the icon with no component, so the names are registered under core.
+        $pix = $dark ? 'atrium_sun' : 'atrium_moon';
+
+        // 5.3 replaced add_navitem() with add_menu_item() and typed value objects, and
+        // deprecated the old call. Its compatibility shim is not enough on its own: it reads
+        // titleattribute and pixicon, where the old stdClass carries titleidentifier and pix,
+        // so going through it would silently drop this item's icon.
+        if (method_exists($hook, 'add_menu_item')) {
+            $hook->add_menu_item(new \core_user\output\user_action_menu\link(
+                scheme::toggle_url(),
+                $title,
+                $titleidentifier,
+                new \core\output\pix_icon($pix, ''),
+            ));
+            return;
+        }
+
         $item = new \stdClass();
         $item->itemtype = 'link';
         $item->url = scheme::toggle_url();
-        $item->title = get_string($dark ? 'switchtolight' : 'switchtodark', 'theme_atrium');
-        $item->titleidentifier = ($dark ? 'switchtolight' : 'switchtodark') . ',theme_atrium';
-        // Core builds the icon with no component, so the names are registered under core.
-        $item->pix = $dark ? 'atrium_sun' : 'atrium_moon';
+        $item->title = $title;
+        $item->titleidentifier = $titleidentifier;
+        $item->pix = $pix;
         $hook->add_navitem($item);
     }
 }

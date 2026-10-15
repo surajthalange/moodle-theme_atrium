@@ -92,9 +92,18 @@
     {{#courseindex}}
         {{< theme_boost/drawer }}
             {{$id}}theme_boost-drawers-courseindex{{/id}}
+            {{! Atrium: both names on purpose. theme_boost/drawer.mustache declared this
+                block as drawerheadercontent up to 5.2 and renamed it to drawercontrols in
+                5.3. Mustache silently discards an override for a block the parent does not
+                declare, which is what would drop these controls on one release or the
+                other, and is also what makes declaring both safe: the running Moodle uses
+                the name it knows and ignores the other. }}
             {{$drawerheadercontent}}
                 {{> theme_boost/courseindexdrawercontrols}}
             {{/drawerheadercontent}}
+            {{$drawercontrols}}
+                {{> theme_boost/courseindexdrawercontrols}}
+            {{/drawercontrols}}
             {{! Atrium: the heading is inline because theme_boost/courseindexdrawerheading only exists from 5.2. }}
             {{$drawerheading}}
                 <div id="courseindexdrawerheading">
@@ -188,7 +197,17 @@
             {{{ output.full_header }}}
             {{#secondarymoremenu}}
                 <div class="secondary-navigation d-print-none">
-                    {{> core/moremenu}}
+                    {{! 5.3 renders this navigation as a React component through
+                        core/secondarymoremenu, which does not exist before 5.3. Rather than
+                        check the release, ask the data: more_menu only exports reactprops on
+                        5.3, so the partial that needs it is only ever reached there. Thanks to
+                        Michael Milette, who used this in theme_trema. }}
+                    {{#reactprops}}
+                        {{> core/secondarymoremenu}}
+                    {{/reactprops}}
+                    {{^reactprops}}
+                        {{> core/moremenu}}
+                    {{/reactprops}}
                 </div>
             {{/secondarymoremenu}}
             <div id="page-content" class="pb-3 d-print-block">

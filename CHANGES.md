@@ -1,5 +1,34 @@
 # Changes
 
+## 1.4.0 (2026-10-10)
+
+Moodle 5.3, which became the current long term support release on 5 October 2026.
+
+- The course index drawer keeps its controls on 5.3. theme_boost/drawer.mustache
+  renamed the block they are placed in from drawerheadercontent to drawercontrols,
+  and Mustache discards an override for a block the parent does not declare without
+  raising anything, so on 5.3 the controls simply stopped rendering. This theme now
+  declares both names; the running Moodle uses the one it knows and ignores the other,
+  which keeps 5.1 and 5.2 working from the same template.
+- The light/dark switch keeps its icon in the user menu on 5.3. 5.3 replaced
+  add_navitem() with add_menu_item() and typed value objects and deprecated the old
+  call; its compatibility shim reads titleattribute and pixicon, where the stdClass this
+  theme passed carries titleidentifier and pix, so the item survived but arrived without
+  its icon and raised a deprecation notice. The callback now uses the new API where it
+  exists and the old one otherwise, from the same source.
+- The secondary navigation uses 5.3's React nav where 5.3 is what is running. The new
+  core/secondarymoremenu partial does not exist before 5.3, so rather than check the
+  release the template checks the data: core only exports reactprops on 5.3, and the
+  partial that needs it is only reached when it is there. Older releases keep
+  core/moremenu and never try to load a partial they do not have. The nav pills 5.3
+  draws are styled to match the underline the Bootstrap nav links already had, so the
+  course tabs look the same on every supported release.
+
+  The approach is Michael Milette's, from theme_trema. I had concluded this could not be
+  done without a version check and said so; he showed otherwise.
+- 5.3 added to the CI matrix on PHP 8.3 and 8.4 against both databases, those versions
+  read from 5.3's own workflow files.
+
 ## 1.3.0 (2026-10-01)
 
 Paper, empty pages, and the next page before you ask for it.
