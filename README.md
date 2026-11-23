@@ -159,6 +159,15 @@ AMD sources are in `amd/src`; rebuild with `grunt amd --root=theme/atrium` from 
 Moodle root. SCSS partials are in `scss/atrium`; the theme compiles them after Boost's
 sheet, so nothing is precompiled.
 
+## Custom development
+
+Need changes to this theme, or something built for your own platform? I am Suraj
+Thalange, a technical project manager and developer. My team builds Moodle plugins, themes,
+upgrades and integrations, and custom software such as web portals, business applications
+and APIs in Laravel and PHP.
+
+Contact: surajthalange18@gmail.com · <https://surajthalange.github.io/>
+
 ## Credits
 
 Boost, the parent, is Moodle core. Edwiser RemUI, Moove and Learnr established what a
