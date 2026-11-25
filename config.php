@@ -35,7 +35,6 @@ $THEME->parents = ['boost'];
 // variables rather than restating their values.
 $THEME->sheets = [];
 $THEME->editor_sheets = [];
-$THEME->editor_scss = ['editor'];
 $THEME->usefallback = true;
 
 $THEME->scss = function ($theme) {

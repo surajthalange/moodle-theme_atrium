@@ -25,8 +25,8 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'theme_atrium';
-$plugin->version = 2026101501;
-$plugin->release = '1.4.0';
+$plugin->version = 2026112400;
+$plugin->release = '1.4.1';
 $plugin->requires = 2025100600; // Moodle 5.1: Boost on Bootstrap 5, the layouts this theme overrides.
 $plugin->supported = [501, 503];
 $plugin->maturity = MATURITY_STABLE;

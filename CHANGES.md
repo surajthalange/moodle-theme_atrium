@@ -1,5 +1,14 @@
 # Changes
 
+## 1.4.1 (2026-11-24)
+
+- Stop declaring an editor stylesheet that does not exist. `config.php` listed
+  `editor_scss = ['editor']`, but `scss/editor.scss` has never been part of this theme.
+  Moodle 5.2 reads that file while building its configs and emits a PHP warning when it is
+  missing, which failed every CI job on 5.2 and 5.3. With the declaration gone, Moodle
+  falls back to the parent theme as it does for any Boost child, so the editor is now
+  styled by Boost's own editor stylesheet. Before this fix it received none.
+
 ## 1.4.0 (2026-10-15)
 
 Moodle 5.3, and the findings from the Marketplace review of 1.3.0 (MMR-347).
